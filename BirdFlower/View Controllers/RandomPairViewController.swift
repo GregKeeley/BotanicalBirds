@@ -28,6 +28,10 @@ class RandomPairViewController: UIViewController {
             loadPlantPhoto()
         }
     }
+    var flickerBirdImage: FlickerSearchResult?
+    var flickerPlantImage: FlickerSearchResult?
+    var flickerBirdImageURL: FlickerPhoto?
+    var flickerPlantImageURL: FlickerPhoto?
     var randomPair = ""
     
     override func viewDidLoad() {
@@ -57,14 +61,14 @@ class RandomPairViewController: UIViewController {
     private func generateRandomPair() {
         let randomBird = birdData?.randomElement()?.commonName ?? "Bird"
         let randomBotanical = botanicalData?.randomElement()?.name ?? "Botanical"
-        getBirdPhoto(for: randomBird)
-        getBotanicalPhoto(for: randomBotanical)
+        getPixaBayBirdPhoto(for: randomBird)
+        getPixaBayBotanicalPhoto(for: randomBotanical)
         randomPair = "\(randomBird) \(randomBotanical)"
         birdNameLabel.text = "\(randomBird)"
         plantNameLabel.text = "\(randomBotanical)"
         
     }
-    private func getBirdPhoto(for bird: String) {
+    private func getPixaBayBirdPhoto(for bird: String) {
         PixaBayAPI.getPhotos(searchQuery: bird) { (results) in
             switch results {
             case .failure(let appError):
@@ -88,13 +92,53 @@ class RandomPairViewController: UIViewController {
             self.plantImageView.kf.setImage(with: URL(string: self.botanicalImageURL ?? ""))
         }
     }
-    private func getBotanicalPhoto(for plant: String) {
+    private func getPixaBayBotanicalPhoto(for plant: String) {
         PixaBayAPI.getPhotos(searchQuery: plant) { (results) in
             switch results {
             case .failure(let appError):
                 print("Failed to load bird photo: \(appError)")
             case .success(let image):
                 self.botanicalImageURL = image.hits.first?.largeImageURL
+            }
+        }
+    }
+    private func searchFlickerBirdPhotos(for query: String) {
+        FlickerAPI.searchPhotos(searchQuery: query) { (results) in
+            switch results {
+            case .failure(let appError):
+                print("Failed to search flicker for a photo: \(appError)")
+            case .success(let results):
+                self.flickerBirdImage = results
+            }
+        }
+    }
+    private func searchFlickerPlantPhotos(for query: String) {
+        FlickerAPI.searchPhotos(searchQuery: query) { (results) in
+            switch results {
+            case .failure(let appError):
+                print("Failed to search flicker for a photo: \(appError)")
+            case .success(let results):
+                self.flickerPlantImage = results
+            }
+        }
+    }
+    private func loadFlickerBirdPhoto(for photo: FlickerPhoto) {
+        FlickerAPI.getUserPhotoURL(photoID: photo.photo.id, photoSecret: photo.photo.secret) { (results) in
+            switch results {
+            case .failure(let appError):
+                print("Failed to search flicker for a photo: \(appError)")
+            case .success(let results):
+                self.flickerBirdImageURL = results
+            }
+        }
+    }
+    private func loadFlickerPlantPhoto(for photo: FlickerPhoto) {
+        FlickerAPI.getUserPhotoURL(photoID: photo.photo.id, photoSecret: photo.photo.secret) { (results) in
+            switch results {
+            case .failure(let appError):
+                print("Failed to search flicker for a photo: \(appError)")
+            case .success(let results):
+                self.flickerPlantImageURL = results
             }
         }
     }
