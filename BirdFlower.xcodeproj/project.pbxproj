@@ -17,6 +17,7 @@
 		88763CC024FDDB4E00EE3409 /* secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CBF24FDDB4E00EE3409 /* secrets.swift */; };
 		88763CC724FDDC8A00EE3409 /* NetworkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CC624FDDC8A00EE3409 /* NetworkHelper.swift */; };
 		88763CC924FDDD2F00EE3409 /* TrefleAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CC824FDDD2F00EE3409 /* TrefleAPIClient.swift */; };
+		88763CCB24FDE49800EE3409 /* Flowers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CCA24FDE49800EE3409 /* Flowers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		88763CBF24FDDB4E00EE3409 /* secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = secrets.swift; path = ../../secrets.swift; sourceTree = "<group>"; };
 		88763CC624FDDC8A00EE3409 /* NetworkHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHelper.swift; sourceTree = "<group>"; };
 		88763CC824FDDD2F00EE3409 /* TrefleAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrefleAPIClient.swift; sourceTree = "<group>"; };
+		88763CCA24FDE49800EE3409 /* Flowers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flowers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				88763CBB24FDCFD300EE3409 /* BirdSpecies.swift */,
+				88763CCA24FDE49800EE3409 /* Flowers.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -192,6 +195,7 @@
 			files = (
 				88763CAC24FDCCE900EE3409 /* ViewController.swift in Sources */,
 				88763CBC24FDCFD300EE3409 /* BirdSpecies.swift in Sources */,
+				88763CCB24FDE49800EE3409 /* Flowers.swift in Sources */,
 				88763CC024FDDB4E00EE3409 /* secrets.swift in Sources */,
 				88763CA824FDCCE900EE3409 /* AppDelegate.swift in Sources */,
 				88763CC924FDDD2F00EE3409 /* TrefleAPIClient.swift in Sources */,
