@@ -12,29 +12,35 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
+    var birdData: [BirdsSpecies]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
+        loadBirdData()
     }
-
+    private func loadBirdData() {
+        birdData = BirdsSpecies.decodeBirdSpeciesData()
+    }
+    
 }
 extension ViewController: UITableViewDelegate {
     
 }
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return birdData?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "basicCell", for: indexPath)
         // Common name
-        cell.textLabel?.text = ""
+        let bird = birdData?[indexPath.row]
+        
+        cell.textLabel?.text = "\(bird?.commonName ?? "BIRD")"
         // Scinetific name
-        cell.detailTextLabel?.text = ""
+        cell.detailTextLabel?.text = "\(bird?.scientificName ?? "AVIAN")"
         return cell
     }
-    
-    
 }

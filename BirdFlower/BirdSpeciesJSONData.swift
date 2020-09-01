@@ -8,11 +8,16 @@
 
 import Foundation
 
-struct BirdsSpecies: Decodable {
+class BirdsSpecies: Decodable {
     var commonName: String
     var scientificName: String
     
-    public func decodeBirdSpeciesData() -> [BirdsSpecies]? {
+    init(commonName: String, scientificName: String) {
+        self.commonName = commonName
+        self.scientificName = scientificName
+    }
+    
+    static func decodeBirdSpeciesData() -> [BirdsSpecies]? {
         do {
             return try JSONDecoder().decode([BirdsSpecies].self, from: birdsSpeciesJSONData)
         } catch {
@@ -21,7 +26,7 @@ struct BirdsSpecies: Decodable {
         }
         
     }
-    var birdsSpeciesJSONData = """
+    static let birdsSpeciesJSONData = """
 [
     {
         "bandCode4": "HITI",
