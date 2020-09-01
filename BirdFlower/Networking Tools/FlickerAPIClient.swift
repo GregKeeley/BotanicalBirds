@@ -35,7 +35,7 @@ struct FlickerAPI {
     }
     static func getUserPhotoURL(photoID: String, photoSecret: String,  completion: @escaping (Result<FlickerPhoto, AppError>) -> ()) {
         let flickerPhotoEndpoint = "https://www.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=\(Secrets.flickerAPIKey)&photo_id=\(photoID)&secret=\(photoSecret)&format=json&nojsoncallback=1".lowercased()
-        print(flickerPhotoEndpoint)
+        print("photo URL: \(flickerPhotoEndpoint)")
         guard let url = URL(string: flickerPhotoEndpoint) else {
             completion(.failure(.badURL(flickerPhotoEndpoint)))
             return
