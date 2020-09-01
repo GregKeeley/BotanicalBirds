@@ -18,19 +18,11 @@ class RandomPairViewController: UIViewController {
     
     var birdData: [BirdsSpecies]?
     var botanicalData: [Flowers]?
-    var birdImageURL: String? {
-        didSet {
-            loadBirdPhoto()
-        }
-    }
-    var botanicalImageURL: String? {
-        didSet {
-            loadPlantPhoto()
-        }
-    }
+    var birdImageURL: String?
+    var botanicalImageURL: String?
     var flickerBirdImageData: FlickerSearchResult? {
         didSet {
-            loadFlickerBirdPhoto(for: (flickerBirdImageData?.photos.photo)!)
+            loadBirdFlickerPhoto(for: (flickerBirdImageData?.photos.photo)!)
         }
     }
     var flickerPlantImageData: FlickerSearchResult? {
@@ -38,16 +30,8 @@ class RandomPairViewController: UIViewController {
             loadFlickerPlantPhoto(for: (flickerPlantImageData?.photos.photo)!)
         }
     }
-    var flickerBirdImageURL: String? {
-        didSet {
-            loadBirdPhoto()
-        }
-    }
-    var flickerPlantImageURL: String? {
-        didSet {
-            loadPlantPhoto()
-        }
-    }
+    var flickerBirdImageURL: String?
+    var flickerPlantImageURL: String?
     var randomPair = ""
     var randomBird = "" {
         didSet {
@@ -109,18 +93,19 @@ class RandomPairViewController: UIViewController {
             }
         }
     }
-    private func loadBirdPhoto() {
+    private func loadBirdPhotoURL(with url: String) {
         DispatchQueue.main.async {
             self.birdImageView.kf.indicatorType = .activity
-            self.birdImageView.kf.setImage(with: URL(string: self.flickerBirdImageURL ?? ""))
+            self.birdImageView.kf.setImage(with: URL(string: url))
         }
 
     }
-    private func loadPlantPhoto() {
+    private func loadPlantPhotoURL(with url: String) {
         DispatchQueue.main.async {
             self.plantImageView.kf.indicatorType = .activity
-            self.plantImageView.kf.setImage(with: URL(string: self.flickerPlantImageURL ?? ""))
+            self.plantImageView.kf.setImage(with: URL(string: url))
         }
+
     }
     private func getPixaBayBotanicalPhoto(for plant: String) {
         PixaBayAPI.getPhotos(searchQuery: plant) { (results) in
@@ -153,25 +138,29 @@ class RandomPairViewController: UIViewController {
             }
         }
     }
-    private func loadFlickerBirdPhoto(for photo: [PhotoResult]) {
-        FlickerAPI.getUserPhotoURL(photoID: photo.first?.id ?? "", photoSecret: photo.first?.secret ?? "") { (results) in
-            switch results {
-            case .failure(let appError):
-                print("Failed to search flicker for a photo: \(appError)")
-            case .success(let results):
-                self.flickerBirdImageURL = results.photo.urls.url.first?.content
-            }
-        }
+    private func loadBirdFlickerPhoto(for photo: [PhotoResult]) {
+        let flickerPhotoEndpoint = "https://farm\(photo.first?.farm ?? 0).staticflickr.com/\(photo.first?.server ?? "")/\(photo.first?.id ?? "")_\(photo.first?.secret ?? "")_m.jpg".lowercased()
+        loadBirdPhotoURL(with: flickerPhotoEndpoint)
+//        FlickerAPI.getUserPhotoURL(photoID: photo.first?.id ?? "", photoSecret: photo.first?.secret ?? "", farm: photo.first?.farm ?? 0, server: photo.first?.server ?? "0") { (results) in
+//            switch results {
+//            case .failure(let appError):
+//                print("Failed to search flicker for a photo: \(appError)")
+//            case .success(let results):
+//                self.flickerBirdImageURL = results.photo.urls.url.first?.content
+//            }
+//        }
     }
     private func loadFlickerPlantPhoto(for photo: [PhotoResult]) {
-        FlickerAPI.getUserPhotoURL(photoID: photo.first?.id ?? "", photoSecret: photo.first?.secret ?? "") { (results) in
-            switch results {
-            case .failure(let appError):
-                print("Failed to search flicker for a photo: \(appError)")
-            case .success(let results):
-                self.flickerPlantImageURL = results.photo.urls.url.first?.content
-            }
-        }
+        let flickerPhotoEndpoint = "https://farm\(photo.first?.farm ?? 0).staticflickr.com/\(photo.first?.server ?? "")/\(photo.first?.id ?? "")_\(photo.first?.secret ?? "")_m.jpg".lowercased()
+        loadPlantPhotoURL(with: flickerPhotoEndpoint)
+//        FlickerAPI.getUserPhotoURL(photoID: photo.first?.id ?? "", photoSecret: photo.first?.secret ?? "", farm: photo.first?.farm ?? 0, server: photo.first?.server ?? "0") { (results) in
+//            switch results {
+//            case .failure(let appError):
+//                print("Failed to search flicker for a photo: \(appError)")
+//            case .success(let results):
+//                self.flickerPlantImageURL = results.photo.urls.url.first?.content
+//            }
+//        }
     }
     @IBAction func shuffleButtonPressed(_ sender: UIButton) {
         generateRandomPair()

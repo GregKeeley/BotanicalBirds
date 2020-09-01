@@ -22,5 +22,6 @@ struct Photos: Codable {
 // MARK: - Photo
 struct PhotoResult: Codable {
     // ID and secret are needed for the photo lookup
-    let id, secret: String
+    let id, secret, server: String
+    let farm: Int
 }

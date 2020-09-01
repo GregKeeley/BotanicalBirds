@@ -33,8 +33,8 @@ struct FlickerAPI {
             }
         }
     }
-    static func getUserPhotoURL(photoID: String, photoSecret: String,  completion: @escaping (Result<FlickerPhoto, AppError>) -> ()) {
-        let flickerPhotoEndpoint = "https://www.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=\(Secrets.flickerAPIKey)&photo_id=\(photoID)&secret=\(photoSecret)&format=json&nojsoncallback=1".lowercased()
+    static func getUserPhotoURL(photoID: String, photoSecret: String, farm: Int, server: String, completion: @escaping (Result<FlickerPhoto, AppError>) -> ()) {
+        let flickerPhotoEndpoint = "https://farm\(farm).staticflickr.com/\(server)/\(photoID)_\(photoSecret)_m.jpg".lowercased()
         print("photo URL: \(flickerPhotoEndpoint)")
         guard let url = URL(string: flickerPhotoEndpoint) else {
             completion(.failure(.badURL(flickerPhotoEndpoint)))
