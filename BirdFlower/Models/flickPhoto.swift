@@ -12,7 +12,7 @@ import Foundation
 /// This is the photo with the URL to be used with KingFisher
 
 // MARK: - Welcome
-struct Welcome: Codable {
+struct FlickerPhoto: Codable {
     let photo: Photo
 }
 // MARK: - Photo
