@@ -10,6 +10,8 @@
 		8836C50F24FDF47D00FCAABF /* PixabayAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8836C50E24FDF47D00FCAABF /* PixabayAPIClient.swift */; };
 		8836C51124FDF58C00FCAABF /* PixaBayImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8836C51024FDF58C00FCAABF /* PixaBayImage.swift */; };
 		8836C51424FDF63900FCAABF /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 8836C51324FDF63900FCAABF /* Kingfisher */; };
+		8836C51824FE80A000FCAABF /* flickPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8836C51724FE809F00FCAABF /* flickPhoto.swift */; };
+		8836C51A24FE80AD00FCAABF /* flickerSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8836C51924FE80AD00FCAABF /* flickerSearch.swift */; };
 		88763CA824FDCCE900EE3409 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CA724FDCCE900EE3409 /* AppDelegate.swift */; };
 		88763CAA24FDCCE900EE3409 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CA924FDCCE900EE3409 /* SceneDelegate.swift */; };
 		88763CAC24FDCCE900EE3409 /* BirdSpeciesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CAB24FDCCE900EE3409 /* BirdSpeciesViewController.swift */; };
@@ -28,6 +30,8 @@
 /* Begin PBXFileReference section */
 		8836C50E24FDF47D00FCAABF /* PixabayAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixabayAPIClient.swift; sourceTree = "<group>"; };
 		8836C51024FDF58C00FCAABF /* PixaBayImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixaBayImage.swift; sourceTree = "<group>"; };
+		8836C51724FE809F00FCAABF /* flickPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = flickPhoto.swift; sourceTree = "<group>"; };
+		8836C51924FE80AD00FCAABF /* flickerSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = flickerSearch.swift; sourceTree = "<group>"; };
 		88763CA424FDCCE900EE3409 /* BirdFlower.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BirdFlower.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88763CA724FDCCE900EE3409 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		88763CA924FDCCE900EE3409 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -110,6 +114,8 @@
 		88763CC324FDDBFD00EE3409 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				8836C51724FE809F00FCAABF /* flickPhoto.swift */,
+				8836C51924FE80AD00FCAABF /* flickerSearch.swift */,
 				88763CBB24FDCFD300EE3409 /* BirdSpecies.swift */,
 				88763CCA24FDE49800EE3409 /* Flowers.swift */,
 				8836C51024FDF58C00FCAABF /* PixaBayImage.swift */,
@@ -214,8 +220,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				88763CCD24FDEA0300EE3409 /* RandomPairViewController.swift in Sources */,
+				8836C51824FE80A000FCAABF /* flickPhoto.swift in Sources */,
 				8836C50F24FDF47D00FCAABF /* PixabayAPIClient.swift in Sources */,
 				8836C51124FDF58C00FCAABF /* PixaBayImage.swift in Sources */,
+				8836C51A24FE80AD00FCAABF /* flickerSearch.swift in Sources */,
 				88763CAC24FDCCE900EE3409 /* BirdSpeciesViewController.swift in Sources */,
 				88763CBC24FDCFD300EE3409 /* BirdSpecies.swift in Sources */,
 				88763CCB24FDE49800EE3409 /* Flowers.swift in Sources */,

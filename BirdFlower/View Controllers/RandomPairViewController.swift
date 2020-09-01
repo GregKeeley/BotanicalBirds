@@ -34,10 +34,19 @@ class RandomPairViewController: UIViewController {
         super.viewDidLoad()
         loadBirdData()
         loadBotanicalData()
+        configureUI()
     }
     private func configureUI() {
-        birdImageView.layer.cornerRadius = birdImageView.frame.width / 2
-        plantImageView.layer.cornerRadius = plantImageView.frame.width / 2
+//        birdImageView.layer.masksToBounds = false
+//        plantImageView.layer.masksToBounds = false
+        birdImageView.layer.borderWidth = 1.0
+        plantImageView.layer.borderWidth = 1.0
+        birdImageView.layer.borderColor = UIColor.white.cgColor
+        plantImageView.layer.borderColor = UIColor.white.cgColor
+        birdImageView.clipsToBounds = true
+        plantImageView.clipsToBounds = true
+        birdImageView.layer.cornerRadius = birdImageView.frame.width / 2.1
+        plantImageView.layer.cornerRadius = plantImageView.frame.width / 2.10
     }
     private func loadBirdData() {
         birdData = BirdsSpecies.decodeBirdSpeciesData()
@@ -85,7 +94,7 @@ class RandomPairViewController: UIViewController {
             case .failure(let appError):
                 print("Failed to load bird photo: \(appError)")
             case .success(let image):
-                self.botanicalImageURL = image.hits.first?.previewURL
+                self.botanicalImageURL = image.hits.first?.largeImageURL
             }
         }
     }
