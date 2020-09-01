@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Flowers: Decodable {
+class Flowers: Decodable {
     var name: String
     init(name: String) {
         self.name = name

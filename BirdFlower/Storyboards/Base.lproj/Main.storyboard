@@ -71,14 +71,70 @@
                     <view key="view" contentMode="scaleToFill" id="M5e-cl-3TT">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eId-ct-eu9">
+                                <rect key="frame" x="172" y="585" width="70" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="70" id="YeD-yf-mZb"/>
+                                </constraints>
+                                <state key="normal" title="Shuffle"/>
+                                <connections>
+                                    <action selector="shuffleButtonPressed:" destination="goj-t6-H1T" eventType="touchUpInside" id="6Dw-ey-XTR"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Botanical Species" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G2W-As-TRl">
+                                <rect key="frame" x="258" y="173" width="136" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BIRD NAME" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XHL-Ay-L7n">
+                                <rect key="frame" x="20" y="264" width="163" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PLANT NAME" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HHS-c6-Pyr">
+                                <rect key="frame" x="223" y="264" width="171" height="20.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="171" id="bfK-0y-oGQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bird Species" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PFn-ET-Rwx">
+                                <rect key="frame" x="20" y="173" width="96" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="HHS-c6-Pyr" firstAttribute="top" secondItem="G2W-As-TRl" secondAttribute="bottom" constant="70" id="0iT-g7-gvj"/>
+                            <constraint firstItem="XHL-Ay-L7n" firstAttribute="top" secondItem="PFn-ET-Rwx" secondAttribute="bottom" constant="70" id="9Ps-mf-tjX"/>
+                            <constraint firstItem="eId-ct-eu9" firstAttribute="top" secondItem="s1I-TA-Ynq" secondAttribute="top" constant="541" id="AT9-ud-aPf"/>
+                            <constraint firstItem="XHL-Ay-L7n" firstAttribute="leading" secondItem="s1I-TA-Ynq" secondAttribute="leading" constant="20" id="Ba7-fA-gUW"/>
+                            <constraint firstItem="HHS-c6-Pyr" firstAttribute="leading" secondItem="XHL-Ay-L7n" secondAttribute="trailing" constant="40" id="COZ-1p-kvw"/>
+                            <constraint firstItem="PFn-ET-Rwx" firstAttribute="leading" secondItem="s1I-TA-Ynq" secondAttribute="leading" constant="20" id="ElN-XI-eT4"/>
+                            <constraint firstItem="s1I-TA-Ynq" firstAttribute="trailing" secondItem="HHS-c6-Pyr" secondAttribute="trailing" constant="20" id="OgV-LR-whH"/>
+                            <constraint firstItem="G2W-As-TRl" firstAttribute="top" secondItem="s1I-TA-Ynq" secondAttribute="top" constant="129" id="UXj-jR-mJx"/>
+                            <constraint firstItem="eId-ct-eu9" firstAttribute="centerX" secondItem="M5e-cl-3TT" secondAttribute="centerX" id="XOi-F1-TWm"/>
+                            <constraint firstItem="PFn-ET-Rwx" firstAttribute="top" secondItem="s1I-TA-Ynq" secondAttribute="top" constant="129" id="qEu-lK-p6v"/>
+                            <constraint firstItem="s1I-TA-Ynq" firstAttribute="trailing" secondItem="G2W-As-TRl" secondAttribute="trailing" constant="20" id="qaP-vw-aQH"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="s1I-TA-Ynq"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Shuffle" image="questionmark" catalog="system" selectedImage="questionmark" id="lkL-IF-sYh"/>
+                    <connections>
+                        <outlet property="birdNameLabel" destination="XHL-Ay-L7n" id="Q82-c3-sGo"/>
+                        <outlet property="plantNameLabel" destination="HHS-c6-Pyr" id="8dI-55-5X2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0uS-rK-Wnu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="920" y="363"/>
+            <point key="canvasLocation" x="918.84057971014499" y="362.94642857142856"/>
         </scene>
         <!--Botanical Species-->
         <scene sceneID="ylf-1e-LI6">
@@ -136,6 +192,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="ZhX-Xf-mZc" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="tHp-JG-L7e">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
