@@ -9,9 +9,7 @@
 import UIKit
 
 struct PixaBayImage: Codable {
-    let totalHits: Int
     let hits: [Hit]
-    let total: Int
 }
 
 struct Hit: Codable, Equatable {

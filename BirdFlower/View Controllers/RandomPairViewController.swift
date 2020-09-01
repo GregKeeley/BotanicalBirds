@@ -7,21 +7,37 @@
 //
 
 import UIKit
+import Kingfisher
 
 class RandomPairViewController: UIViewController {
 
     @IBOutlet weak var birdNameLabel: UILabel!
     @IBOutlet weak var plantNameLabel: UILabel!
+    @IBOutlet weak var plantImageView: UIImageView!
+    @IBOutlet weak var birdImageView: UIImageView!
     
     var birdData: [BirdsSpecies]?
     var botanicalData: [Flowers]?
-    
+    var birdImageURL: String? {
+        didSet {
+            loadBirdPhoto()
+        }
+    }
+    var botanicalImageURL: String? {
+        didSet {
+            loadPlantPhoto()
+        }
+    }
     var randomPair = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         loadBirdData()
         loadBotanicalData()
+    }
+    private func configureUI() {
+        birdImageView.layer.cornerRadius = birdImageView.frame.width / 2
+        plantImageView.layer.cornerRadius = plantImageView.frame.width / 2
     }
     private func loadBirdData() {
         birdData = BirdsSpecies.decodeBirdSpeciesData()
@@ -32,9 +48,46 @@ class RandomPairViewController: UIViewController {
     private func generateRandomPair() {
         let randomBird = birdData?.randomElement()?.commonName ?? "Bird"
         let randomBotanical = botanicalData?.randomElement()?.name ?? "Botanical"
+        getBirdPhoto(for: randomBird)
+        getBotanicalPhoto(for: randomBotanical)
         randomPair = "\(randomBird) \(randomBotanical)"
         birdNameLabel.text = "\(randomBird)"
         plantNameLabel.text = "\(randomBotanical)"
+        
+    }
+    private func getBirdPhoto(for bird: String) {
+        PixaBayAPI.getPhotos(searchQuery: bird) { (results) in
+            switch results {
+            case .failure(let appError):
+                print("Failed to load bird photo: \(appError)")
+            case .success(let image):
+                
+                self.birdImageURL = image.hits.first?.previewURL
+            }
+        }
+    }
+    private func loadBirdPhoto() {
+        DispatchQueue.main.async {
+            self.birdImageView.kf.indicatorType = .activity
+            self.birdImageView.kf.setImage(with: URL(string: self.birdImageURL ?? ""))
+        }
+
+    }
+    private func loadPlantPhoto() {
+        DispatchQueue.main.async {
+            self.plantImageView.kf.indicatorType = .activity
+            self.plantImageView.kf.setImage(with: URL(string: self.botanicalImageURL ?? ""))
+        }
+    }
+    private func getBotanicalPhoto(for plant: String) {
+        PixaBayAPI.getPhotos(searchQuery: plant) { (results) in
+            switch results {
+            case .failure(let appError):
+                print("Failed to load bird photo: \(appError)")
+            case .success(let image):
+                self.botanicalImageURL = image.hits.first?.previewURL
+            }
+        }
     }
     @IBAction func shuffleButtonPressed(_ sender: UIButton) {
         generateRandomPair()

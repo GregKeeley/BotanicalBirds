@@ -10,8 +10,9 @@ import Foundation
 
 struct PixaBayAPI {
     static func getPhotos(searchQuery: String, completion: @escaping (Result<PixaBayImage, AppError>) -> ()) {
-        let search = searchQuery.replacingOccurrences(of: " ", with: "")
-        let pixaBayEndpoint = "https://pixabay.com/api/?key=\(Secrets.pixabayAPIKey)&q=\(search.lowercased())"
+        let search = searchQuery.replacingOccurrences(of: " ", with: "").addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+        
+        let pixaBayEndpoint = "https://pixabay.com/api/?key=\(Secrets.pixabayAPIKey)&q=\(String( search?.lowercased() ?? "ERROR"))"
         print(pixaBayEndpoint)
         guard let url = URL(string: pixaBayEndpoint) else {
             completion(.failure(.badURL(pixaBayEndpoint)))
