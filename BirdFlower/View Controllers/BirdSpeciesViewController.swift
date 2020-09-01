@@ -12,30 +12,18 @@ class BirdSpeciesViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
-    var birdData: [BirdsSpecies]? {
-        didSet {
-            print("There are \(birdData?.count ?? 0) birds")
-        }
-    }
-    var flowerData: [Flowers]? {
-        didSet {
-            print("There are \(flowerData?.count ?? 0) flowers")
-        }
-    }
+    var birdData: [BirdsSpecies]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
         loadBirdData()
-        loadFlowerData()
     }
     private func loadBirdData() {
         birdData = BirdsSpecies.decodeBirdSpeciesData()
     }
-    private func loadFlowerData() {
-        flowerData = Flowers.decodeFlowers()
-    }
+
 }
 extension BirdSpeciesViewController: UITableViewDelegate {
     
