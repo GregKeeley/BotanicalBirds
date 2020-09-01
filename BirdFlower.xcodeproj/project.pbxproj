@@ -13,7 +13,7 @@
 		88763CAF24FDCCE900EE3409 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88763CAD24FDCCE900EE3409 /* Main.storyboard */; };
 		88763CB124FDCCEB00EE3409 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88763CB024FDCCEB00EE3409 /* Assets.xcassets */; };
 		88763CB424FDCCEB00EE3409 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88763CB224FDCCEB00EE3409 /* LaunchScreen.storyboard */; };
-		88763CBC24FDCFD300EE3409 /* BirdSpeciesJSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CBB24FDCFD300EE3409 /* BirdSpeciesJSONData.swift */; };
+		88763CBC24FDCFD300EE3409 /* BirdSpecies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CBB24FDCFD300EE3409 /* BirdSpecies.swift */; };
 		88763CC024FDDB4E00EE3409 /* secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CBF24FDDB4E00EE3409 /* secrets.swift */; };
 /* End PBXBuildFile section */
 
@@ -26,8 +26,8 @@
 		88763CB024FDCCEB00EE3409 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		88763CB324FDCCEB00EE3409 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		88763CB524FDCCEB00EE3409 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		88763CBB24FDCFD300EE3409 /* BirdSpeciesJSONData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdSpeciesJSONData.swift; sourceTree = "<group>"; };
-		88763CBF24FDDB4E00EE3409 /* secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = secrets.swift; sourceTree = "<group>"; };
+		88763CBB24FDCFD300EE3409 /* BirdSpecies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdSpecies.swift; sourceTree = "<group>"; };
+		88763CBF24FDDB4E00EE3409 /* secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = secrets.swift; path = ../../secrets.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,7 +44,6 @@
 		88763C9B24FDCCE900EE3409 = {
 			isa = PBXGroup;
 			children = (
-				88763CBF24FDDB4E00EE3409 /* secrets.swift */,
 				88763CA624FDCCE900EE3409 /* BirdFlower */,
 				88763CA524FDCCE900EE3409 /* Products */,
 			);
@@ -61,16 +60,49 @@
 		88763CA624FDCCE900EE3409 /* BirdFlower */ = {
 			isa = PBXGroup;
 			children = (
-				88763CA724FDCCE900EE3409 /* AppDelegate.swift */,
-				88763CA924FDCCE900EE3409 /* SceneDelegate.swift */,
-				88763CAB24FDCCE900EE3409 /* ViewController.swift */,
-				88763CAD24FDCCE900EE3409 /* Main.storyboard */,
-				88763CB024FDCCEB00EE3409 /* Assets.xcassets */,
-				88763CB224FDCCEB00EE3409 /* LaunchScreen.storyboard */,
+				88763CC124FDDBD200EE3409 /* Supporting Files */,
+				88763CC324FDDBFD00EE3409 /* Models */,
+				88763CC224FDDBE300EE3409 /* View Controllers */,
+				88763CC424FDDC0C00EE3409 /* Storyboards */,
 				88763CB524FDCCEB00EE3409 /* Info.plist */,
-				88763CBB24FDCFD300EE3409 /* BirdSpeciesJSONData.swift */,
 			);
 			path = BirdFlower;
+			sourceTree = "<group>";
+		};
+		88763CC124FDDBD200EE3409 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				88763CB024FDCCEB00EE3409 /* Assets.xcassets */,
+				88763CA724FDCCE900EE3409 /* AppDelegate.swift */,
+				88763CA924FDCCE900EE3409 /* SceneDelegate.swift */,
+				88763CBF24FDDB4E00EE3409 /* secrets.swift */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		88763CC224FDDBE300EE3409 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				88763CAB24FDCCE900EE3409 /* ViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		88763CC324FDDBFD00EE3409 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				88763CBB24FDCFD300EE3409 /* BirdSpecies.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		88763CC424FDDC0C00EE3409 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				88763CAD24FDCCE900EE3409 /* Main.storyboard */,
+				88763CB224FDCCEB00EE3409 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -145,7 +177,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				88763CAC24FDCCE900EE3409 /* ViewController.swift in Sources */,
-				88763CBC24FDCFD300EE3409 /* BirdSpeciesJSONData.swift in Sources */,
+				88763CBC24FDCFD300EE3409 /* BirdSpecies.swift in Sources */,
 				88763CC024FDDB4E00EE3409 /* secrets.swift in Sources */,
 				88763CA824FDCCE900EE3409 /* AppDelegate.swift in Sources */,
 				88763CAA24FDCCE900EE3409 /* SceneDelegate.swift in Sources */,
