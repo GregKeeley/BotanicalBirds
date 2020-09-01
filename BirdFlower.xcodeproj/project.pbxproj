@@ -13,6 +13,7 @@
 		88763CAF24FDCCE900EE3409 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88763CAD24FDCCE900EE3409 /* Main.storyboard */; };
 		88763CB124FDCCEB00EE3409 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88763CB024FDCCEB00EE3409 /* Assets.xcassets */; };
 		88763CB424FDCCEB00EE3409 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88763CB224FDCCEB00EE3409 /* LaunchScreen.storyboard */; };
+		88763CBC24FDCFD300EE3409 /* BirdSpeciesJSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CBB24FDCFD300EE3409 /* BirdSpeciesJSONData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		88763CB024FDCCEB00EE3409 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		88763CB324FDCCEB00EE3409 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		88763CB524FDCCEB00EE3409 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		88763CBB24FDCFD300EE3409 /* BirdSpeciesJSONData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdSpeciesJSONData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				88763CB024FDCCEB00EE3409 /* Assets.xcassets */,
 				88763CB224FDCCEB00EE3409 /* LaunchScreen.storyboard */,
 				88763CB524FDCCEB00EE3409 /* Info.plist */,
+				88763CBB24FDCFD300EE3409 /* BirdSpeciesJSONData.swift */,
 			);
 			path = BirdFlower;
 			sourceTree = "<group>";
@@ -139,6 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				88763CAC24FDCCE900EE3409 /* ViewController.swift in Sources */,
+				88763CBC24FDCFD300EE3409 /* BirdSpeciesJSONData.swift in Sources */,
 				88763CA824FDCCE900EE3409 /* AppDelegate.swift in Sources */,
 				88763CAA24FDCCE900EE3409 /* SceneDelegate.swift in Sources */,
 			);
