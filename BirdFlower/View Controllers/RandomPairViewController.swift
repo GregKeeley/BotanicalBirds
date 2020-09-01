@@ -78,9 +78,11 @@ class RandomPairViewController: UIViewController {
         randomPair = "\(randomBird) \(randomPlant)"
     }
     private func generateRandomBird() {
+        searchFlickerBirdPhotos(for: randomBird)
         randomBird = birdData?.randomElement()?.commonName ?? "BIRD"
     }
     private func generateRandomPlant() {
+        searchFlickerPlantPhotos(for: randomPlant)
         randomPlant = botanicalData?.randomElement()?.name ?? "PLANT"
     }
     private func getPixaBayBirdPhoto(for bird: String) {
