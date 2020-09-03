@@ -36,8 +36,7 @@ extension PlantsListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "plantsCell", for: indexPath)
-        let flower = flowerData?[indexPath.row]
-        cell.textLabel?.text = ("\(flower?.name ?? "FLOWER")")
+
         return cell
     }
     

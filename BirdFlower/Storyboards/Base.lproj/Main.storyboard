@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Bird Species-->
+        <!--BotanicalBirds-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="BirdSpeciesViewController" customModule="BirdFlower" customModuleProvider="target" sceneMemberID="viewController">
@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KTB-99-LpB">
-                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="basicCell" textLabel="ZkY-xZ-C8x" detailTextLabel="HOd-RK-UmO" style="IBUITableViewCellStyleSubtitle" id="eaJ-rb-KBP">
@@ -55,14 +55,20 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Bird Species" image="book" catalog="system" selectedImage="book.fill" id="kmm-IT-Kj9"/>
+                    <navigationItem key="navigationItem" title="BotanicalBirds" largeTitleDisplayMode="always" id="6Yw-7P-pCx">
+                        <barButtonItem key="rightBarButtonItem" image="arrow.2.squarepath" catalog="system" id="hKg-J0-5ht">
+                            <connections>
+                                <action selector="toggleButtonPressed:" destination="BYZ-38-t0r" id="JEJ-Cl-rad"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="KTB-99-LpB" id="Qlg-Hf-ze4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="893" y="-309"/>
+            <point key="canvasLocation" x="1802.8985507246377" y="-309.375"/>
         </scene>
         <!--Shuffle-->
         <scene sceneID="2P6-Xx-C3v">
@@ -187,7 +193,7 @@
                                         </attributes>
                                     </fragment>
                                 </attributedString>
-                                <nil key="highlightedColor"/>
+                                <color key="highlightedColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wbs-z6-jHV">
                                 <rect key="frame" x="187" y="309.5" width="41" height="66"/>
@@ -311,7 +317,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="A2l-FW-H5x"/>
+                        <segue destination="39x-MQ-eJv" kind="relationship" relationship="viewControllers" id="A2l-FW-H5x"/>
                         <segue destination="YES-Bm-wIx" kind="relationship" relationship="viewControllers" id="DM8-bs-XBd"/>
                         <segue destination="goj-t6-H1T" kind="relationship" relationship="viewControllers" id="ncw-dI-Nyw"/>
                     </connections>
@@ -320,9 +326,29 @@
             </objects>
             <point key="canvasLocation" x="24.637681159420293" y="-1.3392857142857142"/>
         </scene>
+        <!--Bird Species-->
+        <scene sceneID="2N4-fg-HGs">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="39x-MQ-eJv" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Bird Species" image="book" catalog="system" selectedImage="book.fill" id="kmm-IT-Kj9"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="tZ0-5z-9cY">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="JAg-xV-6o0"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1h2-Bm-MiN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="892.75362318840587" y="-309.375"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Parakeet_+_Zebra_Plant" width="2100" height="2100"/>
+        <image name="arrow.2.squarepath" catalog="system" width="128" height="89"/>
         <image name="arrow.clockwise" catalog="system" width="115" height="128"/>
         <image name="book" catalog="system" width="128" height="101"/>
         <image name="book.fill" catalog="system" width="128" height="100"/>

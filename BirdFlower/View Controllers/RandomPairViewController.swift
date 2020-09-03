@@ -55,11 +55,7 @@ class RandomPairViewController: UIViewController {
     
     var dataPersistence: DataPersistence<String>?
     
-    var favoriteDuos: [String]? {
-        didSet {
-            dump(favoriteDuos)
-        }
-    }
+    var favoriteDuos: [String]? 
     
     //MARK:- View lifecycle
     override func viewDidLoad() {
