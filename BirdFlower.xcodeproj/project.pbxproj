@@ -24,6 +24,7 @@
 		88763CCB24FDE49800EE3409 /* PlantsSpecies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CCA24FDE49800EE3409 /* PlantsSpecies.swift */; };
 		88763CCD24FDEA0300EE3409 /* RandomPairViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CCC24FDEA0300EE3409 /* RandomPairViewController.swift */; };
 		88763CCF24FDEA2200EE3409 /* PlantsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CCE24FDEA2200EE3409 /* PlantsListViewController.swift */; };
+		88D630A425017FDE0033E275 /* DataPersistence in Frameworks */ = {isa = PBXBuildFile; productRef = 88D630A325017FDE0033E275 /* DataPersistence */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88D630A425017FDE0033E275 /* DataPersistence in Frameworks */,
 				8836C51424FDF63900FCAABF /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -157,6 +159,7 @@
 			name = BirdFlower;
 			packageProductDependencies = (
 				8836C51324FDF63900FCAABF /* Kingfisher */,
+				88D630A325017FDE0033E275 /* DataPersistence */,
 			);
 			productName = BirdFlower;
 			productReference = 88763CA424FDCCE900EE3409 /* BirdFlower.app */;
@@ -188,6 +191,7 @@
 			mainGroup = 88763C9B24FDCCE900EE3409;
 			packageReferences = (
 				8836C51224FDF63900FCAABF /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				88D630A225017FDE0033E275 /* XCRemoteSwiftPackageReference "DataPersistence" */,
 			);
 			productRefGroup = 88763CA524FDCCE900EE3409 /* Products */;
 			projectDirPath = "";
@@ -436,6 +440,14 @@
 				minimumVersion = 5.15.0;
 			};
 		};
+		88D630A225017FDE0033E275 /* XCRemoteSwiftPackageReference "DataPersistence" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/alexpaul/DataPersistence/";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -443,6 +455,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8836C51224FDF63900FCAABF /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		88D630A325017FDE0033E275 /* DataPersistence */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 88D630A225017FDE0033E275 /* XCRemoteSwiftPackageReference "DataPersistence" */;
+			productName = DataPersistence;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
