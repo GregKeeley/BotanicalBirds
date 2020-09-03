@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import DataPersistence
 
 class BirdSpeciesViewController: UIViewController {
 
@@ -14,6 +15,9 @@ class BirdSpeciesViewController: UIViewController {
     
     var birdData: [BirdsSpecies]?
     
+    var dataPersistence: DataPersistence<String>?
+    
+    //MARK:- ViewLifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
@@ -42,5 +46,10 @@ extension BirdSpeciesViewController: UITableViewDataSource {
         // Scinetific name
         cell.detailTextLabel?.text = "\(bird?.scientificName ?? "AVIAN")"
         return cell
+    }
+}
+extension BirdSpeciesViewController: PersistenceStackClient {
+    func setStack(stack: DataPersistence<String>) {
+        self.dataPersistence = stack
     }
 }

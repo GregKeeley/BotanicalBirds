@@ -8,6 +8,7 @@
 
 import UIKit
 import Kingfisher
+import DataPersistence
 
 enum SearchType {
     case bird
@@ -51,6 +52,9 @@ class RandomPairViewController: UIViewController {
         }
     }
     var isFavorite: Bool = false
+    
+    var dataPersistence: DataPersistence<String>?
+    
     //MARK:- View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,7 +63,6 @@ class RandomPairViewController: UIViewController {
         configureUI()
     }
     //MARK:- Funcs
-    
     private func configureUI() {
         birdImageView.layer.masksToBounds = false
         plantImageView.layer.masksToBounds = false
@@ -112,6 +115,13 @@ class RandomPairViewController: UIViewController {
             switch results {
             case .failure(let appError):
                 print("Failed to search flicker for a photo: \(appError)")
+                DispatchQueue.main.async {
+                    if searchType == .bird {
+                        self.birdImageView.image = UIImage(systemName: "questionmark.circle")
+                    } else if searchType == .plant {
+                        self.plantImageView.image = UIImage(systemName: "questionmark.circle")
+                    }
+                }
             case .success(let results):
                 if searchType == .bird {
                 self.flickerBirdImageData = results
@@ -151,4 +161,9 @@ class RandomPairViewController: UIViewController {
         }
     }
     
+}
+extension RandomPairViewController: PersistenceStackClient {
+    func setStack(stack: DataPersistence<String>) {
+        self.dataPersistence = stack
+    }
 }

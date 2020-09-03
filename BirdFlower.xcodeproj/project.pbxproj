@@ -25,6 +25,7 @@
 		88763CCD24FDEA0300EE3409 /* RandomPairViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CCC24FDEA0300EE3409 /* RandomPairViewController.swift */; };
 		88763CCF24FDEA2200EE3409 /* PlantsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CCE24FDEA2200EE3409 /* PlantsListViewController.swift */; };
 		88D630A425017FDE0033E275 /* DataPersistence in Frameworks */ = {isa = PBXBuildFile; productRef = 88D630A325017FDE0033E275 /* DataPersistence */; };
+		88D630A82501837F0033E275 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D630A72501837F0033E275 /* MainTabBarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		88763CCA24FDE49800EE3409 /* PlantsSpecies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantsSpecies.swift; sourceTree = "<group>"; };
 		88763CCC24FDEA0300EE3409 /* RandomPairViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomPairViewController.swift; sourceTree = "<group>"; };
 		88763CCE24FDEA2200EE3409 /* PlantsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantsListViewController.swift; sourceTree = "<group>"; };
+		88D630A72501837F0033E275 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 				88763CAB24FDCCE900EE3409 /* BirdSpeciesViewController.swift */,
 				88763CCC24FDEA0300EE3409 /* RandomPairViewController.swift */,
 				88763CCE24FDEA2200EE3409 /* PlantsListViewController.swift */,
+				88D630A72501837F0033E275 /* MainTabBarController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -230,6 +233,7 @@
 				88763CC024FDDB4E00EE3409 /* secrets.swift in Sources */,
 				88763CA824FDCCE900EE3409 /* AppDelegate.swift in Sources */,
 				8836C51C24FE816300FCAABF /* FlickerAPIClient.swift in Sources */,
+				88D630A82501837F0033E275 /* MainTabBarController.swift in Sources */,
 				88763CC724FDDC8A00EE3409 /* NetworkHelper.swift in Sources */,
 				88763CCF24FDEA2200EE3409 /* PlantsListViewController.swift in Sources */,
 				88763CAA24FDCCE900EE3409 /* SceneDelegate.swift in Sources */,

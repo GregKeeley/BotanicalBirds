@@ -13,7 +13,6 @@ struct FlickerAPI {
         let search = searchQuery.replacingOccurrences(of: " ", with: "").addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
         
         let flickerPhotoSearchEndpoint = "https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=\(Secrets.flickerAPIKey)&tags=\(search ?? "Taco")&per_page=1&page=&format=json&nojsoncallback=1".lowercased()
-        print(flickerPhotoSearchEndpoint)
         guard let url = URL(string: flickerPhotoSearchEndpoint) else {
             completion(.failure(.badURL(flickerPhotoSearchEndpoint)))
             return
@@ -35,7 +34,6 @@ struct FlickerAPI {
     }
     static func getUserPhotoURL(photoID: String, photoSecret: String, farm: Int, server: String, completion: @escaping (Result<FlickerPhoto, AppError>) -> ()) {
         let flickerPhotoEndpoint = "https://farm\(farm).staticflickr.com/\(server)/\(photoID)_\(photoSecret)_m.jpg".lowercased()
-        print("photo URL: \(flickerPhotoEndpoint)")
         guard let url = URL(string: flickerPhotoEndpoint) else {
             completion(.failure(.badURL(flickerPhotoEndpoint)))
             return

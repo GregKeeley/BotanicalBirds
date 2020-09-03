@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import DataPersistence
 
 class PlantsListViewController: UIViewController {
 
     @IBOutlet weak var tableview: UITableView!
     
     var flowerData: [PlantsSpecies]?
+    
+    var dataPersistence: DataPersistence<String>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,5 +44,12 @@ extension PlantsListViewController: UITableViewDataSource {
     
 }
 extension PlantsListViewController: UITableViewDelegate {
+    
+}
+extension PlantsListViewController: PersistenceStackClient {
+    func setStack(stack: DataPersistence<String>) {
+        self.dataPersistence = stack
+    }
+    
     
 }

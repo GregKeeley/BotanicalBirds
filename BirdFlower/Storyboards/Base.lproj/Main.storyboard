@@ -300,10 +300,10 @@
             </objects>
             <point key="canvasLocation" x="893" y="1183"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Main Tab Bar Controller-->
         <scene sceneID="8ew-di-NaB">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="ZhX-Xf-mZc" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="ZhX-Xf-mZc" customClass="MainTabBarController" customModule="BirdFlower" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="tHp-JG-L7e">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
