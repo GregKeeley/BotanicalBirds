@@ -55,12 +55,20 @@ class RandomPairViewController: UIViewController {
     
     var dataPersistence: DataPersistence<String>?
     
+    var favoriteDuos: [String]? {
+        didSet {
+            dump(favoriteDuos)
+        }
+    }
+    
     //MARK:- View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         loadBirdData()
         loadPlantData()
         configureUI()
+        fetchFavoriteDuos()
+        generateRandomPair()
     }
     //MARK:- Funcs
     private func configureUI() {
@@ -76,6 +84,13 @@ class RandomPairViewController: UIViewController {
         plantImageView.layer.cornerRadius = plantImageView.frame.width / 2.10
     }
     // These functions generate random pairs, or individually random data to use in the app
+    private func fetchFavoriteDuos() {
+        do {
+            favoriteDuos = try dataPersistence?.loadItems()
+        } catch {
+            showAlert(title: "Well, this is embarassing", message: "Failed to load favorites...")
+        }
+    }
     private func loadBirdData() {
         birdData = BirdsSpecies.decodeBirdSpeciesData()
     }
@@ -87,7 +102,7 @@ class RandomPairViewController: UIViewController {
         generateRandomPlant()
         searchFlickerPhotos(for: randomBird, searchType: .bird)
         searchFlickerPhotos(for: randomPlant, searchType: .plant)
-        randomPair = "\(randomBird) \(randomPlant)"
+        randomPair = "\(randomBird) + \(randomPlant)"
     }
     private func generateRandomBird() {
         searchFlickerPhotos(for: randomBird, searchType: .bird)
@@ -151,14 +166,31 @@ class RandomPairViewController: UIViewController {
         generateRandomPlant()
     }
     @IBAction func favoriteButtonPressed(_ sender: UIButton) {
+        
         isFavorite.toggle()
         if isFavorite {
-            favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            favoriteButton.tintColor = #colorLiteral(red: 0.8201736992, green: 0.1226904487, blue: 0.007086123212, alpha: 1)
+            do {
+                
+                try dataPersistence?.createItem(randomPair)
+                favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+                favoriteButton.tintColor = #colorLiteral(red: 0.8201736992, green: 0.1226904487, blue: 0.007086123212, alpha: 1)
+            } catch {
+                showAlert(title: "Oops!", message: "Something went wrong. Maybe write this one down...")
+            }
         } else {
+            guard let index = favoriteDuos?.firstIndex(of: randomPair) else {
+                showAlert(title: "Could not find favorite", message: "Failed to remove favorite, or it wasn't a favorite to begin with")
+                return
+            }
+            do {
+                try dataPersistence?.deleteItem(at: index)
             favoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
             favoriteButton.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            } catch {
+                showAlert(title: "Failed to remove favorite", message: "Your guess is as good as mine")
+            }
         }
+        fetchFavoriteDuos()
     }
     
 }

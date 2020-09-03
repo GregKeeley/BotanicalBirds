@@ -26,6 +26,7 @@
 		88763CCF24FDEA2200EE3409 /* PlantsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CCE24FDEA2200EE3409 /* PlantsListViewController.swift */; };
 		88D630A425017FDE0033E275 /* DataPersistence in Frameworks */ = {isa = PBXBuildFile; productRef = 88D630A325017FDE0033E275 /* DataPersistence */; };
 		88D630A82501837F0033E275 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D630A72501837F0033E275 /* MainTabBarController.swift */; };
+		88D630AA2501994C0033E275 /* UIViewController_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D630A92501994C0033E275 /* UIViewController_Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		88763CCC24FDEA0300EE3409 /* RandomPairViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomPairViewController.swift; sourceTree = "<group>"; };
 		88763CCE24FDEA2200EE3409 /* PlantsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantsListViewController.swift; sourceTree = "<group>"; };
 		88D630A72501837F0033E275 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		88D630A92501994C0033E275 /* UIViewController_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController_Extension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 				88763CB024FDCCEB00EE3409 /* Assets.xcassets */,
 				88763CA724FDCCE900EE3409 /* AppDelegate.swift */,
 				88763CA924FDCCE900EE3409 /* SceneDelegate.swift */,
+				88D630A92501994C0033E275 /* UIViewController_Extension.swift */,
 				88763CBF24FDDB4E00EE3409 /* secrets.swift */,
 			);
 			path = "Supporting Files";
@@ -237,6 +240,7 @@
 				88763CC724FDDC8A00EE3409 /* NetworkHelper.swift in Sources */,
 				88763CCF24FDEA2200EE3409 /* PlantsListViewController.swift in Sources */,
 				88763CAA24FDCCE900EE3409 /* SceneDelegate.swift in Sources */,
+				88D630AA2501994C0033E275 /* UIViewController_Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
