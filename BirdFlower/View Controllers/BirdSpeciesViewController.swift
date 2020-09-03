@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class BirdSpeciesViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -23,12 +23,12 @@ class ViewController: UIViewController {
     private func loadBirdData() {
         birdData = BirdsSpecies.decodeBirdSpeciesData()
     }
+
+}
+extension BirdSpeciesViewController: UITableViewDelegate {
     
 }
-extension ViewController: UITableViewDelegate {
-    
-}
-extension ViewController: UITableViewDataSource {
+extension BirdSpeciesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return birdData?.count ?? 0
     }
