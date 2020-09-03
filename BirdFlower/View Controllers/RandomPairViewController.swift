@@ -9,13 +9,19 @@
 import UIKit
 import Kingfisher
 
-class RandomPairViewController: UIViewController {
+enum SearchType {
+    case bird
+    case plant
+}
 
+class RandomPairViewController: UIViewController {
+//MARK:- IBOutlets
     @IBOutlet weak var birdNameLabel: UILabel!
     @IBOutlet weak var plantNameLabel: UILabel!
     @IBOutlet weak var plantImageView: UIImageView!
     @IBOutlet weak var birdImageView: UIImageView!
     
+    //MARK:- Variables
     var birdData: [BirdsSpecies]?
     var botanicalData: [Flowers]?
     var birdImageURL: String?
@@ -43,13 +49,15 @@ class RandomPairViewController: UIViewController {
             plantNameLabel.text = "\(randomPlant)"
         }
     }
-    
+    //MARK:- View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         loadBirdData()
         loadBotanicalData()
         configureUI()
     }
+    //MARK:- Funcs
+    
     private func configureUI() {
         birdImageView.layer.masksToBounds = false
         plantImageView.layer.masksToBounds = false
@@ -62,6 +70,7 @@ class RandomPairViewController: UIViewController {
         birdImageView.layer.cornerRadius = birdImageView.frame.width / 2.1
         plantImageView.layer.cornerRadius = plantImageView.frame.width / 2.10
     }
+    // These functions generate random pairs, or individually random data to use in the app
     private func loadBirdData() {
         birdData = BirdsSpecies.decodeBirdSpeciesData()
     }
@@ -69,100 +78,55 @@ class RandomPairViewController: UIViewController {
         botanicalData = Flowers.decodeFlowers()
     }
     private func generateRandomPair() {
-        randomBird = birdData?.randomElement()?.commonName ?? "Bird"
-        randomPlant = botanicalData?.randomElement()?.name ?? "Botanical"
-//        getPixaBayBirdPhoto(for: randomBird)
-//        getPixaBayBotanicalPhoto(for: randomBotanical)
-        searchFlickerBirdPhotos(for: randomBird)
-        searchFlickerPlantPhotos(for: randomPlant)
+        generateRandomBird()
+        generateRandomPlant()
+        searchFlickerPhotos(for: randomBird, searchType: .bird)
+        searchFlickerPhotos(for: randomPlant, searchType: .plant)
         randomPair = "\(randomBird) \(randomPlant)"
     }
     private func generateRandomBird() {
-        searchFlickerBirdPhotos(for: randomBird)
+        searchFlickerPhotos(for: randomBird, searchType: .bird)
         randomBird = birdData?.randomElement()?.commonName ?? "BIRD"
     }
     private func generateRandomPlant() {
-        searchFlickerPlantPhotos(for: randomPlant)
+        searchFlickerPhotos(for: randomPlant, searchType: .plant)
         randomPlant = botanicalData?.randomElement()?.name ?? "PLANT"
     }
-    private func getPixaBayBirdPhoto(for bird: String) {
-        PixaBayAPI.getPhotos(searchQuery: bird) { (results) in
-            switch results {
-            case .failure(let appError):
-                print("Failed to load bird photo: \(appError)")
-            case .success(let image):
-                self.birdImageURL = image.hits.first?.previewURL
-            }
-        }
-    }
-    private func loadBirdPhotoURL(with url: String) {
+    
+    /// Sets the image view using KingFisher to set a UIImageView
+    ///
+    /// - Parameters:
+    ///   - url: URL address for the pic generated from the search func
+    ///   - imageView: The UIImageView that needs to be set
+    private func loadPhotoFromURL(with url: String, imageView: UIImageView) {
         DispatchQueue.main.async {
-            self.birdImageView.kf.indicatorType = .activity
-            self.birdImageView.kf.setImage(with: URL(string: url))
-        }
-
-    }
-    private func loadPlantPhotoURL(with url: String) {
-        DispatchQueue.main.async {
-            self.plantImageView.kf.indicatorType = .activity
-            self.plantImageView.kf.setImage(with: URL(string: url))
-        }
-
-    }
-    private func getPixaBayBotanicalPhoto(for plant: String) {
-        PixaBayAPI.getPhotos(searchQuery: plant) { (results) in
-            switch results {
-            case .failure(let appError):
-                print("Failed to load bird photo: \(appError)")
-            case .success(let image):
-                self.botanicalImageURL = image.hits.first?.largeImageURL
-            }
+            imageView.kf.indicatorType = .activity
+            imageView.kf.setImage(with: URL(string: url))
         }
     }
     //MARK:- Flicker functions
-    private func searchFlickerBirdPhotos(for query: String) {
+    private func searchFlickerPhotos(for query: String, searchType: SearchType) {
         FlickerAPI.searchPhotos(searchQuery: query) { (results) in
             switch results {
             case .failure(let appError):
                 print("Failed to search flicker for a photo: \(appError)")
             case .success(let results):
+                if searchType == .bird {
                 self.flickerBirdImageData = results
+                } else if searchType == .plant {
+                    self.flickerPlantImageData = results
+                }
             }
         }
     }
-    private func searchFlickerPlantPhotos(for query: String) {
-        FlickerAPI.searchPhotos(searchQuery: query) { (results) in
-            switch results {
-            case .failure(let appError):
-                print("Failed to search flicker for a photo: \(appError)")
-            case .success(let results):
-                self.flickerPlantImageData = results
-            }
-        }
-    }
+
     private func loadBirdFlickerPhoto(for photo: [PhotoResult]) {
         let flickerPhotoEndpoint = "https://farm\(photo.first?.farm ?? 0).staticflickr.com/\(photo.first?.server ?? "")/\(photo.first?.id ?? "")_\(photo.first?.secret ?? "")_m.jpg".lowercased()
-        loadBirdPhotoURL(with: flickerPhotoEndpoint)
-//        FlickerAPI.getUserPhotoURL(photoID: photo.first?.id ?? "", photoSecret: photo.first?.secret ?? "", farm: photo.first?.farm ?? 0, server: photo.first?.server ?? "0") { (results) in
-//            switch results {
-//            case .failure(let appError):
-//                print("Failed to search flicker for a photo: \(appError)")
-//            case .success(let results):
-//                self.flickerBirdImageURL = results.photo.urls.url.first?.content
-//            }
-//        }
+        loadPhotoFromURL(with: flickerPhotoEndpoint, imageView: birdImageView)
     }
     private func loadFlickerPlantPhoto(for photo: [PhotoResult]) {
         let flickerPhotoEndpoint = "https://farm\(photo.first?.farm ?? 0).staticflickr.com/\(photo.first?.server ?? "")/\(photo.first?.id ?? "")_\(photo.first?.secret ?? "")_m.jpg".lowercased()
-        loadPlantPhotoURL(with: flickerPhotoEndpoint)
-//        FlickerAPI.getUserPhotoURL(photoID: photo.first?.id ?? "", photoSecret: photo.first?.secret ?? "", farm: photo.first?.farm ?? 0, server: photo.first?.server ?? "0") { (results) in
-//            switch results {
-//            case .failure(let appError):
-//                print("Failed to search flicker for a photo: \(appError)")
-//            case .success(let results):
-//                self.flickerPlantImageURL = results.photo.urls.url.first?.content
-//            }
-//        }
+        loadPhotoFromURL(with: flickerPhotoEndpoint, imageView: plantImageView)
     }
     @IBAction func shuffleButtonPressed(_ sender: UIButton) {
         generateRandomPair()
