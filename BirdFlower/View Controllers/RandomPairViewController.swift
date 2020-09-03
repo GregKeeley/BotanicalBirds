@@ -22,6 +22,7 @@ class RandomPairViewController: UIViewController {
     @IBOutlet weak var plantImageView: UIImageView!
     @IBOutlet weak var birdImageView: UIImageView!
     @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var shuffleButton: UIButton!
     
     //MARK:- Variables
     var birdData: [BirdsSpecies]?
@@ -78,8 +79,10 @@ class RandomPairViewController: UIViewController {
         plantImageView.layer.borderColor = UIColor.white.cgColor
         birdImageView.clipsToBounds = true
         plantImageView.clipsToBounds = true
-        birdImageView.layer.cornerRadius = birdImageView.frame.width / 2.1
-        plantImageView.layer.cornerRadius = plantImageView.frame.width / 2.10
+        birdImageView.layer.cornerRadius = birdImageView.frame.height / 2.09
+        plantImageView.layer.cornerRadius = plantImageView.frame.height / 2.08
+        
+        shuffleButton.layer.cornerRadius = 8
     }
     // These functions generate random pairs, or individually random data to use in the app
     private func fetchFavoriteDuos() {

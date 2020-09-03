@@ -187,7 +187,7 @@
                                 <attributedString key="attributedText">
                                     <fragment content="BOTANICAL BIRDS">
                                         <attributes>
-                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <font key="NSFont" size="50" name="Futura-Bold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
@@ -250,6 +250,7 @@
                         <outlet property="favoriteButton" destination="zTM-bv-szX" id="Y7f-Io-eso"/>
                         <outlet property="plantImageView" destination="SQW-tj-qVE" id="GuH-Oa-prn"/>
                         <outlet property="plantNameLabel" destination="HHS-c6-Pyr" id="8dI-55-5X2"/>
+                        <outlet property="shuffleButton" destination="eId-ct-eu9" id="LpJ-RD-LRP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0uS-rK-Wnu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
