@@ -23,9 +23,9 @@ class RandomPairViewController: UIViewController {
     
     //MARK:- Variables
     var birdData: [BirdsSpecies]?
-    var botanicalData: [Flowers]?
+    var plantData: [PlantsSpecies]?
     var birdImageURL: String?
-    var botanicalImageURL: String?
+    var plantImageURL: String?
     var flickerBirdImageData: FlickerSearchResult? {
         didSet {
             loadBirdFlickerPhoto(for: (flickerBirdImageData?.photos.photo)!)
@@ -53,7 +53,7 @@ class RandomPairViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadBirdData()
-        loadBotanicalData()
+        loadPlantData()
         configureUI()
     }
     //MARK:- Funcs
@@ -74,8 +74,8 @@ class RandomPairViewController: UIViewController {
     private func loadBirdData() {
         birdData = BirdsSpecies.decodeBirdSpeciesData()
     }
-    private func loadBotanicalData() {
-        botanicalData = Flowers.decodeFlowers()
+    private func loadPlantData() {
+        plantData = PlantsSpecies.decodeFlowers()
     }
     private func generateRandomPair() {
         generateRandomBird()
@@ -90,7 +90,7 @@ class RandomPairViewController: UIViewController {
     }
     private func generateRandomPlant() {
         searchFlickerPhotos(for: randomPlant, searchType: .plant)
-        randomPlant = botanicalData?.randomElement()?.name ?? "PLANT"
+        randomPlant = plantData?.randomElement()?.name ?? "PLANT"
     }
     
     /// Sets the image view using KingFisher to set a UIImageView

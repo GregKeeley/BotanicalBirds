@@ -23,9 +23,9 @@
 		88763CC024FDDB4E00EE3409 /* secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CBF24FDDB4E00EE3409 /* secrets.swift */; };
 		88763CC724FDDC8A00EE3409 /* NetworkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CC624FDDC8A00EE3409 /* NetworkHelper.swift */; };
 		88763CC924FDDD2F00EE3409 /* TrefleAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CC824FDDD2F00EE3409 /* TrefleAPIClient.swift */; };
-		88763CCB24FDE49800EE3409 /* Flowers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CCA24FDE49800EE3409 /* Flowers.swift */; };
+		88763CCB24FDE49800EE3409 /* PlantsSpecies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CCA24FDE49800EE3409 /* PlantsSpecies.swift */; };
 		88763CCD24FDEA0300EE3409 /* RandomPairViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CCC24FDEA0300EE3409 /* RandomPairViewController.swift */; };
-		88763CCF24FDEA2200EE3409 /* BotanicalsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CCE24FDEA2200EE3409 /* BotanicalsListViewController.swift */; };
+		88763CCF24FDEA2200EE3409 /* PlantsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CCE24FDEA2200EE3409 /* PlantsListViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,9 +46,9 @@
 		88763CBF24FDDB4E00EE3409 /* secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = secrets.swift; path = ../../secrets.swift; sourceTree = "<group>"; };
 		88763CC624FDDC8A00EE3409 /* NetworkHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHelper.swift; sourceTree = "<group>"; };
 		88763CC824FDDD2F00EE3409 /* TrefleAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrefleAPIClient.swift; sourceTree = "<group>"; };
-		88763CCA24FDE49800EE3409 /* Flowers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flowers.swift; sourceTree = "<group>"; };
+		88763CCA24FDE49800EE3409 /* PlantsSpecies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantsSpecies.swift; sourceTree = "<group>"; };
 		88763CCC24FDEA0300EE3409 /* RandomPairViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomPairViewController.swift; sourceTree = "<group>"; };
-		88763CCE24FDEA2200EE3409 /* BotanicalsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BotanicalsListViewController.swift; sourceTree = "<group>"; };
+		88763CCE24FDEA2200EE3409 /* PlantsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantsListViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,7 +108,7 @@
 			children = (
 				88763CAB24FDCCE900EE3409 /* BirdSpeciesViewController.swift */,
 				88763CCC24FDEA0300EE3409 /* RandomPairViewController.swift */,
-				88763CCE24FDEA2200EE3409 /* BotanicalsListViewController.swift */,
+				88763CCE24FDEA2200EE3409 /* PlantsListViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -119,7 +119,7 @@
 				8836C51724FE809F00FCAABF /* flickPhoto.swift */,
 				8836C51924FE80AD00FCAABF /* flickerSearch.swift */,
 				88763CBB24FDCFD300EE3409 /* BirdSpecies.swift */,
-				88763CCA24FDE49800EE3409 /* Flowers.swift */,
+				88763CCA24FDE49800EE3409 /* PlantsSpecies.swift */,
 				8836C51024FDF58C00FCAABF /* PixaBayImage.swift */,
 			);
 			path = Models;
@@ -229,13 +229,13 @@
 				8836C51A24FE80AD00FCAABF /* flickerSearch.swift in Sources */,
 				88763CAC24FDCCE900EE3409 /* BirdSpeciesViewController.swift in Sources */,
 				88763CBC24FDCFD300EE3409 /* BirdSpecies.swift in Sources */,
-				88763CCB24FDE49800EE3409 /* Flowers.swift in Sources */,
+				88763CCB24FDE49800EE3409 /* PlantsSpecies.swift in Sources */,
 				88763CC024FDDB4E00EE3409 /* secrets.swift in Sources */,
 				88763CA824FDCCE900EE3409 /* AppDelegate.swift in Sources */,
 				88763CC924FDDD2F00EE3409 /* TrefleAPIClient.swift in Sources */,
 				8836C51C24FE816300FCAABF /* FlickerAPIClient.swift in Sources */,
 				88763CC724FDDC8A00EE3409 /* NetworkHelper.swift in Sources */,
-				88763CCF24FDEA2200EE3409 /* BotanicalsListViewController.swift in Sources */,
+				88763CCF24FDEA2200EE3409 /* PlantsListViewController.swift in Sources */,
 				88763CAA24FDCCE900EE3409 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

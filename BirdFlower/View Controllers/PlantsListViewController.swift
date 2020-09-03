@@ -1,5 +1,5 @@
 //
-//  BotanicalsListViewController.swift
+//  PlantsListViewController.swift
 //  BirdFlower
 //
 //  Created by Gregory Keeley on 8/31/20.
@@ -12,7 +12,7 @@ class PlantsListViewController: UIViewController {
 
     @IBOutlet weak var tableview: UITableView!
     
-    var flowerData: [Flowers]?
+    var flowerData: [PlantsSpecies]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +22,7 @@ class PlantsListViewController: UIViewController {
     }
     
     private func loadFlowerData() {
-        flowerData = Flowers.decodeFlowers()
+        flowerData = PlantsSpecies.decodeFlowers()
     }
     
 }
@@ -32,7 +32,7 @@ extension PlantsListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "plantCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "plantsCell", for: indexPath)
         let flower = flowerData?[indexPath.row]
         cell.textLabel?.text = ("\(flower?.name ?? "FLOWER")")
         return cell

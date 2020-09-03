@@ -246,10 +246,10 @@
             </objects>
             <point key="canvasLocation" x="918.84057971014499" y="362.94642857142856"/>
         </scene>
-        <!--Botanical Species-->
+        <!--Plant Species-->
         <scene sceneID="ylf-1e-LI6">
             <objects>
-                <viewController id="YES-Bm-wIx" customClass="BotanicalsListViewController" customModule="BirdFlower" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="YES-Bm-wIx" customClass="PlantsListViewController" customModule="BirdFlower" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DF8-G2-uaZ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -258,7 +258,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="769"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="botanicalCell" textLabel="AKL-ki-Ikc" style="IBUITableViewCellStyleDefault" id="yDM-7o-Gym">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="plantCell" textLabel="AKL-ki-Ikc" style="IBUITableViewCellStyleDefault" id="yDM-7o-Gym">
                                         <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yDM-7o-Gym" id="Vcg-T4-9oe">
@@ -287,7 +287,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="FRA-mZ-hBB"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Botanical Species" image="book" catalog="system" selectedImage="book.fill" id="dBC-iG-KcZ"/>
+                    <tabBarItem key="tabBarItem" title="Plant Species" image="book" catalog="system" selectedImage="book.fill" id="dBC-iG-KcZ"/>
                     <connections>
                         <outlet property="tableview" destination="Acy-kG-EX5" id="dtk-9L-6NT"/>
                     </connections>
