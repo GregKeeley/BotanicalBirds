@@ -14,7 +14,7 @@
 		8836C51C24FE816300FCAABF /* FlickerAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8836C51B24FE816300FCAABF /* FlickerAPIClient.swift */; };
 		88763CA824FDCCE900EE3409 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CA724FDCCE900EE3409 /* AppDelegate.swift */; };
 		88763CAA24FDCCE900EE3409 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CA924FDCCE900EE3409 /* SceneDelegate.swift */; };
-		88763CAC24FDCCE900EE3409 /* BirdSpeciesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CAB24FDCCE900EE3409 /* BirdSpeciesViewController.swift */; };
+		88763CAC24FDCCE900EE3409 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CAB24FDCCE900EE3409 /* ListViewController.swift */; };
 		88763CAF24FDCCE900EE3409 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88763CAD24FDCCE900EE3409 /* Main.storyboard */; };
 		88763CB124FDCCEB00EE3409 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88763CB024FDCCEB00EE3409 /* Assets.xcassets */; };
 		88763CB424FDCCEB00EE3409 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88763CB224FDCCEB00EE3409 /* LaunchScreen.storyboard */; };
@@ -37,7 +37,7 @@
 		88763CA424FDCCE900EE3409 /* BirdFlower.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BirdFlower.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88763CA724FDCCE900EE3409 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		88763CA924FDCCE900EE3409 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		88763CAB24FDCCE900EE3409 /* BirdSpeciesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdSpeciesViewController.swift; sourceTree = "<group>"; };
+		88763CAB24FDCCE900EE3409 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		88763CAE24FDCCE900EE3409 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		88763CB024FDCCEB00EE3409 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		88763CB324FDCCEB00EE3409 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -109,7 +109,7 @@
 		88763CC224FDDBE300EE3409 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				88763CAB24FDCCE900EE3409 /* BirdSpeciesViewController.swift */,
+				88763CAB24FDCCE900EE3409 /* ListViewController.swift */,
 				88763CCC24FDEA0300EE3409 /* RandomPairViewController.swift */,
 				88763CCE24FDEA2200EE3409 /* PlantsListViewController.swift */,
 				88D630A72501837F0033E275 /* MainTabBarController.swift */,
@@ -230,7 +230,7 @@
 				8836C51824FE80A000FCAABF /* flickPhoto.swift in Sources */,
 				8836C51124FDF58C00FCAABF /* PixaBayImage.swift in Sources */,
 				8836C51A24FE80AD00FCAABF /* flickerSearch.swift in Sources */,
-				88763CAC24FDCCE900EE3409 /* BirdSpeciesViewController.swift in Sources */,
+				88763CAC24FDCCE900EE3409 /* ListViewController.swift in Sources */,
 				88763CBC24FDCFD300EE3409 /* BirdSpecies.swift in Sources */,
 				88763CCB24FDE49800EE3409 /* PlantsSpecies.swift in Sources */,
 				88763CC024FDDB4E00EE3409 /* secrets.swift in Sources */,

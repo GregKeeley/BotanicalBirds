@@ -9,13 +9,11 @@
 import UIKit
 import DataPersistence
 
-protocol PersistenceStackClient {
+protocol PersistenceStackClientDelegate: AnyObject {
     func setStack(stack: DataPersistence<String>)
 }
 
 class MainTabBarController: UITabBarController {
-    private var dataPersistence = DataPersistence<String>(filename: "favoritePairs.plist")
-    
     //MARK:- View LifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -45,7 +45,7 @@ extension PlantsListViewController: UITableViewDataSource {
 extension PlantsListViewController: UITableViewDelegate {
     
 }
-extension PlantsListViewController: PersistenceStackClient {
+extension PlantsListViewController: PersistenceStackClientDelegate {
     func setStack(stack: DataPersistence<String>) {
         self.dataPersistence = stack
     }

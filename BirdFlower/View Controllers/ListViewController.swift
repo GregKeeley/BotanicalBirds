@@ -16,13 +16,17 @@ enum SortType {
     case randomDuos
 }
 
-class BirdSpeciesViewController: UIViewController {
-
+class ListViewController: UIViewController {
+    
     @IBOutlet weak var tableView: UITableView!
     
-    var birdData = [BirdsSpecies]() 
+    var birdData = [BirdsSpecies]()
     var plantData = [PlantsSpecies]()
-    var favoriteDuos: [String]?
+    var favoriteDuos: [String]? {
+        didSet {
+            print("There are \(favoriteDuos?.count ?? -1) favorites")
+        }
+    }
     var randomDuos = [String]() {
         didSet {
             
@@ -30,6 +34,8 @@ class BirdSpeciesViewController: UIViewController {
     }
     
     var dataPersistence: DataPersistence<String>?
+    
+    var persistenceDelegate: PersistenceStackClientDelegate?
     
     var currentSortType = SortType.randomDuos {
         didSet {
@@ -43,6 +49,10 @@ class BirdSpeciesViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         loadAllData()
+        persistenceDelegate = self
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        fetchFavoriteDuos()
     }
     private func loadAllData() {
         birdData = BirdsSpecies.decodeBirdSpeciesData()!
@@ -54,15 +64,18 @@ class BirdSpeciesViewController: UIViewController {
     private func generateRandomDuos() {
         var i = 0
         for _ in 0..<min(plantData.count, birdData.count) {
-            let bird = birdData[i]
-            let plant = plantData[i]
-                randomDuos.append("\(bird) + \(plant)")
+            let bird = birdData[i].commonName
+            let plant = plantData[i].name
+            let randomDuo = ("\(bird) + \(plant)")
+            randomDuos.append(randomDuo)
             i += 1
+            
         }
     }
     private func fetchFavoriteDuos() {
         do {
             favoriteDuos = try dataPersistence?.loadItems()
+            dump(favoriteDuos)
         } catch {
             showAlert(title: "Well, this is embarassing", message: "Failed to load favorites...")
         }
@@ -81,12 +94,21 @@ class BirdSpeciesViewController: UIViewController {
     }
     
 }
-extension BirdSpeciesViewController: UITableViewDelegate {
+extension ListViewController: UITableViewDelegate {
     
 }
-extension BirdSpeciesViewController: UITableViewDataSource {
+extension ListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return birdData.count
+        switch currentSortType {
+        case .randomDuos:
+            return randomDuos.count
+        case .birds:
+            return birdData.count
+        case .plants:
+            return plantData.count
+        case .favorites:
+            return favoriteDuos?.count ?? 1
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -94,24 +116,35 @@ extension BirdSpeciesViewController: UITableViewDataSource {
         // Common name
         switch currentSortType {
         case .randomDuos:
+            navigationItem.title = "Random Pairs"
+            navigationController?.navigationBar.prefersLargeTitles = true
             let randomDuo = randomDuos[indexPath.row]
             cell.textLabel?.text = ("\(randomDuo)")
+            cell.detailTextLabel?.text = ""
         case .birds:
+            navigationItem.title = "Birds"
+            navigationController?.navigationBar.prefersLargeTitles = true
             let bird = birdData[indexPath.row]
             cell.textLabel?.text = "\(bird.commonName)"
             // Scinetific name
             cell.detailTextLabel?.text = "\(bird.scientificName)"
         case .plants:
+            navigationItem.title = "Plants"
+            navigationController?.navigationBar.prefersLargeTitles = true
             let flower = plantData[indexPath.row]
             cell.textLabel?.text = ("\(flower.name )")
+            cell.detailTextLabel?.text = ""
         case .favorites:
+            navigationItem.title = "Favorites"
+            navigationController?.navigationBar.prefersLargeTitles = true
             let favorite = favoriteDuos?[indexPath.row]
-            cell.textLabel?.text = ("\(favorite ?? "BIRD + PLANT")")
+            cell.textLabel?.text = ("\(favorite ?? "Coming soon")")
+            cell.detailTextLabel?.text = ""
         }
         return cell
     }
 }
-extension BirdSpeciesViewController: PersistenceStackClient {
+extension ListViewController: PersistenceStackClientDelegate {
     func setStack(stack: DataPersistence<String>) {
         self.dataPersistence = stack
     }

@@ -53,7 +53,8 @@ class RandomPairViewController: UIViewController {
     }
     var isFavorite: Bool = false
     
-    var dataPersistence: DataPersistence<String>?
+    var dataPersistence: DataPersistence<String>!
+    var persistenceDelegate: PersistenceStackClientDelegate?
     
     var favoriteDuos: [String]? 
     
@@ -65,6 +66,7 @@ class RandomPairViewController: UIViewController {
         configureUI()
         fetchFavoriteDuos()
         generateRandomPair()
+        persistenceDelegate = self
     }
     //MARK:- Funcs
     private func configureUI() {
@@ -153,6 +155,9 @@ class RandomPairViewController: UIViewController {
     }
     //MARK:- IBActions
     @IBAction func shuffleButtonPressed(_ sender: UIButton) {
+        isFavorite = false
+        favoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
+        favoriteButton.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         generateRandomPair()
     }
     @IBAction func randomBirdButtonPressed(_ sender: UIButton) {
@@ -190,7 +195,7 @@ class RandomPairViewController: UIViewController {
     }
     
 }
-extension RandomPairViewController: PersistenceStackClient {
+extension RandomPairViewController: PersistenceStackClientDelegate {
     func setStack(stack: DataPersistence<String>) {
         self.dataPersistence = stack
     }
