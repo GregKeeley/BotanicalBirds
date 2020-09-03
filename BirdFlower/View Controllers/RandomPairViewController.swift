@@ -20,6 +20,7 @@ class RandomPairViewController: UIViewController {
     @IBOutlet weak var plantNameLabel: UILabel!
     @IBOutlet weak var plantImageView: UIImageView!
     @IBOutlet weak var birdImageView: UIImageView!
+    @IBOutlet weak var favoriteButton: UIButton!
     
     //MARK:- Variables
     var birdData: [BirdsSpecies]?
@@ -49,6 +50,7 @@ class RandomPairViewController: UIViewController {
             plantNameLabel.text = "\(randomPlant)"
         }
     }
+    var isFavorite: Bool = false
     //MARK:- View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -128,6 +130,7 @@ class RandomPairViewController: UIViewController {
         let flickerPhotoEndpoint = "https://farm\(photo.first?.farm ?? 0).staticflickr.com/\(photo.first?.server ?? "")/\(photo.first?.id ?? "")_\(photo.first?.secret ?? "")_m.jpg".lowercased()
         loadPhotoFromURL(with: flickerPhotoEndpoint, imageView: plantImageView)
     }
+    //MARK:- IBActions
     @IBAction func shuffleButtonPressed(_ sender: UIButton) {
         generateRandomPair()
     }
@@ -136,6 +139,16 @@ class RandomPairViewController: UIViewController {
     }
     @IBAction func randomPlantButtonPressed(_ sender: UIButton) {
         generateRandomPlant()
+    }
+    @IBAction func favoriteButtonPressed(_ sender: UIButton) {
+        isFavorite.toggle()
+        if isFavorite {
+            favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            favoriteButton.tintColor = #colorLiteral(red: 0.8201736992, green: 0.1226904487, blue: 0.007086123212, alpha: 1)
+        } else {
+            favoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
+            favoriteButton.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        }
     }
     
 }

@@ -118,6 +118,9 @@
                                 <state key="normal" image="heart" catalog="system">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="48"/>
                                 </state>
+                                <connections>
+                                    <action selector="favoriteButtonPressed:" destination="goj-t6-H1T" eventType="touchUpInside" id="J2d-xO-HCI"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HHS-c6-Pyr">
                                 <rect key="frame" x="236.5" y="441.5" width="157.5" height="78.5"/>
@@ -238,6 +241,7 @@
                     <connections>
                         <outlet property="birdImageView" destination="E33-Lp-tSS" id="01g-lZ-XHD"/>
                         <outlet property="birdNameLabel" destination="XHL-Ay-L7n" id="Q82-c3-sGo"/>
+                        <outlet property="favoriteButton" destination="zTM-bv-szX" id="Y7f-Io-eso"/>
                         <outlet property="plantImageView" destination="SQW-tj-qVE" id="GuH-Oa-prn"/>
                         <outlet property="plantNameLabel" destination="HHS-c6-Pyr" id="8dI-55-5X2"/>
                     </connections>
@@ -258,7 +262,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="769"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="plantCell" textLabel="AKL-ki-Ikc" style="IBUITableViewCellStyleDefault" id="yDM-7o-Gym">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="plantsCell" textLabel="AKL-ki-Ikc" style="IBUITableViewCellStyleDefault" id="yDM-7o-Gym">
                                         <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yDM-7o-Gym" id="Vcg-T4-9oe">
