@@ -27,11 +27,7 @@ class ListViewController: UIViewController {
             print("There are \(favoriteDuos?.count ?? -1) favorites")
         }
     }
-    var randomDuos = [String]() {
-        didSet {
-            
-        }
-    }
+    var randomDuos = [String]()
     
     var dataPersistence: DataPersistence<String>?
     
@@ -58,7 +54,7 @@ class ListViewController: UIViewController {
     private func loadAllData() {
         birdData = BirdsSpecies.decodeBirdSpeciesData()!
         plantData = PlantsSpecies.decodeFlowers()!
-        fetchFavoriteDuos()
+//        fetchFavoriteDuos()
         generateRandomDuos()
     }
     // Note: This is a great example of indexing into the smaller of two arrays for data!
@@ -108,7 +104,11 @@ extension ListViewController: UITableViewDataSource {
         case .plants:
             return plantData.count
         case .favorites:
-            return favoriteDuos?.count ?? 1
+            if favoriteDuos?.count ?? -1 >= 1 {
+                return favoriteDuos?.count ?? -1
+            } else {
+                return 1
+            }
         }
     }
     
@@ -138,9 +138,13 @@ extension ListViewController: UITableViewDataSource {
         case .favorites:
             navigationItem.title = "Favorites"
             navigationController?.navigationBar.prefersLargeTitles = true
-            let favorite = favoriteDuos?[indexPath.row]
-            cell.textLabel?.text = ("\(favorite ?? "Coming soon")")
-            cell.detailTextLabel?.text = ""
+            if favoriteDuos?.count ?? -1 >= 1 {
+                let favorite = favoriteDuos?[indexPath.row]
+                cell.textLabel?.text = ("\(favorite ?? "Bird")")
+                cell.detailTextLabel?.text = ""
+            } else {
+                cell.textLabel?.text = "Looks like favorites is empty"
+            }
         }
         return cell
     }
