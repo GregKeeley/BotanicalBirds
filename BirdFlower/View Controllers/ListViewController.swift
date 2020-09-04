@@ -67,12 +67,13 @@ class ListViewController: UIViewController {
         }
     }
     private func fetchFavoriteDuos() {
-        do {
-            favoriteDuos = try dataPersistence?.loadItems()
-            dump(favoriteDuos)
-        } catch {
-            showAlert(title: "Well, this is embarassing", message: "Failed to load favorites...")
-        }
+        
+//        do {
+//            favoriteDuos = try dataPersistence?.loadItems()
+//            dump(favoriteDuos)
+//        } catch {
+//            showAlert(title: "Well, this is embarassing", message: "Failed to load favorites...")
+//        }
     }
     @IBAction func toggleButtonPressed(_ sender: UIBarButtonItem) {
         switch currentSortType {

@@ -23,7 +23,6 @@
 		88763CC724FDDC8A00EE3409 /* NetworkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CC624FDDC8A00EE3409 /* NetworkHelper.swift */; };
 		88763CCB24FDE49800EE3409 /* PlantsSpecies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CCA24FDE49800EE3409 /* PlantsSpecies.swift */; };
 		88763CCD24FDEA0300EE3409 /* RandomPairViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CCC24FDEA0300EE3409 /* RandomPairViewController.swift */; };
-		88763CCF24FDEA2200EE3409 /* PlantsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CCE24FDEA2200EE3409 /* PlantsListViewController.swift */; };
 		88D630A425017FDE0033E275 /* DataPersistence in Frameworks */ = {isa = PBXBuildFile; productRef = 88D630A325017FDE0033E275 /* DataPersistence */; };
 		88D630A82501837F0033E275 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D630A72501837F0033E275 /* MainTabBarController.swift */; };
 		88D630AA2501994C0033E275 /* UIViewController_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D630A92501994C0033E275 /* UIViewController_Extension.swift */; };
@@ -47,7 +46,6 @@
 		88763CC624FDDC8A00EE3409 /* NetworkHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHelper.swift; sourceTree = "<group>"; };
 		88763CCA24FDE49800EE3409 /* PlantsSpecies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantsSpecies.swift; sourceTree = "<group>"; };
 		88763CCC24FDEA0300EE3409 /* RandomPairViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomPairViewController.swift; sourceTree = "<group>"; };
-		88763CCE24FDEA2200EE3409 /* PlantsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantsListViewController.swift; sourceTree = "<group>"; };
 		88D630A72501837F0033E275 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		88D630A92501994C0033E275 /* UIViewController_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController_Extension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -111,7 +109,6 @@
 			children = (
 				88763CAB24FDCCE900EE3409 /* ListViewController.swift */,
 				88763CCC24FDEA0300EE3409 /* RandomPairViewController.swift */,
-				88763CCE24FDEA2200EE3409 /* PlantsListViewController.swift */,
 				88D630A72501837F0033E275 /* MainTabBarController.swift */,
 			);
 			path = "View Controllers";
@@ -238,7 +235,6 @@
 				8836C51C24FE816300FCAABF /* FlickerAPIClient.swift in Sources */,
 				88D630A82501837F0033E275 /* MainTabBarController.swift in Sources */,
 				88763CC724FDDC8A00EE3409 /* NetworkHelper.swift in Sources */,
-				88763CCF24FDEA2200EE3409 /* PlantsListViewController.swift in Sources */,
 				88763CAA24FDCCE900EE3409 /* SceneDelegate.swift in Sources */,
 				88D630AA2501994C0033E275 /* UIViewController_Extension.swift in Sources */,
 			);

@@ -136,22 +136,22 @@ class RandomPairViewController: UIViewController {
     }
     //MARK:- Flicker functions
     private func searchFlickerPhotos(for query: String, searchType: SearchType) {
-        FlickerAPI.searchPhotos(searchQuery: query) { (results) in
+        FlickerAPI.searchPhotos(searchQuery: query) { [weak self] (results) in
             switch results {
             case .failure(let appError):
                 print("Failed to search flicker for a photo: \(appError)")
                 DispatchQueue.main.async {
                     if searchType == .bird {
-                        self.birdImageView.image = UIImage(systemName: "questionmark.circle")
+                        self?.birdImageView.image = UIImage(systemName: "questionmark.circle")
                     } else if searchType == .plant {
-                        self.plantImageView.image = UIImage(systemName: "questionmark.circle")
+                        self?.plantImageView.image = UIImage(systemName: "questionmark.circle")
                     }
                 }
             case .success(let results):
                 if searchType == .bird {
-                self.flickerBirdImageData = results
+                    self?.flickerBirdImageData = results
                 } else if searchType == .plant {
-                    self.flickerPlantImageData = results
+                    self?.flickerPlantImageData = results
                 }
             }
         }
