@@ -28,11 +28,8 @@ class ListViewController: UIViewController {
         }
     }
     var randomDuos = [String]()
-    
     var dataPersistence: DataPersistence<String>?
-    
     var persistenceDelegate: PersistenceStackClientDelegate?
-    
     var currentSortType = SortType.randomDuos {
         didSet {
             tableView.reloadData()
@@ -152,5 +149,10 @@ extension ListViewController: UITableViewDataSource {
 extension ListViewController: PersistenceStackClientDelegate {
     func setStack(stack: DataPersistence<String>) {
         self.dataPersistence = stack
+    }
+}
+extension ListViewController: FavoriteSelectedDelegate {
+    func favoritesAreSelected(favorites: [String]) {
+        favoriteDuos = favorites
     }
 }

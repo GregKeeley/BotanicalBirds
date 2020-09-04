@@ -14,12 +14,21 @@ protocol PersistenceStackClientDelegate: AnyObject {
 }
 
 class MainTabBarController: UITabBarController {
+    
+    var dataPersistence = DataPersistence<String>(filename: "favorites.plist")
+
+    weak var persistenceDelegate: PersistenceStackClientDelegate?
+    
     //MARK:- View LifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
+        persistenceDelegate?.setStack(stack: dataPersistence)
+        configureUI()
+        
+    }
+
+    private func configureUI() {
         UITabBar.appearance().tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
     }
     
-
-
 }
