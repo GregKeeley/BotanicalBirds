@@ -13768,13 +13768,6 @@ class BirdsSpecies: Decodable {
         "commonName": "Pin-tailed Whydah",
         "scientificName": "Vidua macroura",
         "bandCode6": "VIDMAC"
-    },
-    {
-        "nonSpeciesTaxon": true,
-        "bandCode4": "UNBI",
-        "commonName": "Unidentified Bird",
-        "scientificName": "Aves (gen, sp)",
-        "bandCode6": "AVEGSP"
     }
 ]
 """.data(using: .utf8)!

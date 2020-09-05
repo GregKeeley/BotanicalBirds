@@ -8,14 +8,14 @@
 
 import Foundation
 
-class Flowers: Decodable {
+class PlantsSpecies: Decodable {
     var name: String
     init(name: String) {
         self.name = name
     }
-    static func decodeFlowers() -> [Flowers]? {
+    static func decodeFlowers() -> [PlantsSpecies]? {
         do {
-            return try JSONDecoder().decode([Flowers].self, from: flowersJSONData)
+            return try JSONDecoder().decode([PlantsSpecies].self, from: flowersJSONData)
         } catch {
             print("Failed to decode flowers")
             return nil

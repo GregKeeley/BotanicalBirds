@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BotanicalsListViewController: UIViewController {
+class PlantsListViewController: UIViewController {
 
     @IBOutlet weak var tableview: UITableView!
     
@@ -26,13 +26,13 @@ class BotanicalsListViewController: UIViewController {
     }
     
 }
-extension BotanicalsListViewController: UITableViewDataSource {
+extension PlantsListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return flowerData?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "botanicalCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "plantCell", for: indexPath)
         let flower = flowerData?[indexPath.row]
         cell.textLabel?.text = ("\(flower?.name ?? "FLOWER")")
         return cell
@@ -40,6 +40,6 @@ extension BotanicalsListViewController: UITableViewDataSource {
     
     
 }
-extension BotanicalsListViewController: UITableViewDelegate {
+extension PlantsListViewController: UITableViewDelegate {
     
 }
