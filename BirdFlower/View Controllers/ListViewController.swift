@@ -17,9 +17,10 @@ enum SortType {
 }
 
 class ListViewController: UIViewController {
-    
+    //MARK:- IBOutlets
     @IBOutlet weak var tableView: UITableView!
     
+    //MARK:- Variables/Constants
     var birdData = [BirdsSpecies]()
     var plantData = [PlantsSpecies]()
     var favoriteDuos: [String]? {
@@ -28,25 +29,37 @@ class ListViewController: UIViewController {
         }
     }
     var randomDuos = [String]()
-    var dataPersistence: DataPersistence<String>?
-    var persistenceDelegate: PersistenceStackClientDelegate?
+    
+    public var dataPersistence: DataPersistence<FavoriteDuo>?
+    
     var currentSortType = SortType.randomDuos {
         didSet {
             tableView.reloadData()
         }
     }
-    
+//    init(_ dataPersistence: DataPersistence<FavoriteDuo>) {
+//        self.dataPersistence = dataPersistence
+//        super.init(nibName: nil, bundle: nil)
+//    }
+//    required init?(coder: NSCoder) {
+//        super.init(coder: coder)
+//    }
     //MARK:- ViewLifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
         loadAllData()
-        persistenceDelegate = self
         navigationItem.rightBarButtonItem?.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
     }
     override func viewWillAppear(_ animated: Bool) {
         fetchFavoriteDuos()
+    }
+    //MARK:- Functions
+    private func getFavoritesFromRandomPairVC() {
+        let barViewControllers = self.tabBarController?.viewControllers
+        let randoVC = barViewControllers![1] as! RandomPairViewController
+        self.favoriteDuos = randoVC.favoriteDuos
     }
     private func loadAllData() {
         birdData = BirdsSpecies.decodeBirdSpeciesData()!
@@ -75,6 +88,7 @@ class ListViewController: UIViewController {
 //            showAlert(title: "Well, this is embarassing", message: "Failed to load favorites...")
 //        }
     }
+    //MARK:- IBActions
     @IBAction func toggleButtonPressed(_ sender: UIBarButtonItem) {
         switch currentSortType {
         case .birds:
@@ -89,6 +103,8 @@ class ListViewController: UIViewController {
     }
     
 }
+
+//MARK:- Extensions
 extension ListViewController: UITableViewDelegate {
     
 }
@@ -147,13 +163,4 @@ extension ListViewController: UITableViewDataSource {
         return cell
     }
 }
-extension ListViewController: PersistenceStackClientDelegate {
-    func setStack(stack: DataPersistence<String>) {
-        self.dataPersistence = stack
-    }
-}
-extension ListViewController: FavoriteSelectedDelegate {
-    func favoritesAreSelected(favorites: [String]) {
-        favoriteDuos = favorites
-    }
-}
+

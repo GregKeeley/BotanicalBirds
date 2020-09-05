@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		88201A332502B513006152F1 /* FavoriteDuos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88201A322502B513006152F1 /* FavoriteDuos.swift */; };
 		8836C51124FDF58C00FCAABF /* PixaBayImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8836C51024FDF58C00FCAABF /* PixaBayImage.swift */; };
 		8836C51424FDF63900FCAABF /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 8836C51324FDF63900FCAABF /* Kingfisher */; };
 		8836C51824FE80A000FCAABF /* flickPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8836C51724FE809F00FCAABF /* flickPhoto.swift */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		88201A322502B513006152F1 /* FavoriteDuos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteDuos.swift; sourceTree = "<group>"; };
 		8836C51024FDF58C00FCAABF /* PixaBayImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixaBayImage.swift; sourceTree = "<group>"; };
 		8836C51724FE809F00FCAABF /* flickPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = flickPhoto.swift; sourceTree = "<group>"; };
 		8836C51924FE80AD00FCAABF /* flickerSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = flickerSearch.swift; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 				88763CBB24FDCFD300EE3409 /* BirdSpecies.swift */,
 				88763CCA24FDE49800EE3409 /* PlantsSpecies.swift */,
 				8836C51024FDF58C00FCAABF /* PixaBayImage.swift */,
+				88201A322502B513006152F1 /* FavoriteDuos.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -231,6 +234,7 @@
 				88763CBC24FDCFD300EE3409 /* BirdSpecies.swift in Sources */,
 				88763CCB24FDE49800EE3409 /* PlantsSpecies.swift in Sources */,
 				88763CC024FDDB4E00EE3409 /* secrets.swift in Sources */,
+				88201A332502B513006152F1 /* FavoriteDuos.swift in Sources */,
 				88763CA824FDCCE900EE3409 /* AppDelegate.swift in Sources */,
 				8836C51C24FE816300FCAABF /* FlickerAPIClient.swift in Sources */,
 				88D630A82501837F0033E275 /* MainTabBarController.swift in Sources */,

@@ -9,6 +9,8 @@
 import UIKit
 import DataPersistence
 
+
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
@@ -18,16 +20,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        let dataPersistence = DataPersistence<String>(filename: "favDuos.plist")
-        if let tab = window?.rootViewController as? UITabBarController {
-            for child in tab.viewControllers ?? [] {
-                for nav in child.children {
-                    if let top = nav as? PersistenceStackClientDelegate {
-                        top.setStack(stack: dataPersistence)
-                    }
-                }
-            }
-        }
+//        if let tab = window?.rootViewController as? UITabBarController {
+//            for child in tab.viewControllers ?? [] {
+//                for nav in child.children {
+//                    if let top = nav as? DataPersistenceDelegate {
+//                        top.setStack(stack: dataPersistence)
+//                    }
+//                }
+//            }
+//        }
         guard let _ = (scene as? UIWindowScene) else { return }
     }
     

@@ -257,56 +257,6 @@
             </objects>
             <point key="canvasLocation" x="918.84057971014499" y="362.94642857142856"/>
         </scene>
-        <!--Plant Species-->
-        <scene sceneID="ylf-1e-LI6">
-            <objects>
-                <viewController id="YES-Bm-wIx" customClass="PlantsListViewController" customModule="BirdFlower" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="DF8-G2-uaZ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Acy-kG-EX5">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="plantsCell" textLabel="AKL-ki-Ikc" style="IBUITableViewCellStyleDefault" id="yDM-7o-Gym">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yDM-7o-Gym" id="Vcg-T4-9oe">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AKL-ki-Ikc">
-                                                    <rect key="frame" x="20" y="0.0" width="374" height="43.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="FRA-mZ-hBB" firstAttribute="bottom" secondItem="Acy-kG-EX5" secondAttribute="bottom" id="3NH-Tk-leu"/>
-                            <constraint firstItem="FRA-mZ-hBB" firstAttribute="trailing" secondItem="Acy-kG-EX5" secondAttribute="trailing" id="A4E-LS-Rwr"/>
-                            <constraint firstItem="Acy-kG-EX5" firstAttribute="leading" secondItem="FRA-mZ-hBB" secondAttribute="leading" id="cT2-U9-l3w"/>
-                            <constraint firstItem="Acy-kG-EX5" firstAttribute="top" secondItem="FRA-mZ-hBB" secondAttribute="top" id="gjr-ln-aBm"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="FRA-mZ-hBB"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Plant Species" image="book" catalog="system" selectedImage="book.fill" id="dBC-iG-KcZ"/>
-                    <connections>
-                        <outlet property="tableview" destination="Acy-kG-EX5" id="dtk-9L-6NT"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9T8-uR-W7l" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="893" y="1183"/>
-        </scene>
         <!--Main Tab Bar Controller-->
         <scene sceneID="8ew-di-NaB">
             <objects>

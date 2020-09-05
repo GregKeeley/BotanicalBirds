@@ -14,11 +14,10 @@ enum SearchType {
     case bird
     case plant
 }
-protocol FavoriteSelectedDelegate: AnyObject {
-    func favoritesAreSelected(favorites: [String])
-}
+
 class RandomPairViewController: UIViewController {
-//MARK:- IBOutlets
+    
+    //MARK:- IBOutlets
     @IBOutlet weak var birdNameLabel: UILabel!
     @IBOutlet weak var plantNameLabel: UILabel!
     @IBOutlet weak var plantImageView: UIImageView!
@@ -27,8 +26,6 @@ class RandomPairViewController: UIViewController {
     @IBOutlet weak var shuffleButton: UIButton!
     
     //MARK:- Variables
-    weak var favoritesSelectionDelegate: FavoriteSelectedDelegate?
-    
     var birdData: [BirdsSpecies]?
     var plantData: [PlantsSpecies]?
     var birdImageURL: String?
@@ -45,7 +42,7 @@ class RandomPairViewController: UIViewController {
     }
     var flickerBirdImageURL: String?
     var flickerPlantImageURL: String?
-    var randomPair = ""
+    var randomPair: FavoriteDuo?
     var randomBird = "" {
         didSet {
             birdNameLabel.text = "\(randomBird)"
@@ -57,15 +54,20 @@ class RandomPairViewController: UIViewController {
         }
     }
     var isFavorite: Bool = false
-    
-    var dataPersistence: DataPersistence<String>!
-    var persistenceDelegate: PersistenceStackClientDelegate?
-    
     var favoriteDuos: [String]? {
         didSet {
-            favoritesSelectionDelegate?.favoritesAreSelected(favorites: favoriteDuos ?? [])
+
         }
     }
+    var dataPersistence: DataPersistence<String>?
+    
+//    init(_ dataPersistence: DataPersistence<String>) {
+//        self.dataPersistence = dataPersistence
+//        super.init(nibName: nil, bundle: nil)
+//    }
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
     
     //MARK:- View lifecycle
     override func viewDidLoad() {
@@ -75,7 +77,6 @@ class RandomPairViewController: UIViewController {
         configureUI()
         fetchFavoriteDuos()
         generateRandomPair()
-        persistenceDelegate = self
     }
     //MARK:- Funcs
     private func configureUI() {
@@ -112,7 +113,7 @@ class RandomPairViewController: UIViewController {
         generateRandomPlant()
 //        searchFlickerPhotos(for: randomBird, searchType: .bird)
 //        searchFlickerPhotos(for: randomPlant, searchType: .plant)
-        randomPair = "\(randomBird) + \(randomPlant)"
+        randomPair = FavoriteDuo(item: ("\(randomBird) + \(randomPlant)"))
     }
     private func generateRandomBird() {
         randomBird = birdData?.randomElement()?.commonName ?? "BIRD"
@@ -182,7 +183,7 @@ class RandomPairViewController: UIViewController {
         isFavorite.toggle()
         if isFavorite {
             do {
-                try dataPersistence?.createItem(randomPair)
+                try dataPersistence?.createItem(randomPair!.item)
                 showAlert(title: "Success!", message: "Favorite saved")
                 favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
                 favoriteButton.tintColor = #colorLiteral(red: 0.8201736992, green: 0.1226904487, blue: 0.007086123212, alpha: 1)
@@ -190,7 +191,7 @@ class RandomPairViewController: UIViewController {
                 showAlert(title: "Oops!", message: "Something went wrong. Maybe write this one down...")
             }
         } else {
-            guard let index = favoriteDuos?.firstIndex(of: randomPair) else {
+            guard let index = favoriteDuos?.firstIndex(of: randomPair!.item) else {
                 showAlert(title: "Could not find favorite", message: "Failed to remove favorite, or it wasn't a favorite to begin with")
                 favoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
                 favoriteButton.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
@@ -208,8 +209,5 @@ class RandomPairViewController: UIViewController {
     }
     
 }
-extension RandomPairViewController: PersistenceStackClientDelegate {
-    func setStack(stack: DataPersistence<String>) {
-        self.dataPersistence = stack
-    }
-}
+
+//MARK:- Extensions

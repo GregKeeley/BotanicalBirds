@@ -9,22 +9,27 @@
 import UIKit
 import DataPersistence
 
-protocol PersistenceStackClientDelegate: AnyObject {
-    func setStack(stack: DataPersistence<String>)
-}
-
 class MainTabBarController: UITabBarController {
     
     var dataPersistence = DataPersistence<String>(filename: "favorites.plist")
 
-    weak var persistenceDelegate: PersistenceStackClientDelegate?
+//    private lazy var listVC: ListViewController = {
+//        let vc = ListViewController(dataPersistence)
+//        vc.dataPersistence = dataPersistence
+//        return vc
+//    }()
+//    private lazy var randomPairsVC: RandomPairViewController = {
+//        let vc = RandomPairViewController(dataPersistence)
+//        vc.dataPersistence = dataPersistence
+//        return vc
+//    }()
     
     //MARK:- View LifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        persistenceDelegate?.setStack(stack: dataPersistence)
-        configureUI()
+//        viewControllers = [listVC, randomPairsVC]
         
+        configureUI()
     }
 
     private func configureUI() {
