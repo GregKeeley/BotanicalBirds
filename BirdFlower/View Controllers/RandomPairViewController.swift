@@ -126,17 +126,21 @@ class RandomPairViewController: UIViewController {
         generateRandomPlant()
 //        searchFlickerPhotos(for: randomBird, searchType: .bird)
 //        searchFlickerPhotos(for: randomPlant, searchType: .plant)
-        randomPair = FavoriteDuo(item: ("\(randomBird) + \(randomPlant)"))
+        
     }
     private func generateRandomBird() {
         randomBird = birdData?.randomElement()?.commonName ?? "BIRD"
+        makeRandomPair()
         searchFlickerPhotos(for: randomBird, searchType: .bird)
     }
     private func generateRandomPlant() {
         randomPlant = plantData?.randomElement()?.name ?? "PLANT"
+        makeRandomPair()
         searchFlickerPhotos(for: randomPlant, searchType: .plant)
     }
-    
+    private func makeRandomPair() {
+        randomPair = FavoriteDuo(item: ("\(randomBird) + \(randomPlant)"))
+    }
     /// Sets the image view using KingFisher to set a UIImageView
     ///
     /// - Parameters:
@@ -184,17 +188,23 @@ class RandomPairViewController: UIViewController {
             dataPersistence = tabBarController.dataPersistence
         }
     }
-    //MARK:- IBActions
-    @IBAction func shuffleButtonPressed(_ sender: UIButton) {
+    private func resetFavoriteButton() {
         isFavorite = false
         favoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
         favoriteButton.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+    }
+    //MARK:- IBActions
+    @IBAction func shuffleButtonPressed(_ sender: UIButton) {
+        isFavorite = false
+        resetFavoriteButton()
         generateRandomPair()
     }
     @IBAction func randomBirdButtonPressed(_ sender: UIButton) {
+        resetFavoriteButton()
         generateRandomBird()
     }
     @IBAction func randomPlantButtonPressed(_ sender: UIButton) {
+        resetFavoriteButton()
         generateRandomPlant()
     }
     @IBAction func favoriteButtonPressed(_ sender: UIButton) {
