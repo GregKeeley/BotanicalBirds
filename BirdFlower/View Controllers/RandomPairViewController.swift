@@ -15,6 +15,15 @@ enum SearchType {
     case plant
 }
 
+@IBDesignable class RoundedImageView: UIImageView {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.borderWidth = 1.0
+        layer.borderColor = UIColor.white.cgColor
+        layer.cornerRadius = min(bounds.width, bounds.height) / 2
+    }
+}
+
 class RandomPairViewController: UIViewController {
     
     //MARK:- IBOutlets
@@ -24,6 +33,7 @@ class RandomPairViewController: UIViewController {
     @IBOutlet weak var birdImageView: UIImageView!
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var shuffleButton: UIButton!
+    @IBOutlet weak var testImage: RoundedImageView!
     
     //MARK:- Variables
     var birdData: [BirdsSpecies]?
@@ -75,24 +85,26 @@ class RandomPairViewController: UIViewController {
         setupDataPersistence()
         loadBirdData()
         loadPlantData()
-        configureUI()
+//        configureUI()
         fetchFavoriteDuos()
         generateRandomPair()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        configureUI()
+    }
     //MARK:- Funcs
     private func configureUI() {
-        birdImageView.layer.masksToBounds = false
-        plantImageView.layer.masksToBounds = false
-        birdImageView.layer.borderWidth = 1.0
-        plantImageView.layer.borderWidth = 1.0
-        birdImageView.layer.borderColor = UIColor.white.cgColor
-        plantImageView.layer.borderColor = UIColor.white.cgColor
-        birdImageView.clipsToBounds = true
-        plantImageView.clipsToBounds = true
-        birdImageView.layer.cornerRadius = birdImageView.frame.height / 2.09
-        plantImageView.layer.cornerRadius = plantImageView.frame.height / 2.08
-        
-        shuffleButton.layer.cornerRadius = 8
+//        birdImageView.layer.masksToBounds = false
+//        plantImageView.layer.masksToBounds = false
+//        birdImageView.layer.borderWidth = 1.0
+//        plantImageView.layer.borderWidth = 1.0
+//        birdImageView.layer.borderColor = UIColor.white.cgColor
+//        plantImageView.layer.borderColor = UIColor.white.cgColor
+//        birdImageView.clipsToBounds = true
+//        plantImageView.clipsToBounds = true
+//        birdImageView.layer.cornerRadius = birdImageView.frame.height / 2.0
+//        plantImageView.layer.cornerRadius = plantImageView.frame.height / 2.0
+//        shuffleButton.layer.cornerRadius = 8
     }
     // These functions generate random pairs, or individually random data to use in the app
     private func fetchFavoriteDuos() {
