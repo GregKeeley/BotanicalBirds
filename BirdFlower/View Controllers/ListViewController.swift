@@ -67,7 +67,6 @@ class ListViewController: UIViewController {
     private func loadAllData() {
         birdData = BirdsSpecies.decodeBirdSpeciesData()!
         plantData = PlantsSpecies.decodeFlowers()!
-//        fetchFavoriteDuos()
         generateRandomDuos()
     }
     // Note: This is a great example of indexing into the smaller of two arrays for data!

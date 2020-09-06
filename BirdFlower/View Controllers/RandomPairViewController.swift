@@ -55,12 +55,12 @@ class RandomPairViewController: UIViewController {
     var randomPair: FavoriteDuo?
     var randomBird: BirdsSpecies? {
         didSet {
-            birdNameLabel.text = "\(randomBird ?? BirdsSpecies(commonName: "Common", scientificName: "Scientificus"))"
+            birdNameLabel.text = "\(randomBird?.commonName ?? "Bird")"
         }
     }
     var randomPlant: PlantsSpecies? {
         didSet {
-            plantNameLabel.text = "\(randomPlant)"
+            plantNameLabel.text = "\(randomPlant?.name ?? "Plant")"
         }
     }
     var isFavorite: Bool = false
