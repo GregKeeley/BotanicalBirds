@@ -56,7 +56,7 @@ class RandomPairViewController: UIViewController {
     var isFavorite: Bool = false
     var favoriteDuos: [String]? {
         didSet {
-
+            
         }
     }
     var dataPersistence: DataPersistence<String>?
@@ -72,6 +72,7 @@ class RandomPairViewController: UIViewController {
     //MARK:- View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupDataPersistence()
         loadBirdData()
         loadPlantData()
         configureUI()
@@ -166,6 +167,11 @@ class RandomPairViewController: UIViewController {
         let flickerPhotoEndpoint = "https://farm\(photo.first?.farm ?? 0).staticflickr.com/\(photo.first?.server ?? "")/\(photo.first?.id ?? "")_\(photo.first?.secret ?? "")_m.jpg".lowercased()
         loadPhotoFromURL(with: flickerPhotoEndpoint, imageView: plantImageView)
     }
+    private func setupDataPersistence() {
+        if let tabBarController = self.tabBarController as? MainTabBarController {
+            dataPersistence = tabBarController.dataPersistence
+        }
+    }
     //MARK:- IBActions
     @IBAction func shuffleButtonPressed(_ sender: UIButton) {
         isFavorite = false
@@ -211,3 +217,8 @@ class RandomPairViewController: UIViewController {
 }
 
 //MARK:- Extensions
+extension RandomPairViewController: PersistenceStackClient {
+    func setStack(stack: DataPersistence<String>) {
+        self.dataPersistence = stack
+    }
+}

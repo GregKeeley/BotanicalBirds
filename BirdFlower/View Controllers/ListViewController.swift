@@ -26,11 +26,12 @@ class ListViewController: UIViewController {
     var favoriteDuos: [String]? {
         didSet {
             print("There are \(favoriteDuos?.count ?? -1) favorites")
+            tableView.reloadData()
         }
     }
     var randomDuos = [String]()
     
-    public var dataPersistence: DataPersistence<FavoriteDuo>?
+    public var dataPersistence: DataPersistence<String>?
     
     var currentSortType = SortType.randomDuos {
         didSet {
@@ -47,9 +48,11 @@ class ListViewController: UIViewController {
     //MARK:- ViewLifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupDataPersistence()
         tableView.dataSource = self
         tableView.delegate = self
         loadAllData()
+        
         navigationItem.rightBarButtonItem?.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -80,13 +83,12 @@ class ListViewController: UIViewController {
         }
     }
     private func fetchFavoriteDuos() {
-        
-//        do {
-//            favoriteDuos = try dataPersistence?.loadItems()
-//            dump(favoriteDuos)
-//        } catch {
-//            showAlert(title: "Well, this is embarassing", message: "Failed to load favorites...")
-//        }
+        do {
+            favoriteDuos = try dataPersistence?.loadItems()
+            dump(favoriteDuos)
+        } catch {
+            showAlert(title: "Well, this is embarassing", message: "Failed to load favorites...")
+        }
     }
     //MARK:- IBActions
     @IBAction func toggleButtonPressed(_ sender: UIBarButtonItem) {
@@ -101,7 +103,11 @@ class ListViewController: UIViewController {
             currentSortType = .birds
         }
     }
-    
+    private func setupDataPersistence() {
+        if let tabBarController = self.tabBarController as? MainTabBarController {
+            dataPersistence = tabBarController.dataPersistence
+        }
+    }
 }
 
 //MARK:- Extensions
@@ -164,3 +170,8 @@ extension ListViewController: UITableViewDataSource {
     }
 }
 
+extension ListViewController: PersistenceStackClient {
+    func setStack(stack: DataPersistence<String>) {
+        self.dataPersistence = stack
+    }
+}
