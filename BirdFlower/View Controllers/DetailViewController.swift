@@ -9,13 +9,25 @@
 import UIKit
 
 class DetailViewController: UIViewController {
-
+    
+    @IBOutlet weak var birdImageView: UIImageView!
+    @IBOutlet weak var plantImageView: UIImageView!
+    
+    var duo = ""
+    var bird = ""
+    var plant = ""
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
     }
-    
-
+    private func setupUI() {
+        
+    }
+    private func loadVariables() {
+        
+    }
 
 
 }

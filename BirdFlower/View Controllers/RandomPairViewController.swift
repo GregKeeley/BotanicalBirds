@@ -13,6 +13,7 @@ import DataPersistence
 enum SearchType {
     case bird
     case plant
+    case duo
 }
 
 @IBDesignable class RoundedImageView: UIImageView {

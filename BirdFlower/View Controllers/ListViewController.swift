@@ -112,7 +112,9 @@ class ListViewController: UIViewController {
 
 //MARK:- Extensions
 extension ListViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.navigationController?.navigationBar.tintColor = UIColor.white
+    }
 }
 extension ListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

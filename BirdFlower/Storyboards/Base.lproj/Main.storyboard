@@ -73,10 +73,10 @@
             </objects>
             <point key="canvasLocation" x="1802.8985507246377" y="-309.375"/>
         </scene>
-        <!--View Controller-->
+        <!--Detail View Controller-->
         <scene sceneID="W8n-Gx-pcu">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="mD2-UH-5og" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="mD2-UH-5og" customClass="DetailViewController" customModule="BirdFlower" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cqy-DV-ScD">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -154,6 +154,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="wH6-kD-mln"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black"/>
+                    <connections>
+                        <outlet property="birdImageView" destination="uu0-nd-uOX" id="kif-8n-qFi"/>
+                        <outlet property="plantImageView" destination="uu0-nd-uOX" id="nca-rg-zCC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YI9-AT-nMF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
