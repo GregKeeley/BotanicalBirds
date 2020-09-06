@@ -23,7 +23,7 @@ class ListViewController: UIViewController {
     //MARK:- Variables/Constants
     var birdData = [BirdsSpecies]()
     var plantData = [PlantsSpecies]()
-    var favoriteDuos: [String]? {
+    var favoriteDuos: [FavoriteDuo]? {
         didSet {
             print("There are \(favoriteDuos?.count ?? -1) favorites")
             tableView.reloadData()
@@ -31,7 +31,7 @@ class ListViewController: UIViewController {
     }
     var randomDuos = [String]()
     
-    public var dataPersistence: DataPersistence<String>?
+    public var dataPersistence: DataPersistence<FavoriteDuo>?
     
     var currentSortType = SortType.randomDuos {
         didSet {
@@ -87,7 +87,8 @@ class ListViewController: UIViewController {
             favoriteDuos = try dataPersistence?.loadItems()
             dump(favoriteDuos)
         } catch {
-            showAlert(title: "Well, this is embarassing", message: "Failed to load favorites...")
+            print("Failed to load favorites")
+//            showAlert(title: "Well, this is embarassing", message: "Failed to load favorites...")
         }
     }
     //MARK:- IBActions
@@ -162,7 +163,7 @@ extension ListViewController: UITableViewDataSource {
             navigationController?.navigationBar.prefersLargeTitles = true
             if favoriteDuos?.count ?? -1 >= 1 {
                 let favorite = favoriteDuos?[indexPath.row]
-                cell.textLabel?.text = ("\(favorite ?? "Bird")")
+                cell.textLabel?.text = ("\(favorite?.birdCommonName ?? "Bird") + \(favorite?.plantName ?? "Plant")")
                 cell.detailTextLabel?.text = ""
             } else {
                 cell.textLabel?.text = "Looks like favorites is empty"
@@ -174,6 +175,6 @@ extension ListViewController: UITableViewDataSource {
 
 extension ListViewController: PersistenceStackClient {
     func setStack(stack: DataPersistence<String>) {
-        self.dataPersistence = stack
+//        self.dataPersistence = stack
     }
 }

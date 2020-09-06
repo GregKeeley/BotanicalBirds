@@ -10,24 +10,29 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
+   //MARK:- IBOutlets
     @IBOutlet weak var birdImageView: UIImageView!
     @IBOutlet weak var plantImageView: UIImageView!
+    @IBOutlet weak var birdCommonNameLabel: UILabel!
+    @IBOutlet weak var birdScientificNameLabel: UILabel!
+    @IBOutlet weak var plantNameLabel: UILabel!
     
+    //MARK:- Variables and Constants
     var duo = ""
     var bird = ""
     var plant = ""
     
-    
+    //MARK:- View LifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
         
     }
+    
+    //MARK:- Functions
     private func setupUI() {
-        
-    }
-    private func loadVariables() {
-        
     }
 
 
 }
+//MARK:- Extensions
+

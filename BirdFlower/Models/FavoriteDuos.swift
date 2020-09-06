@@ -9,5 +9,7 @@
 import Foundation
 
 struct FavoriteDuo: Codable & Equatable {
-    var item: String
+    var birdCommonName: String
+    var birdScientificName: String
+    var plantName: String
 }

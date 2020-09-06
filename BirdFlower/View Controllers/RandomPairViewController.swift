@@ -34,7 +34,6 @@ class RandomPairViewController: UIViewController {
     @IBOutlet weak var birdImageView: UIImageView!
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var shuffleButton: UIButton!
-    @IBOutlet weak var testImage: RoundedImageView!
     
     //MARK:- Variables
     var birdData: [BirdsSpecies]?
@@ -54,31 +53,24 @@ class RandomPairViewController: UIViewController {
     var flickerBirdImageURL: String?
     var flickerPlantImageURL: String?
     var randomPair: FavoriteDuo?
-    var randomBird = "" {
+    var randomBird: BirdsSpecies? {
         didSet {
-            birdNameLabel.text = "\(randomBird)"
+            birdNameLabel.text = "\(randomBird ?? BirdsSpecies(commonName: "Common", scientificName: "Scientificus"))"
         }
     }
-    var randomPlant = "" {
+    var randomPlant: PlantsSpecies? {
         didSet {
             plantNameLabel.text = "\(randomPlant)"
         }
     }
     var isFavorite: Bool = false
-    var favoriteDuos: [String]? {
+    var favoriteDuos: [FavoriteDuo]? {
         didSet {
             
         }
     }
-    var dataPersistence: DataPersistence<String>?
-    
-//    init(_ dataPersistence: DataPersistence<String>) {
-//        self.dataPersistence = dataPersistence
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    //MARK: dataPersistence Instance
+    var dataPersistence: DataPersistence<FavoriteDuo>?
     
     //MARK:- View lifecycle
     override func viewDidLoad() {
@@ -91,22 +83,8 @@ class RandomPairViewController: UIViewController {
         generateRandomPair()
     }
     override func viewWillAppear(_ animated: Bool) {
-        configureUI()
     }
     //MARK:- Funcs
-    private func configureUI() {
-//        birdImageView.layer.masksToBounds = false
-//        plantImageView.layer.masksToBounds = false
-//        birdImageView.layer.borderWidth = 1.0
-//        plantImageView.layer.borderWidth = 1.0
-//        birdImageView.layer.borderColor = UIColor.white.cgColor
-//        plantImageView.layer.borderColor = UIColor.white.cgColor
-//        birdImageView.clipsToBounds = true
-//        plantImageView.clipsToBounds = true
-//        birdImageView.layer.cornerRadius = birdImageView.frame.height / 2.0
-//        plantImageView.layer.cornerRadius = plantImageView.frame.height / 2.0
-//        shuffleButton.layer.cornerRadius = 8
-    }
     // These functions generate random pairs, or individually random data to use in the app
     private func fetchFavoriteDuos() {
         do {
@@ -125,22 +103,21 @@ class RandomPairViewController: UIViewController {
     private func generateRandomPair() {
         generateRandomBird() // getting a random Bird, then its searching flicker
         generateRandomPlant()
-//        searchFlickerPhotos(for: randomBird, searchType: .bird)
-//        searchFlickerPhotos(for: randomPlant, searchType: .plant)
+
         
     }
     private func generateRandomBird() {
-        randomBird = birdData?.randomElement()?.commonName ?? "BIRD"
+        randomBird = birdData?.randomElement()
         makeRandomPair()
-        searchFlickerPhotos(for: randomBird, searchType: .bird)
+        searchFlickerPhotos(for: randomBird?.commonName ?? "", searchType: .bird)
     }
     private func generateRandomPlant() {
-        randomPlant = plantData?.randomElement()?.name ?? "PLANT"
+        randomPlant = plantData?.randomElement()
         makeRandomPair()
-        searchFlickerPhotos(for: randomPlant, searchType: .plant)
+        searchFlickerPhotos(for: randomPlant?.name ?? "", searchType: .plant)
     }
     private func makeRandomPair() {
-        randomPair = FavoriteDuo(item: ("\(randomBird) + \(randomPlant)"))
+        randomPair = FavoriteDuo(birdCommonName: randomBird?.commonName ?? "Bird", birdScientificName: randomBird?.scientificName ?? "Scientific name", plantName: randomPlant?.name ?? "Plant name")
     }
     /// Sets the image view using KingFisher to set a UIImageView
     ///
@@ -212,7 +189,7 @@ class RandomPairViewController: UIViewController {
         isFavorite.toggle()
         if isFavorite {
             do {
-                try dataPersistence?.createItem(randomPair!.item)
+                try dataPersistence?.createItem(randomPair!)
                 showAlert(title: "Success!", message: "Favorite saved")
                 favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
                 favoriteButton.tintColor = #colorLiteral(red: 0.8201736992, green: 0.1226904487, blue: 0.007086123212, alpha: 1)
@@ -220,7 +197,7 @@ class RandomPairViewController: UIViewController {
                 showAlert(title: "Oops!", message: "Something went wrong. Maybe write this one down...")
             }
         } else {
-            guard let index = favoriteDuos?.firstIndex(of: randomPair!.item) else {
+            guard let index = favoriteDuos?.firstIndex(of: randomPair!) else {
                 showAlert(title: "Could not find favorite", message: "Failed to remove favorite, or it wasn't a favorite to begin with")
                 favoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
                 favoriteButton.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
@@ -242,6 +219,6 @@ class RandomPairViewController: UIViewController {
 //MARK:- Extensions
 extension RandomPairViewController: PersistenceStackClient {
     func setStack(stack: DataPersistence<String>) {
-        self.dataPersistence = stack
+//        self.dataPersistence = stack
     }
 }

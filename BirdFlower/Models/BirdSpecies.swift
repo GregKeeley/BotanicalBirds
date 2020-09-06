@@ -8,7 +8,8 @@
 
 import Foundation
 
-class BirdsSpecies: Decodable {
+class BirdsSpecies: Codable {
+    
     var commonName: String
     var scientificName: String
     

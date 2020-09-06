@@ -155,8 +155,11 @@
                     <navigationItem key="navigationItem" id="wH6-kD-mln"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black"/>
                     <connections>
+                        <outlet property="birdCommonNameLabel" destination="11D-rQ-14z" id="oTE-Ad-D4c"/>
                         <outlet property="birdImageView" destination="uu0-nd-uOX" id="kif-8n-qFi"/>
+                        <outlet property="birdScientificNameLabel" destination="BMj-Jd-B47" id="PoI-5i-RyA"/>
                         <outlet property="plantImageView" destination="uu0-nd-uOX" id="nca-rg-zCC"/>
+                        <outlet property="plantNameLabel" destination="phs-bO-4ZT" id="FHS-0I-iUO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YI9-AT-nMF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
