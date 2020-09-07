@@ -26,8 +26,14 @@ class ListViewController: UIViewController {
     var plantData = [PlantsSpecies]()
     var favoriteDuos: [FavoriteDuo]? {
         didSet {
-            print("There are \(favoriteDuos?.count ?? -1) favorites")
             tableView.reloadData()
+            if favoriteDuos?.isEmpty ?? true {
+                tableView.backgroundView = EmptyView.init(title: "Looks like you don't have any favorites :(", message: "Head over to the \"Shuffle\" tab and tap the heart button on any pair you want to save and come back here to check them out", imageName: "heart.fill")
+                tableView.separatorStyle = .none
+            } else {
+                tableView.reloadData()
+                tableView.backgroundView = nil
+            }
         }
     }
     var randomDuos = [FavoriteDuo]()
@@ -39,7 +45,7 @@ class ListViewController: UIViewController {
             tableView.reloadData()
         }
     }
-
+    
     //MARK:- ViewLifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -210,15 +216,13 @@ extension ListViewController: UITableViewDataSource {
                 let favorite = favoriteDuos?[indexPath.row]
                 cell.textLabel?.text = ("\(favorite?.birdCommonName ?? "Bird") + \(favorite?.plantName ?? "Plant")")
                 cell.detailTextLabel?.text = ""
-            } else {
-                cell.textLabel?.text = "Looks like favorites is empty"
             }
         }
         return cell
     }
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         if favoriteDuos?.count ?? 0 > 0 {
-        return currentSortType == .favorites
+            return currentSortType == .favorites
         } else {
             return false
         }
