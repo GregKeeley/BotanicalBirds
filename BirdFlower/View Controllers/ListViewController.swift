@@ -26,12 +26,12 @@ class ListViewController: UIViewController {
     var plantData = [PlantsSpecies]()
     var favoriteDuos: [FavoriteDuo]? {
         didSet {
-            tableView.reloadData()
+//            tableView.reloadData()
             if favoriteDuos?.isEmpty ?? true {
                 tableView.backgroundView = EmptyView.init(title: "Looks like you don't have any favorites :(", message: "Head over to the \"Shuffle\" tab and tap the heart button on any pair you want to save and come back here to check them out", imageName: "heart.fill")
                 tableView.separatorStyle = .none
             } else {
-                tableView.reloadData()
+//                tableView.reloadData()
                 tableView.backgroundView = nil
             }
         }
@@ -57,6 +57,7 @@ class ListViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         fetchFavoriteDuos()
+        tableView.reloadData()
     }
     
     //MARK:- Functions
@@ -179,11 +180,12 @@ extension ListViewController: UITableViewDataSource {
         case .plants:
             return plantData.count
         case .favorites:
-            if favoriteDuos?.count ?? 0 >= 1 {
-                return favoriteDuos?.count ?? 0
-            } else {
-                return 1
-            }
+            return favoriteDuos?.count ?? 0
+//            if favoriteDuos?.count ?? 0 >= 1 {
+//                return favoriteDuos?.count ?? 0
+//            } else {
+//                return 0
+//            }
         }
     }
     
@@ -230,9 +232,27 @@ extension ListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         switch editingStyle {
         case .delete:
+            // Check sort type is favorites (We dont want to be able to delete anything else)
             if currentSortType == .favorites {
+                // Make sure we have a favorite item
+                guard let favoriteItem = favoriteDuos?[indexPath.row] else {
+                    return
+                }
+                // Get the index of the item to remove later
+                guard let favoriteIndex = favoriteDuos?.firstIndex(of: favoriteItem ) else {
+                    showAlert(title: "Could not find favorite", message: "Failed to remove favorite, or it wasn't a favorite to begin with")
+                    return
+                }
+                do {
+                    // Delete the favorite item from data persistence
+                    try dataPersistence?.deleteItem(at: favoriteIndex)
+                } catch {
+                    showAlert(title: "Failed to remove favorite", message: "Your guess is as good as mine")
+                }
+                // Finally, we can remove the item from the array of favorites, and reload the tableview
                 favoriteDuos?.remove(at: indexPath.row)
-                tableView.reloadData()
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+//                tableView.reloadData()
             }
         case .insert:
             break
