@@ -114,14 +114,6 @@ class ListViewController: UIViewController {
 //MARK:- Extensions
 extension ListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-/*
-        if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NewsDetailsVCID") as? NewsDetailsViewController {
-              viewController.newsObj = newsObj
-              if let navigator = navigationController {
-                  navigator.pushViewController(viewController, animated: true)
-              }
-          }
-*/
         switch currentSortType {
         case .randomDuos:
             let item = randomDuos[indexPath.row]
@@ -183,7 +175,6 @@ extension ListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "basicCell", for: indexPath)
-        // Common name
         switch currentSortType {
         case .randomDuos:
             navigationItem.title = "Random Pairs"

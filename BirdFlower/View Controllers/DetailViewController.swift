@@ -19,8 +19,16 @@ class DetailViewController: UIViewController {
     
     //MARK:- Variables and Constants
     var duo: FavoriteDuo?
-    //    var bird = ""
-    //    var plant = ""
+    var flickerBirdImageData: FlickerSearchResult? {
+        didSet {
+            loadBirdFlickerPhoto(for: (flickerBirdImageData?.photos.photo)!)
+        }
+    }
+    var flickerPlantImageData: FlickerSearchResult? {
+        didSet {
+            loadFlickerPlantPhoto(for: (flickerPlantImageData?.photos.photo)!)
+        }
+    }
     
     //MARK:- Init
     init(duo: FavoriteDuo) {
@@ -43,8 +51,49 @@ class DetailViewController: UIViewController {
         birdCommonNameLabel.text = duo?.birdCommonName
         birdScientificNameLabel.text = duo?.birdScientificName
         plantNameLabel.text = duo?.plantName
+        searchFlickerImageData()
     }
     
+    private func searchFlickerImageData() {
+        searchFlickerPhotos(for: duo?.birdCommonName ?? "", searchType: .bird)
+        searchFlickerPhotos(for: duo?.plantName ?? "", searchType: .plant)
+    }
+    private func searchFlickerPhotos(for query: String, searchType: SearchType) {
+        FlickerAPI.searchPhotos(searchQuery: query) { [weak self] (results) in
+            switch results {
+            case .failure(let appError):
+                print("Failed to search flicker for a photo: \(appError)")
+                DispatchQueue.main.async {
+                    if searchType == .bird {
+                        self?.birdImageView.image = UIImage(systemName: "questionmark.circle")
+                    } else if searchType == .plant {
+                        self?.plantImageView.image = UIImage(systemName: "questionmark.circle")
+                    }
+                }
+            case .success(let results):
+                if searchType == .bird {
+                    self?.flickerBirdImageData = results
+                } else if searchType == .plant {
+                    self?.flickerPlantImageData = results
+                }
+            }
+        }
+    }
+    
+    private func loadPhotoFromURL(with url: String, imageView: UIImageView) {
+        DispatchQueue.main.async {
+            imageView.kf.indicatorType = .activity
+            imageView.kf.setImage(with: URL(string: url))
+        }
+    }
+    private func loadBirdFlickerPhoto(for photo: [PhotoResult]) {
+        let flickerPhotoEndpoint = "https://farm\(photo.first?.farm ?? 0).staticflickr.com/\(photo.first?.server ?? "")/\(photo.first?.id ?? "")_\(photo.first?.secret ?? "")_m.jpg".lowercased()
+        loadPhotoFromURL(with: flickerPhotoEndpoint, imageView: birdImageView)
+    }
+    private func loadFlickerPlantPhoto(for photo: [PhotoResult]) {
+        let flickerPhotoEndpoint = "https://farm\(photo.first?.farm ?? 0).staticflickr.com/\(photo.first?.server ?? "")/\(photo.first?.id ?? "")_\(photo.first?.secret ?? "")_m.jpg".lowercased()
+        loadPhotoFromURL(with: flickerPhotoEndpoint, imageView: plantImageView)
+    }
     
 }
 //MARK:- Extensions
