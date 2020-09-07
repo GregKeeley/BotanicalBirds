@@ -8,6 +8,7 @@
 
 import UIKit
 import DataPersistence
+import SafariServices
 
 enum SortType {
     case birds
@@ -38,13 +39,7 @@ class ListViewController: UIViewController {
             tableView.reloadData()
         }
     }
-    //    init(_ dataPersistence: DataPersistence<FavoriteDuo>) {
-    //        self.dataPersistence = dataPersistence
-    //        super.init(nibName: nil, bundle: nil)
-    //    }
-    //    required init?(coder: NSCoder) {
-    //        super.init(coder: coder)
-    //    }
+
     //MARK:- ViewLifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,13 +47,17 @@ class ListViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         loadAllData()
-        
-        navigationItem.rightBarButtonItem?.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
+        setupNavigationBar()
     }
     override func viewWillAppear(_ animated: Bool) {
         fetchFavoriteDuos()
     }
+    
     //MARK:- Functions
+    private func setupNavigationBar() {
+        navigationItem.rightBarButtonItem?.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
+        navigationItem.leftBarButtonItem?.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
+    }
     private func getFavoritesFromRandomPairVC() {
         let barViewControllers = self.tabBarController?.viewControllers
         let randoVC = barViewControllers![1] as! RandomPairViewController
@@ -91,6 +90,11 @@ class ListViewController: UIViewController {
             //            showAlert(title: "Well, this is embarassing", message: "Failed to load favorites...")
         }
     }
+    private func setupDataPersistence() {
+        if let tabBarController = self.tabBarController as? MainTabBarController {
+            dataPersistence = tabBarController.dataPersistence
+        }
+    }
     //MARK:- IBActions
     @IBAction func toggleButtonPressed(_ sender: UIBarButtonItem) {
         switch currentSortType {
@@ -104,10 +108,14 @@ class ListViewController: UIViewController {
             currentSortType = .birds
         }
     }
-    private func setupDataPersistence() {
-        if let tabBarController = self.tabBarController as? MainTabBarController {
-            dataPersistence = tabBarController.dataPersistence
+    
+    @IBAction func aboutButtonPressed(_ sender: UIBarButtonItem) {
+        if let aboutVC = UIStoryboard(name: "AboutViewController", bundle: nil).instantiateViewController(identifier: "aboutViewController") as? AboutViewController {
+            if let navigator = navigationController {
+                navigator.pushViewController(aboutVC, animated: true)
+            }
         }
+        self.navigationController?.navigationBar.tintColor = UIColor.white
     }
 }
 
