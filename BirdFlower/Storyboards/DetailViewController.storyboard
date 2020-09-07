@@ -20,10 +20,10 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hYh-t6-JEv">
-                                <rect key="frame" x="20" y="108" width="374" height="224"/>
+                                <rect key="frame" x="20" y="88" width="374" height="224"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sdn-KB-wPb">
-                                <rect key="frame" x="20" y="375.5" width="374" height="23"/>
+                                <rect key="frame" x="20" y="355.5" width="374" height="23"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Scientific Name">
                                         <attributes>
@@ -36,7 +36,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kby-ce-mtL">
-                                <rect key="frame" x="20" y="340" width="374" height="27.5"/>
+                                <rect key="frame" x="20" y="320" width="374" height="27.5"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Bird common name">
                                         <attributes>
@@ -48,10 +48,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rkj-C2-srf">
-                                <rect key="frame" x="20" y="418.5" width="374" height="212"/>
+                                <rect key="frame" x="20" y="442.5" width="374" height="212"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DtR-of-uoX">
-                                <rect key="frame" x="20" y="638.5" width="374" height="27.5"/>
+                                <rect key="frame" x="20" y="662.5" width="374" height="27.5"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Plant Name">
                                         <attributes>
@@ -75,9 +75,9 @@
                             <constraint firstItem="1aM-Lh-khB" firstAttribute="trailing" secondItem="kby-ce-mtL" secondAttribute="trailing" constant="20" id="fAR-XO-APc"/>
                             <constraint firstItem="1aM-Lh-khB" firstAttribute="trailing" secondItem="hYh-t6-JEv" secondAttribute="trailing" constant="20" id="gaV-wS-kqa"/>
                             <constraint firstItem="1aM-Lh-khB" firstAttribute="trailing" secondItem="sdn-KB-wPb" secondAttribute="trailing" constant="20" id="nMJ-GJ-myh"/>
+                            <constraint firstItem="Rkj-C2-srf" firstAttribute="top" secondItem="sdn-KB-wPb" secondAttribute="bottom" constant="64" id="nvA-X3-YUl"/>
                             <constraint firstItem="1aM-Lh-khB" firstAttribute="trailing" secondItem="Rkj-C2-srf" secondAttribute="trailing" constant="20" id="p8h-KK-zHZ"/>
-                            <constraint firstItem="hYh-t6-JEv" firstAttribute="top" secondItem="1aM-Lh-khB" secondAttribute="top" constant="20" id="pK1-YL-ECm"/>
-                            <constraint firstItem="Rkj-C2-srf" firstAttribute="top" secondItem="sdn-KB-wPb" secondAttribute="bottom" constant="20" id="pqR-HS-uJ1"/>
+                            <constraint firstItem="hYh-t6-JEv" firstAttribute="top" secondItem="1aM-Lh-khB" secondAttribute="top" id="pK1-YL-ECm"/>
                             <constraint firstItem="hYh-t6-JEv" firstAttribute="height" secondItem="drW-ck-4u2" secondAttribute="height" multiplier="0.25" id="qJj-U1-Fzy"/>
                             <constraint firstItem="Rkj-C2-srf" firstAttribute="leading" secondItem="1aM-Lh-khB" secondAttribute="leading" constant="20" id="qQg-2V-eBM"/>
                             <constraint firstItem="sdn-KB-wPb" firstAttribute="top" secondItem="kby-ce-mtL" secondAttribute="bottom" constant="8" id="qXc-z1-KIB"/>

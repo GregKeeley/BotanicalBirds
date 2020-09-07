@@ -180,7 +180,7 @@ extension ListViewController: UITableViewDataSource {
             navigationItem.title = "Random Pairs"
             navigationController?.navigationBar.prefersLargeTitles = true
             let randomDuo = randomDuos[indexPath.row]
-            cell.textLabel?.text = ("\(randomDuo)")
+            cell.textLabel?.text = ("\(randomDuo.birdCommonName) + \(randomDuo.plantName)")
             cell.detailTextLabel?.text = ""
         case .birds:
             navigationItem.title = "Birds"
