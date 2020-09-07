@@ -56,11 +56,18 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="BotanicalBirds" largeTitleDisplayMode="always" id="6Yw-7P-pCx">
-                        <barButtonItem key="leftBarButtonItem" image="arrow.2.squarepath" catalog="system" id="hKg-J0-5ht">
-                            <connections>
-                                <action selector="toggleButtonPressed:" destination="BYZ-38-t0r" id="JEJ-Cl-rad"/>
-                            </connections>
-                        </barButtonItem>
+                        <leftBarButtonItems>
+                            <barButtonItem image="arrow.2.squarepath" catalog="system" id="hKg-J0-5ht">
+                                <connections>
+                                    <action selector="toggleButtonPressed:" destination="BYZ-38-t0r" id="JEJ-Cl-rad"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Item" image="shuffle" catalog="system" id="fS3-fp-D6Y">
+                                <connections>
+                                    <action selector="shuffleRandomDuos:" destination="BYZ-38-t0r" id="IXE-OB-ylZ"/>
+                                </connections>
+                            </barButtonItem>
+                        </leftBarButtonItems>
                         <barButtonItem key="rightBarButtonItem" image="info.circle.fill" catalog="system" id="fzB-Gw-IbS">
                             <connections>
                                 <action selector="aboutButtonPressed:" destination="BYZ-38-t0r" id="8Sb-a6-ftC"/>
@@ -68,6 +75,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="shuffleBarButton" destination="fS3-fp-D6Y" id="lMn-f0-TQe"/>
                         <outlet property="tableView" destination="KTB-99-LpB" id="Qlg-Hf-ze4"/>
                     </connections>
                 </viewController>
@@ -311,5 +319,6 @@
         <image name="info.circle.fill" catalog="system" width="128" height="121"/>
         <image name="photo" catalog="system" width="128" height="93"/>
         <image name="questionmark" catalog="system" width="96" height="128"/>
+        <image name="shuffle" catalog="system" width="128" height="93"/>
     </resources>
 </document>

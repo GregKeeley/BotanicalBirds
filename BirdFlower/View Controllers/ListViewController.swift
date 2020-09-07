@@ -20,32 +20,35 @@ enum SortType {
 class ListViewController: UIViewController {
     //MARK:- IBOutlets
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var shuffleBarButton: UIBarButtonItem!
     
     //MARK:- Variables/Constants
     var birdData = [BirdsSpecies]()
     var plantData = [PlantsSpecies]()
     var favoriteDuos: [FavoriteDuo]? {
         didSet {
-//            tableView.reloadData()
             if favoriteDuos?.isEmpty ?? true {
                 tableView.backgroundView = EmptyView.init(title: "Looks like you don't have any favorites :(", message: "Head over to the \"Shuffle\" tab and tap the heart button on any pair you want to save and come back here to check them out", imageName: "heart.fill")
                 tableView.separatorStyle = .none
             } else {
-//                tableView.reloadData()
                 tableView.backgroundView = nil
             }
         }
     }
-    var randomDuos = [FavoriteDuo]()
+    var randomDuos = [FavoriteDuo]() {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     public var dataPersistence: DataPersistence<FavoriteDuo>?
     
     var currentSortType = SortType.randomDuos {
         didSet {
             tableView.reloadData()
+            checkToEnableShuffle()
         }
     }
-    
     //MARK:- ViewLifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,16 +57,19 @@ class ListViewController: UIViewController {
         tableView.delegate = self
         loadAllData()
         setupNavigationBar()
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         fetchFavoriteDuos()
         tableView.reloadData()
+        checkToEnableShuffle()
     }
     
     //MARK:- Functions
     private func setupNavigationBar() {
         navigationItem.rightBarButtonItem?.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
         navigationItem.leftBarButtonItem?.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
+        shuffleBarButton.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
     }
     private func getFavoritesFromRandomPairVC() {
         let barViewControllers = self.tabBarController?.viewControllers
@@ -77,24 +83,28 @@ class ListViewController: UIViewController {
     }
     // Note: This is a great example of indexing into the smaller of two arrays for data!
     private func generateRandomDuos() {
-        var i = 0
         for _ in 0..<min(plantData.count, birdData.count) {
-            let birdCommonName = birdData[i].commonName
-            let birdScientificName = birdData[i].scientificName
-            let plantName = plantData[i].name
+            let birdCommonName = birdData.randomElement()?.commonName ?? ""
+            let birdScientificName = birdData.randomElement()?.scientificName ?? ""
+            let plantName = plantData.randomElement()?.name ?? ""
             let randomDuo = FavoriteDuo(birdCommonName: birdCommonName, birdScientificName: birdScientificName, plantName: plantName)
             randomDuos.append(randomDuo)
-            i += 1
-            
         }
+//        var i = 0
+//        for _ in 0..<min(plantData.count, birdData.count) {
+//            let birdCommonName = birdData[i].commonName
+//            let birdScientificName = birdData[i].scientificName
+//            let plantName = plantData[i].name
+//            let randomDuo = FavoriteDuo(birdCommonName: birdCommonName, birdScientificName: birdScientificName, plantName: plantName)
+//            randomDuos.append(randomDuo)
+//            i += 1
+//        }
     }
     private func fetchFavoriteDuos() {
         do {
             favoriteDuos = try dataPersistence?.loadItems()
-            dump(favoriteDuos)
         } catch {
             print("Failed to load favorites")
-            //            showAlert(title: "Well, this is embarassing", message: "Failed to load favorites...")
         }
     }
     private func setupDataPersistence() {
@@ -102,6 +112,14 @@ class ListViewController: UIViewController {
             dataPersistence = tabBarController.dataPersistence
         }
     }
+    private func checkToEnableShuffle() {
+        if currentSortType == .randomDuos {
+            shuffleBarButton.isEnabled = true
+        } else {
+            shuffleBarButton.isEnabled = false
+        }
+    }
+    
     //MARK:- IBActions
     @IBAction func toggleButtonPressed(_ sender: UIBarButtonItem) {
         switch currentSortType {
@@ -123,6 +141,10 @@ class ListViewController: UIViewController {
             }
         }
         self.navigationController?.navigationBar.tintColor = UIColor.white
+    }
+    @IBAction func shuffleRandomDuos(_ sender: UIBarButtonItem) {
+        randomDuos.removeAll()
+        generateRandomDuos()
     }
 }
 
@@ -181,11 +203,11 @@ extension ListViewController: UITableViewDataSource {
             return plantData.count
         case .favorites:
             return favoriteDuos?.count ?? 0
-//            if favoriteDuos?.count ?? 0 >= 1 {
-//                return favoriteDuos?.count ?? 0
-//            } else {
-//                return 0
-//            }
+            //            if favoriteDuos?.count ?? 0 >= 1 {
+            //                return favoriteDuos?.count ?? 0
+            //            } else {
+            //                return 0
+            //            }
         }
     }
     
@@ -252,7 +274,7 @@ extension ListViewController: UITableViewDataSource {
                 // Finally, we can remove the item from the array of favorites, and reload the tableview
                 favoriteDuos?.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .automatic)
-//                tableView.reloadData()
+                //                tableView.reloadData()
             }
         case .insert:
             break
