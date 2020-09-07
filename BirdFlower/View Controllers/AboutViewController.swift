@@ -23,6 +23,14 @@ class AboutViewController: UIViewController {
         websiteButton.layer.cornerRadius = 4
         bkgdView.layer.cornerRadius = 4
     }
+    @IBAction func websiteButtonPressed(_ sender: UIButton) {
+        guard let url = URL(string: "https://www.meghankeeley.com/botanicalbirds") else {
+            showAlert(title: "Error", message: "Something went wrong with safari link")
+            return
+        }
+        let safariVC = SFSafariViewController(url: url)
+        present(safariVC, animated: true)
+    }
 }
 
 

@@ -173,8 +173,8 @@ extension ListViewController: UITableViewDataSource {
         case .plants:
             return plantData.count
         case .favorites:
-            if favoriteDuos?.count ?? -1 >= 1 {
-                return favoriteDuos?.count ?? -1
+            if favoriteDuos?.count ?? 0 >= 1 {
+                return favoriteDuos?.count ?? 0
             } else {
                 return 1
             }
@@ -206,7 +206,7 @@ extension ListViewController: UITableViewDataSource {
         case .favorites:
             navigationItem.title = "Favorites"
             navigationController?.navigationBar.prefersLargeTitles = true
-            if favoriteDuos?.count ?? -1 >= 1 {
+            if favoriteDuos?.count ?? 0 >= 1 {
                 let favorite = favoriteDuos?[indexPath.row]
                 cell.textLabel?.text = ("\(favorite?.birdCommonName ?? "Bird") + \(favorite?.plantName ?? "Plant")")
                 cell.detailTextLabel?.text = ""
@@ -215,6 +215,26 @@ extension ListViewController: UITableViewDataSource {
             }
         }
         return cell
+    }
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if favoriteDuos?.count ?? 0 > 0 {
+        return currentSortType == .favorites
+        } else {
+            return false
+        }
+    }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        switch editingStyle {
+        case .delete:
+            if currentSortType == .favorites {
+                favoriteDuos?.remove(at: indexPath.row)
+                tableView.reloadData()
+            }
+        case .insert:
+            break
+        default:
+            print("...")
+        }
     }
 }
 
