@@ -10,7 +10,7 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
-   //MARK:- IBOutlets
+    //MARK:- IBOutlets
     @IBOutlet weak var birdImageView: UIImageView!
     @IBOutlet weak var plantImageView: UIImageView!
     @IBOutlet weak var birdCommonNameLabel: UILabel!
@@ -18,21 +18,34 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var plantNameLabel: UILabel!
     
     //MARK:- Variables and Constants
-    var duo = ""
-    var bird = ""
-    var plant = ""
+    var duo: FavoriteDuo?
+    //    var bird = ""
+    //    var plant = ""
+    
+    //MARK:- Init
+    init(duo: FavoriteDuo) {
+        self.duo = duo
+        super.init(nibName: nil, bundle: nil)
+    }
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        //        fatalError("init(coder:) has not been implemented")
+    }
     
     //MARK:- View LifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupUI()
     }
     
     //MARK:- Functions
     private func setupUI() {
+        birdCommonNameLabel.text = duo?.birdCommonName
+        birdScientificNameLabel.text = duo?.birdScientificName
+        plantNameLabel.text = duo?.plantName
     }
-
-
+    
+    
 }
 //MARK:- Extensions
 

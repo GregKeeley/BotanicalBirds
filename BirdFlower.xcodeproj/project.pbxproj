@@ -25,6 +25,7 @@
 		88763CCB24FDE49800EE3409 /* PlantsSpecies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CCA24FDE49800EE3409 /* PlantsSpecies.swift */; };
 		88763CCD24FDEA0300EE3409 /* RandomPairViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88763CCC24FDEA0300EE3409 /* RandomPairViewController.swift */; };
 		88C0E8FD25055CB50089FED5 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C0E8FC25055CB50089FED5 /* DetailViewController.swift */; };
+		88C6782F2505B0870054BC5D /* DetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88C6782E2505B0870054BC5D /* DetailViewController.storyboard */; };
 		88D630A425017FDE0033E275 /* DataPersistence in Frameworks */ = {isa = PBXBuildFile; productRef = 88D630A325017FDE0033E275 /* DataPersistence */; };
 		88D630A82501837F0033E275 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D630A72501837F0033E275 /* MainTabBarController.swift */; };
 		88D630AA2501994C0033E275 /* UIViewController_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D630A92501994C0033E275 /* UIViewController_Extension.swift */; };
@@ -50,6 +51,7 @@
 		88763CCA24FDE49800EE3409 /* PlantsSpecies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantsSpecies.swift; sourceTree = "<group>"; };
 		88763CCC24FDEA0300EE3409 /* RandomPairViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomPairViewController.swift; sourceTree = "<group>"; };
 		88C0E8FC25055CB50089FED5 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		88C6782E2505B0870054BC5D /* DetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailViewController.storyboard; sourceTree = "<group>"; };
 		88D630A72501837F0033E275 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		88D630A92501994C0033E275 /* UIViewController_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController_Extension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -136,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				88763CAD24FDCCE900EE3409 /* Main.storyboard */,
+				88C6782E2505B0870054BC5D /* DetailViewController.storyboard */,
 				88763CB224FDCCEB00EE3409 /* LaunchScreen.storyboard */,
 			);
 			path = Storyboards;
@@ -216,6 +219,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88C6782F2505B0870054BC5D /* DetailViewController.storyboard in Resources */,
 				88763CB424FDCCEB00EE3409 /* LaunchScreen.storyboard in Resources */,
 				88763CB124FDCCEB00EE3409 /* Assets.xcassets in Resources */,
 				88763CAF24FDCCE900EE3409 /* Main.storyboard in Resources */,

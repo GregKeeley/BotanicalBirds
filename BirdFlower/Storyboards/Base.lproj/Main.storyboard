@@ -42,9 +42,6 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="mD2-UH-5og" kind="show" id="T2J-Ps-PH4"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -72,99 +69,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1802.8985507246377" y="-309.375"/>
-        </scene>
-        <!--Detail View Controller-->
-        <scene sceneID="W8n-Gx-pcu">
-            <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="mD2-UH-5og" customClass="DetailViewController" customModule="BirdFlower" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="cqy-DV-ScD">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Parakeet_+_Zebra_Plant" translatesAutoresizingMaskIntoConstraints="NO" id="mpa-gt-rZw">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JeM-vh-CAv">
-                                <rect key="frame" x="20" y="108" width="374" height="224"/>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BMj-Jd-B47">
-                                <rect key="frame" x="20" y="375.5" width="374" height="23"/>
-                                <attributedString key="attributedText">
-                                    <fragment content="Scientific Name">
-                                        <attributes>
-                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <font key="NSFont" size="17" name="Futura-MediumItalic"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="11D-rQ-14z">
-                                <rect key="frame" x="20" y="340" width="374" height="27.5"/>
-                                <attributedString key="attributedText">
-                                    <fragment content="Bird common name">
-                                        <attributes>
-                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <font key="NSFont" size="21" name="Futura-MediumItalic"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uu0-nd-uOX">
-                                <rect key="frame" x="20" y="418.5" width="374" height="212"/>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="phs-bO-4ZT">
-                                <rect key="frame" x="20" y="638.5" width="374" height="27.5"/>
-                                <attributedString key="attributedText">
-                                    <fragment content="Plant Name">
-                                        <attributes>
-                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <font key="NSFont" size="21" name="Futura-MediumItalic"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="phs-bO-4ZT" firstAttribute="leading" secondItem="NtE-zI-K2q" secondAttribute="leading" constant="20" id="5xk-jI-KyD"/>
-                            <constraint firstItem="NtE-zI-K2q" firstAttribute="trailing" secondItem="phs-bO-4ZT" secondAttribute="trailing" constant="20" id="9mM-Uz-8m7"/>
-                            <constraint firstItem="JeM-vh-CAv" firstAttribute="height" secondItem="cqy-DV-ScD" secondAttribute="height" multiplier="0.25" id="Bo3-qA-R2V"/>
-                            <constraint firstItem="JeM-vh-CAv" firstAttribute="leading" secondItem="NtE-zI-K2q" secondAttribute="leading" constant="20" id="EkY-Bz-kMu"/>
-                            <constraint firstItem="phs-bO-4ZT" firstAttribute="top" secondItem="uu0-nd-uOX" secondAttribute="bottom" constant="8" id="FaJ-Oq-WDb"/>
-                            <constraint firstItem="NtE-zI-K2q" firstAttribute="trailing" secondItem="JeM-vh-CAv" secondAttribute="trailing" constant="20" id="HFB-XC-Y8I"/>
-                            <constraint firstItem="NtE-zI-K2q" firstAttribute="trailing" secondItem="uu0-nd-uOX" secondAttribute="trailing" constant="20" id="MF8-3b-e9Z"/>
-                            <constraint firstItem="uu0-nd-uOX" firstAttribute="width" secondItem="JeM-vh-CAv" secondAttribute="width" id="Q5k-cL-IUv"/>
-                            <constraint firstItem="NtE-zI-K2q" firstAttribute="trailing" secondItem="BMj-Jd-B47" secondAttribute="trailing" constant="20" id="QX5-BD-ile"/>
-                            <constraint firstItem="BMj-Jd-B47" firstAttribute="top" secondItem="11D-rQ-14z" secondAttribute="bottom" constant="8" id="Vwr-LZ-6EN"/>
-                            <constraint firstItem="uu0-nd-uOX" firstAttribute="height" secondItem="JeM-vh-CAv" secondAttribute="height" multiplier="0.945668" id="XCA-9C-AnI"/>
-                            <constraint firstItem="11D-rQ-14z" firstAttribute="top" secondItem="JeM-vh-CAv" secondAttribute="bottom" constant="8" id="f1V-Kt-oSK"/>
-                            <constraint firstItem="BMj-Jd-B47" firstAttribute="leading" secondItem="NtE-zI-K2q" secondAttribute="leading" constant="20" id="ffG-Vk-wqL"/>
-                            <constraint firstItem="uu0-nd-uOX" firstAttribute="top" secondItem="BMj-Jd-B47" secondAttribute="bottom" constant="20" id="hGK-n6-hHI"/>
-                            <constraint firstItem="JeM-vh-CAv" firstAttribute="top" secondItem="NtE-zI-K2q" secondAttribute="top" constant="20" id="osx-yB-Xnt"/>
-                            <constraint firstItem="11D-rQ-14z" firstAttribute="leading" secondItem="NtE-zI-K2q" secondAttribute="leading" constant="20" id="uf2-P3-QMw"/>
-                            <constraint firstItem="uu0-nd-uOX" firstAttribute="leading" secondItem="NtE-zI-K2q" secondAttribute="leading" constant="20" id="xEM-DT-has"/>
-                            <constraint firstItem="NtE-zI-K2q" firstAttribute="trailing" secondItem="11D-rQ-14z" secondAttribute="trailing" constant="20" id="yfS-ut-ehi"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="NtE-zI-K2q"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="wH6-kD-mln"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black"/>
-                    <connections>
-                        <outlet property="birdCommonNameLabel" destination="11D-rQ-14z" id="oTE-Ad-D4c"/>
-                        <outlet property="birdImageView" destination="uu0-nd-uOX" id="kif-8n-qFi"/>
-                        <outlet property="birdScientificNameLabel" destination="BMj-Jd-B47" id="PoI-5i-RyA"/>
-                        <outlet property="plantImageView" destination="uu0-nd-uOX" id="nca-rg-zCC"/>
-                        <outlet property="plantNameLabel" destination="phs-bO-4ZT" id="FHS-0I-iUO"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="YI9-AT-nMF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2844.9275362318845" y="-309.375"/>
         </scene>
         <!--Shuffle-->
         <scene sceneID="2P6-Xx-C3v">

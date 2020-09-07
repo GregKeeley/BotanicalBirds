@@ -29,7 +29,7 @@ class ListViewController: UIViewController {
             tableView.reloadData()
         }
     }
-    var randomDuos = [String]()
+    var randomDuos = [FavoriteDuo]()
     
     public var dataPersistence: DataPersistence<FavoriteDuo>?
     
@@ -38,13 +38,13 @@ class ListViewController: UIViewController {
             tableView.reloadData()
         }
     }
-//    init(_ dataPersistence: DataPersistence<FavoriteDuo>) {
-//        self.dataPersistence = dataPersistence
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//    required init?(coder: NSCoder) {
-//        super.init(coder: coder)
-//    }
+    //    init(_ dataPersistence: DataPersistence<FavoriteDuo>) {
+    //        self.dataPersistence = dataPersistence
+    //        super.init(nibName: nil, bundle: nil)
+    //    }
+    //    required init?(coder: NSCoder) {
+    //        super.init(coder: coder)
+    //    }
     //MARK:- ViewLifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,9 +73,10 @@ class ListViewController: UIViewController {
     private func generateRandomDuos() {
         var i = 0
         for _ in 0..<min(plantData.count, birdData.count) {
-            let bird = birdData[i].commonName
-            let plant = plantData[i].name
-            let randomDuo = ("\(bird) + \(plant)")
+            let birdCommonName = birdData[i].commonName
+            let birdScientificName = birdData[i].scientificName
+            let plantName = plantData[i].name
+            let randomDuo = FavoriteDuo(birdCommonName: birdCommonName, birdScientificName: birdScientificName, plantName: plantName)
             randomDuos.append(randomDuo)
             i += 1
             
@@ -87,7 +88,7 @@ class ListViewController: UIViewController {
             dump(favoriteDuos)
         } catch {
             print("Failed to load favorites")
-//            showAlert(title: "Well, this is embarassing", message: "Failed to load favorites...")
+            //            showAlert(title: "Well, this is embarassing", message: "Failed to load favorites...")
         }
     }
     //MARK:- IBActions
@@ -113,6 +114,52 @@ class ListViewController: UIViewController {
 //MARK:- Extensions
 extension ListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+/*
+        if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NewsDetailsVCID") as? NewsDetailsViewController {
+              viewController.newsObj = newsObj
+              if let navigator = navigationController {
+                  navigator.pushViewController(viewController, animated: true)
+              }
+          }
+*/
+        switch currentSortType {
+        case .randomDuos:
+            let item = randomDuos[indexPath.row]
+            if let detailVC = UIStoryboard(name: "DetailViewController", bundle: nil).instantiateViewController(identifier: "DetailViewController") as? DetailViewController {
+                detailVC.duo = item
+                if let navigator = navigationController {
+                    navigator.pushViewController(detailVC, animated: true)
+                }
+            }
+        case .birds:
+            let item = birdData[indexPath.row]
+            let itemToPass = FavoriteDuo(birdCommonName: item.commonName, birdScientificName: item.scientificName, plantName: "")
+            if let detailVC = UIStoryboard(name: "DetailViewController", bundle: nil).instantiateViewController(identifier: "DetailViewController") as? DetailViewController {
+                detailVC.duo = itemToPass
+                if let navigator = navigationController {
+                    navigator.pushViewController(detailVC, animated: true)
+                }
+            }
+        case .plants:
+            let item = plantData[indexPath.row]
+            let itemToPass = FavoriteDuo(birdCommonName: "", birdScientificName: "", plantName: item.name)
+            if let detailVC = UIStoryboard(name: "DetailViewController", bundle: nil).instantiateViewController(identifier: "DetailViewController") as? DetailViewController {
+                detailVC.duo = itemToPass
+                if let navigator = navigationController {
+                    navigator.pushViewController(detailVC, animated: true)
+                }
+            }
+        case .favorites:
+            guard let item = favoriteDuos?[indexPath.row] else {
+                return
+            }
+            if let detailVC = UIStoryboard(name: "DetailViewController", bundle: nil).instantiateViewController(identifier: "DetailViewController") as? DetailViewController {
+                detailVC.duo = item
+                if let navigator = navigationController {
+                    navigator.pushViewController(detailVC, animated: true)
+                }
+            }
+        }
         self.navigationController?.navigationBar.tintColor = UIColor.white
     }
 }
@@ -174,6 +221,6 @@ extension ListViewController: UITableViewDataSource {
 
 extension ListViewController: PersistenceStackClient {
     func setStack(stack: DataPersistence<String>) {
-//        self.dataPersistence = stack
+        //        self.dataPersistence = stack
     }
 }
