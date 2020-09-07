@@ -72,9 +72,9 @@ class DetailViewController: UIViewController {
                 print("Failed to search flicker for a photo: \(appError)")
                 DispatchQueue.main.async {
                     if searchType == .bird {
-                        self?.birdImageView.image = UIImage(systemName: "questionmark.circle")
+                        self?.birdImageView.isHidden = true
                     } else if searchType == .plant {
-                        self?.plantImageView.image = UIImage(systemName: "questionmark.circle")
+                        self?.plantImageView.isHidden = true
                     }
                 }
             case .success(let results):
