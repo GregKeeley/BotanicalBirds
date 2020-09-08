@@ -10,7 +10,7 @@
         <!--Detail View Controller-->
         <scene sceneID="Ezg-XO-maU">
             <objects>
-                <viewController storyboardIdentifier="DetailViewController" hidesBottomBarWhenPushed="YES" id="j3V-Wj-f4s" customClass="DetailViewController" customModule="BirdFlower" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailViewController" hidesBottomBarWhenPushed="YES" id="j3V-Wj-f4s" customClass="DetailViewController" customModule="BotanicalBirds" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="drW-ck-4u2">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -19,7 +19,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hYh-t6-JEv">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hYh-t6-JEv" userLabel="Bird Image View">
                                 <rect key="frame" x="20" y="88" width="374" height="224"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sdn-KB-wPb">
@@ -47,7 +47,7 @@
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rkj-C2-srf">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rkj-C2-srf" userLabel="Plant Image View">
                                 <rect key="frame" x="20" y="442.5" width="374" height="212"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DtR-of-uoX">
@@ -62,27 +62,51 @@
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Igg-RL-lgj" userLabel="BirdButton">
+                                <rect key="frame" x="20" y="88" width="374" height="224"/>
+                                <connections>
+                                    <action selector="birdButtonPressed:" destination="j3V-Wj-f4s" eventType="touchUpInside" id="AQS-5W-gRK"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tjg-Km-V2Y" userLabel="PlantButton">
+                                <rect key="frame" x="20" y="442.5" width="374" height="212"/>
+                                <connections>
+                                    <action selector="plantButtonPressed:" destination="j3V-Wj-f4s" eventType="touchUpInside" id="SDk-xm-Id4"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="1aM-Lh-khB" firstAttribute="trailing" secondItem="DtR-of-uoX" secondAttribute="trailing" constant="20" id="3Bq-55-I9h"/>
+                            <constraint firstItem="tjg-Km-V2Y" firstAttribute="centerY" secondItem="Rkj-C2-srf" secondAttribute="centerY" id="3LE-kc-NYT"/>
                             <constraint firstItem="Rkj-C2-srf" firstAttribute="height" secondItem="hYh-t6-JEv" secondAttribute="height" multiplier="0.945668" id="5Af-A4-Nay"/>
+                            <constraint firstItem="tjg-Km-V2Y" firstAttribute="trailing" secondItem="Rkj-C2-srf" secondAttribute="trailing" id="6Pd-rh-Q7s"/>
                             <constraint firstItem="hYh-t6-JEv" firstAttribute="leading" secondItem="1aM-Lh-khB" secondAttribute="leading" constant="20" id="8ee-Rc-2Up"/>
+                            <constraint firstItem="Igg-RL-lgj" firstAttribute="bottom" secondItem="hYh-t6-JEv" secondAttribute="bottom" id="EBv-CZ-leP"/>
                             <constraint firstItem="kby-ce-mtL" firstAttribute="leading" secondItem="1aM-Lh-khB" secondAttribute="leading" constant="20" id="Ibo-8I-ijm"/>
+                            <constraint firstItem="tjg-Km-V2Y" firstAttribute="leading" secondItem="Rkj-C2-srf" secondAttribute="leading" id="KNP-5t-OYD"/>
                             <constraint firstItem="kby-ce-mtL" firstAttribute="top" secondItem="hYh-t6-JEv" secondAttribute="bottom" constant="8" id="MI3-NO-K3q"/>
                             <constraint firstItem="DtR-of-uoX" firstAttribute="top" secondItem="Rkj-C2-srf" secondAttribute="bottom" constant="8" id="NtE-Cn-oon"/>
+                            <constraint firstItem="Igg-RL-lgj" firstAttribute="top" secondItem="hYh-t6-JEv" secondAttribute="top" id="RgC-Y5-Hyh"/>
                             <constraint firstItem="Rkj-C2-srf" firstAttribute="width" secondItem="hYh-t6-JEv" secondAttribute="width" id="ZL2-Yj-vPt"/>
+                            <constraint firstItem="Igg-RL-lgj" firstAttribute="trailing" secondItem="hYh-t6-JEv" secondAttribute="trailing" id="aca-1n-4pw"/>
+                            <constraint firstItem="tjg-Km-V2Y" firstAttribute="bottom" secondItem="Rkj-C2-srf" secondAttribute="bottom" id="ckj-Cd-yYF"/>
                             <constraint firstItem="1aM-Lh-khB" firstAttribute="trailing" secondItem="kby-ce-mtL" secondAttribute="trailing" constant="20" id="fAR-XO-APc"/>
                             <constraint firstItem="1aM-Lh-khB" firstAttribute="trailing" secondItem="hYh-t6-JEv" secondAttribute="trailing" constant="20" id="gaV-wS-kqa"/>
+                            <constraint firstItem="Igg-RL-lgj" firstAttribute="centerY" secondItem="hYh-t6-JEv" secondAttribute="centerY" id="mDT-Ow-GLh"/>
                             <constraint firstItem="1aM-Lh-khB" firstAttribute="trailing" secondItem="sdn-KB-wPb" secondAttribute="trailing" constant="20" id="nMJ-GJ-myh"/>
                             <constraint firstItem="Rkj-C2-srf" firstAttribute="top" secondItem="sdn-KB-wPb" secondAttribute="bottom" constant="64" id="nvA-X3-YUl"/>
                             <constraint firstItem="1aM-Lh-khB" firstAttribute="trailing" secondItem="Rkj-C2-srf" secondAttribute="trailing" constant="20" id="p8h-KK-zHZ"/>
                             <constraint firstItem="hYh-t6-JEv" firstAttribute="top" secondItem="1aM-Lh-khB" secondAttribute="top" id="pK1-YL-ECm"/>
+                            <constraint firstItem="Igg-RL-lgj" firstAttribute="centerX" secondItem="hYh-t6-JEv" secondAttribute="centerX" id="pTn-2h-yMx"/>
+                            <constraint firstItem="tjg-Km-V2Y" firstAttribute="centerX" secondItem="Rkj-C2-srf" secondAttribute="centerX" id="ph3-p5-mhW"/>
                             <constraint firstItem="hYh-t6-JEv" firstAttribute="height" secondItem="drW-ck-4u2" secondAttribute="height" multiplier="0.25" id="qJj-U1-Fzy"/>
                             <constraint firstItem="Rkj-C2-srf" firstAttribute="leading" secondItem="1aM-Lh-khB" secondAttribute="leading" constant="20" id="qQg-2V-eBM"/>
                             <constraint firstItem="sdn-KB-wPb" firstAttribute="top" secondItem="kby-ce-mtL" secondAttribute="bottom" constant="8" id="qXc-z1-KIB"/>
                             <constraint firstItem="DtR-of-uoX" firstAttribute="leading" secondItem="1aM-Lh-khB" secondAttribute="leading" constant="20" id="sw5-RI-CMU"/>
+                            <constraint firstItem="tjg-Km-V2Y" firstAttribute="top" secondItem="Rkj-C2-srf" secondAttribute="top" id="tXH-ux-J1M"/>
                             <constraint firstItem="sdn-KB-wPb" firstAttribute="leading" secondItem="1aM-Lh-khB" secondAttribute="leading" constant="20" id="xBA-bU-qlX"/>
+                            <constraint firstItem="Igg-RL-lgj" firstAttribute="leading" secondItem="hYh-t6-JEv" secondAttribute="leading" id="zUg-u9-ev2"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="1aM-Lh-khB"/>
                     </view>
@@ -90,9 +114,9 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black"/>
                     <connections>
                         <outlet property="birdCommonNameLabel" destination="kby-ce-mtL" id="ym8-0R-BGQ"/>
-                        <outlet property="birdImageView" destination="hYh-t6-JEv" id="Qc8-8r-kwY"/>
+                        <outlet property="birdImageView" destination="hYh-t6-JEv" id="1p1-Gq-Ku5"/>
                         <outlet property="birdScientificNameLabel" destination="sdn-KB-wPb" id="1A5-14-ImM"/>
-                        <outlet property="plantImageView" destination="Rkj-C2-srf" id="qwI-3e-BSc"/>
+                        <outlet property="plantImageView" destination="Rkj-C2-srf" id="cnE-2b-e3U"/>
                         <outlet property="plantNameLabel" destination="DtR-of-uoX" id="krD-kP-9gl"/>
                     </connections>
                 </viewController>

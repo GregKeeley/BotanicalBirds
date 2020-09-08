@@ -9,8 +9,16 @@
 import Foundation
 
 struct FlickerAPI {
-    static func searchPhotos(searchQuery: String, completion: @escaping (Result<FlickerSearchResult, AppError>) -> ()) {
+    static func searchPhotos(searchQuery: String, contentType: SortType, completion: @escaping (Result<FlickerSearchResult, AppError>) -> ()) {
+        var tag = ""
+        if contentType == .birds {
+            tag = "bird"
+        } else {
+            tag = "plant"
+        }
         let search = searchQuery.replacingOccurrences(of: " ", with: "").addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+        //        let flickerPhotoSearchEndpoint = "https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=\(Secrets.flickerAPIKey)&tags=\(search ?? "Taco")&per_page=1&page=&format=json&nojsoncallback=1&&tags=\(tag)".lowercased()
+        //        let safeFlickerPhotoSearchEndpoint = "https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=\(Secrets.flickerAPIKey)&tags=\(search ?? "Taco")&per_page=1&page=&format=json&nojsoncallback=1&safe_search=1&tags=\(tag)".lowercased()
         let flickerPhotoSearchEndpoint = "https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=\(Secrets.flickerAPIKey)&tags=\(search ?? "Taco")&per_page=1&page=&format=json&nojsoncallback=1".lowercased()
         guard let url = URL(string: flickerPhotoSearchEndpoint) else {
             completion(.failure(.badURL(flickerPhotoSearchEndpoint)))

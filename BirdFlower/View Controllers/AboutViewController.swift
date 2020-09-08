@@ -20,6 +20,7 @@ class AboutViewController: UIViewController {
     }
     private func setupUI() {
         websiteButton.clearColorForTitle()
+        websiteButton.sizeToFit()
         websiteButton.layer.cornerRadius = 4
         bkgdView.layer.cornerRadius = 4
     }

@@ -132,21 +132,35 @@ class RandomPairViewController: UIViewController {
     }
     //MARK:- Flicker functions
     private func searchFlickerPhotos(for query: String, searchType: SearchType) {
-        FlickerAPI.searchPhotos(searchQuery: query) { [weak self] (results) in
-            switch results {
-            case .failure(let appError):
-                print("Failed to search flicker for a photo: \(appError)")
-                DispatchQueue.main.async {
-                    if searchType == .bird {
-                        self?.birdImageView.image = UIImage(systemName: "questionmark.circle")
-                    } else if searchType == .plant {
-                        self?.plantImageView.image = UIImage(systemName: "questionmark.circle")
+     if searchType == .bird {
+            FlickerAPI.searchPhotos(searchQuery: query, contentType: .birds) { [weak self] (results) in
+                switch results {
+                case .failure(let appError):
+                    print("Failed to search flicker for a photo: \(appError)")
+                    DispatchQueue.main.async {
+                        if searchType == .bird {
+                            self?.birdImageView.isHidden = true
+                        } else if searchType == .plant {
+                            self?.plantImageView.isHidden = true
+                        }
                     }
-                }
-            case .success(let results):
-                if searchType == .bird {
+                case .success(let results):
                     self?.flickerBirdImageData = results
-                } else if searchType == .plant {
+                }
+            }
+        } else if searchType == .plant {
+            FlickerAPI.searchPhotos(searchQuery: query, contentType: .plants) { [weak self] (results) in
+                switch results {
+                case .failure(let appError):
+                    print("Failed to search flicker for a photo: \(appError)")
+                    DispatchQueue.main.async {
+                        if searchType == .bird {
+                            self?.birdImageView.isHidden = true
+                        } else if searchType == .plant {
+                            self?.plantImageView.isHidden = true
+                        }
+                    }
+                case .success(let results):
                     self?.flickerPlantImageData = results
                 }
             }

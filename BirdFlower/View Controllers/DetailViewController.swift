@@ -27,8 +27,11 @@ class DetailViewController: UIViewController {
     var flickerPlantImageData: FlickerSearchResult? {
         didSet {
             loadFlickerPlantPhoto(for: (flickerPlantImageData?.photos.photo)!)
+            
         }
     }
+    var birdImage: UIImage!
+    var plantImage: UIImage!
     
     //MARK:- Init
     init(duo: FavoriteDuo) {
@@ -37,7 +40,6 @@ class DetailViewController: UIViewController {
     }
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        //        fatalError("init(coder:) has not been implemented")
     }
     
     //MARK:- View LifeCycles
@@ -66,21 +68,35 @@ class DetailViewController: UIViewController {
         searchFlickerPhotos(for: duo?.plantName ?? "", searchType: .plant)
     }
     private func searchFlickerPhotos(for query: String, searchType: SearchType) {
-        FlickerAPI.searchPhotos(searchQuery: query) { [weak self] (results) in
-            switch results {
-            case .failure(let appError):
-                print("Failed to search flicker for a photo: \(appError)")
-                DispatchQueue.main.async {
-                    if searchType == .bird {
-                        self?.birdImageView.isHidden = true
-                    } else if searchType == .plant {
-                        self?.plantImageView.isHidden = true
+        if searchType == .bird {
+            FlickerAPI.searchPhotos(searchQuery: query, contentType: .birds) { [weak self] (results) in
+                switch results {
+                case .failure(let appError):
+                    print("Failed to search flicker for a photo: \(appError)")
+                    DispatchQueue.main.async {
+                        if searchType == .bird {
+                            self?.birdImageView.isHidden = true
+                        } else if searchType == .plant {
+                            self?.plantImageView.isHidden = true
+                        }
                     }
-                }
-            case .success(let results):
-                if searchType == .bird {
+                case .success(let results):
                     self?.flickerBirdImageData = results
-                } else if searchType == .plant {
+                }
+            }
+        } else if searchType == .plant {
+            FlickerAPI.searchPhotos(searchQuery: query, contentType: .plants) { [weak self] (results) in
+                switch results {
+                case .failure(let appError):
+                    print("Failed to search flicker for a photo: \(appError)")
+                    DispatchQueue.main.async {
+                        if searchType == .bird {
+                            self?.birdImageView.isHidden = true
+                        } else if searchType == .plant {
+                            self?.plantImageView.isHidden = true
+                        }
+                    }
+                case .success(let results):
                     self?.flickerPlantImageData = results
                 }
             }
@@ -100,6 +116,22 @@ class DetailViewController: UIViewController {
     private func loadFlickerPlantPhoto(for photo: [PhotoResult]) {
         let flickerPhotoEndpoint = "https://farm\(photo.first?.farm ?? 0).staticflickr.com/\(photo.first?.server ?? "")/\(photo.first?.id ?? "")_\(photo.first?.secret ?? "")_m.jpg".lowercased()
         loadPhotoFromURL(with: flickerPhotoEndpoint, imageView: plantImageView)
+    }
+    @IBAction func birdButtonPressed(_ sender: UIButton) {
+        if let imageZoomVC = UIStoryboard(name: "ImageZoomViewController", bundle: nil).instantiateViewController(identifier: "ImageZoomViewController") as? ImageZoomViewController {
+            imageZoomVC.imageData = flickerBirdImageData
+            if let navigator = navigationController {
+                navigator.pushViewController(imageZoomVC, animated: true)
+            }
+        }
+    }
+    @IBAction func plantButtonPressed(_ sender: UIButton) {
+        if let imageZoomVC = UIStoryboard(name: "ImageZoomViewController", bundle: nil).instantiateViewController(identifier: "ImageZoomViewController") as? ImageZoomViewController {
+            imageZoomVC.imageData = flickerPlantImageData
+            if let navigator = navigationController {
+                navigator.pushViewController(imageZoomVC, animated: true)
+            }
+        }
     }
     
 }
