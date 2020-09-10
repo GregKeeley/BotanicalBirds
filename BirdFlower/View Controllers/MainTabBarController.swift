@@ -9,9 +9,13 @@
 import UIKit
 import DataPersistence
 
+protocol PersistenceStackClient {
+    func setStack(stack: DataPersistence<String>)
+}
+
 class MainTabBarController: UITabBarController {
     
-    var dataPersistence = DataPersistence<String>(filename: "favorites.plist")
+    var dataPersistence = DataPersistence<FavoriteDuo>(filename: "favorites.plist")
 
 //    private lazy var listVC: ListViewController = {
 //        let vc = ListViewController(dataPersistence)
