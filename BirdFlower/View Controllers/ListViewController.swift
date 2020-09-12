@@ -21,18 +21,23 @@ enum SortMethod {
     case descending
 }
 class ListViewController: UIViewController {
+
+    
     //MARK:- IBOutlets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var shuffleBarButton: UIBarButtonItem!
     @IBOutlet weak var sortMethodBarButton: UIBarButtonItem!
-    @IBOutlet weak var searchBar: UISearchBar!
     
     //MARK:- Variables/Constants
+    
+    var resultSearchController = UISearchController()
+    
     var birdData = [BirdsSpecies]()
     var plantData = [PlantsSpecies]()
     var favoriteDuos: [FavoriteDuo]? {
         didSet {
             if favoriteDuos?.isEmpty ?? true {
+//                resultSearchController.searchBar.isUserInteractionEnabled = true
                 tableView.backgroundView = EmptyView.init(title: "Looks like you don't have any favorites :(", message: "Head over to the \"Shuffle\" tab and tap the heart button on any pair you want to save and come back here to check them out", imageName: "heart.fill")
                 tableView.separatorStyle = .none
             } else {
@@ -45,6 +50,10 @@ class ListViewController: UIViewController {
             tableView.reloadData()
         }
     }
+    var filteredBirdData = [BirdsSpecies]()
+    var filteredPlantData = [PlantsSpecies]()
+    var filteredFavorites: [FavoriteDuo]?
+    var filteredRandoms = [FavoriteDuo]()
     
     public var dataPersistence: DataPersistence<FavoriteDuo>?
     
@@ -68,18 +77,30 @@ class ListViewController: UIViewController {
         setupDataPersistence()
         tableView.dataSource = self
         tableView.delegate = self
-        searchBar.delegate = self
+//        searchBar.delegate = self
         loadAllData()
         setupNavigationBar()
-        
+        setupSearchController()
     }
     override func viewWillAppear(_ animated: Bool) {
         fetchFavoriteDuos()
+        generateRandomDuos()
         tableView.reloadData()
         checkToEnableShuffle()
     }
     
     //MARK:- Functions
+    private func setupSearchController() {
+        resultSearchController = ({
+        let controller = UISearchController(searchResultsController: nil)
+            controller.searchResultsUpdater = self
+            controller.searchBar.sizeToFit()
+            controller.obscuresBackgroundDuringPresentation = false
+            tableView.tableHeaderView = controller.searchBar
+            return controller
+    })()
+        
+    }
     private func setupNavigationBar() {
         navigationItem.rightBarButtonItem?.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
         navigationItem.leftBarButtonItem?.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
@@ -95,7 +116,6 @@ class ListViewController: UIViewController {
     private func loadAllData() {
         birdData = BirdsSpecies.decodeBirdSpeciesData()!
         plantData = PlantsSpecies.decodeFlowers()!
-        generateRandomDuos()
         fetchFavoriteDuos()
     }
     // Note: This is a great example of indexing into the smaller of two arrays for data!
@@ -131,33 +151,33 @@ class ListViewController: UIViewController {
     private func searchList(_ query: String, listType: ListType) {
         switch listType {
         case .birds:
-            birdData = birdData.filter {
+            filteredBirdData = birdData.filter {
                 $0.commonName.lowercased().contains(query.lowercased())
             }
         case .plants:
-            plantData = plantData.filter {
+            filteredPlantData = plantData.filter {
                 $0.name.lowercased().contains(query.lowercased())
             }
         case .randomDuos:
-            randomDuos = randomDuos.filter {
+            filteredRandoms = randomDuos.filter {
                 $0.birdCommonName.lowercased().contains(query.lowercased()) || $0.plantName.lowercased().contains(query.lowercased())
             }
         case .favorites:
-            favoriteDuos = favoriteDuos?.filter {
+            filteredFavorites = favoriteDuos?.filter  {
                 $0.birdCommonName.lowercased().contains(query.lowercased()) || $0.plantName.lowercased().contains(query.lowercased())
-            }
+                }
         }
     }
     private func setSearchBarPlaceHolderText(_ listType: ListType) {
         switch listType {
         case .birds:
-            searchBar.placeholder = "Search Birds"
+            resultSearchController.title = "Search Birds"
         case .favorites:
-            searchBar.placeholder = "Search Favorites"
+            resultSearchController.title = "Search Favorites"
         case .plants:
-            searchBar.placeholder = "Search Plants"
+            resultSearchController.title = "Search Plants"
         case .randomDuos:
-            searchBar.placeholder = "Search Random Pairs"
+            resultSearchController.title = "Search Random Pairs"
         }
     }
     //MARK:- IBActions
@@ -250,13 +270,29 @@ extension ListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch currentListType {
         case .randomDuos:
-            return randomDuos.count
+            if currentlySearching {
+                return filteredRandoms.count
+            } else {
+                return randomDuos.count
+            }
         case .birds:
+            if currentlySearching {
+                return filteredBirdData.count
+            } else {
             return birdData.count
+            }
         case .plants:
+            if currentlySearching {
+                return filteredPlantData.count
+            } else {
             return plantData.count
+            }
         case .favorites:
+            if currentlySearching {
+               return filteredFavorites?.count ?? 0
+            } else {
             return favoriteDuos?.count ?? 0
+            }
         }
     }
     
@@ -266,44 +302,84 @@ extension ListViewController: UITableViewDataSource {
         case .randomDuos:
             navigationItem.title = "Random Pairs"
             navigationController?.navigationBar.prefersLargeTitles = true
-            var sortRandomDuos = randomDuos.sorted(by: {$0.birdCommonName < $1.birdCommonName})
-            if currentSortMethod == .descending {
-                sortRandomDuos = randomDuos.sorted(by: {$0.birdCommonName > $1.birdCommonName})
+            let randomDuo: FavoriteDuo?
+            if currentlySearching {
+                var sortRandomDuos = filteredRandoms.sorted(by: {$0.birdCommonName < $1.birdCommonName})
+                if currentSortMethod == .descending {
+                    sortRandomDuos = filteredRandoms.sorted(by: {$0.birdCommonName > $1.birdCommonName})
+                }
+                randomDuo = sortRandomDuos[indexPath.row]
+            } else {
+                var sortRandomDuos = randomDuos.sorted(by: {$0.birdCommonName < $1.birdCommonName})
+                if currentSortMethod == .descending {
+                    sortRandomDuos = randomDuos.sorted(by: {$0.birdCommonName > $1.birdCommonName})
+                }
+                randomDuo = sortRandomDuos[indexPath.row]
             }
-            let randomDuo = sortRandomDuos[indexPath.row]
-            cell.textLabel?.text = ("\(randomDuo.birdCommonName) + \(randomDuo.plantName)")
+            cell.textLabel?.text = ("\(randomDuo?.birdCommonName ?? "bird") + \(randomDuo?.plantName ?? "Plant")")
             cell.detailTextLabel?.text = ""
         case .birds:
             navigationItem.title = "Birds"
             navigationController?.navigationBar.prefersLargeTitles = true
-            var sortedBirds = birdData.sorted(by: {$0.commonName < $1.commonName })
-            if currentSortMethod == .descending {
-                sortedBirds = birdData.sorted(by: {$0.commonName > $1.commonName})
+            let bird: BirdsSpecies?
+            if currentlySearching {
+                var sortedBirds = filteredBirdData.sorted(by: {$0.commonName < $1.commonName })
+                if currentSortMethod == .descending {
+                    sortedBirds = filteredBirdData.sorted(by: {$0.commonName > $1.commonName})
+                }
+                bird = sortedBirds[indexPath.row]
+            } else {
+                var sortedBirds = birdData.sorted(by: {$0.commonName < $1.commonName })
+                if currentSortMethod == .descending {
+                    sortedBirds = birdData.sorted(by: {$0.commonName > $1.commonName})
+                }
+                bird = sortedBirds[indexPath.row]
             }
-            let bird = sortedBirds[indexPath.row]
-            cell.textLabel?.text = "\(bird.commonName)"
-            cell.detailTextLabel?.text = "\(bird.scientificName)"
+            cell.textLabel?.text = "\(bird?.commonName ?? "Bird")"
+            cell.detailTextLabel?.text = "\(bird?.scientificName ?? "Scientific Name")"
         case .plants:
             navigationItem.title = "Plants"
             navigationController?.navigationBar.prefersLargeTitles = true
-            var sortedPlants = plantData.sorted(by: {$0.name < $1.name })
-            if currentSortMethod == .descending {
-                sortedPlants = plantData.sorted(by: {$0.name > $1.name })
+            let plant: PlantsSpecies?
+            if currentlySearching {
+                var sortedPlants = filteredPlantData.sorted(by: {$0.name < $1.name })
+                if currentSortMethod == .descending {
+                    sortedPlants = filteredPlantData.sorted(by: {$0.name > $1.name })
+                }
+                plant = sortedPlants[indexPath.row]
+            } else {
+                var sortedPlants = plantData.sorted(by: {$0.name < $1.name })
+                if currentSortMethod == .descending {
+                    sortedPlants = plantData.sorted(by: {$0.name > $1.name })
+                }
+                plant = sortedPlants[indexPath.row]
             }
-            let plant = sortedPlants[indexPath.row]
-            cell.textLabel?.text = ("\(plant.name )")
+            cell.textLabel?.text = ("\(plant?.name ?? "Plant")")
             cell.detailTextLabel?.text = ""
         case .favorites:
             navigationItem.title = "Favorites"
             navigationController?.navigationBar.prefersLargeTitles = true
-            var sortedFavorites = favoriteDuos?.sorted(by: { $0.birdCommonName < $1.birdCommonName })
-            if currentSortMethod == .descending {
-                sortedFavorites = favoriteDuos?.sorted(by: { $0.birdCommonName > $1.birdCommonName })
-            }
-            if sortedFavorites?.count ?? 0 >= 1 {
-                let favorite = sortedFavorites?[indexPath.row]
-                cell.textLabel?.text = ("\(favorite?.birdCommonName ?? "Bird") + \(favorite?.plantName ?? "Plant")")
-                cell.detailTextLabel?.text = ""
+            let favorite: FavoriteDuo?
+            if currentlySearching {
+                var sortedFavorites = filteredFavorites?.sorted(by: { $0.birdCommonName < $1.birdCommonName })
+                if currentSortMethod == .descending {
+                    sortedFavorites = filteredFavorites?.sorted(by: { $0.birdCommonName > $1.birdCommonName })
+                }
+                if sortedFavorites?.count ?? 0 >= 1 {
+                    favorite = sortedFavorites?[indexPath.row]
+                    cell.textLabel?.text = ("\(favorite?.birdCommonName ?? "Bird") + \(favorite?.plantName ?? "Plant")")
+                    cell.detailTextLabel?.text = ""
+                }
+            } else {
+                var sortedFavorites = favoriteDuos?.sorted(by: { $0.birdCommonName < $1.birdCommonName })
+                if currentSortMethod == .descending {
+                    sortedFavorites = favoriteDuos?.sorted(by: { $0.birdCommonName > $1.birdCommonName })
+                }
+                if sortedFavorites?.count ?? 0 >= 1 {
+                    favorite = sortedFavorites?[indexPath.row]
+                    cell.textLabel?.text = ("\(favorite?.birdCommonName ?? "Bird") + \(favorite?.plantName ?? "Plant")")
+                    cell.detailTextLabel?.text = ""
+                }
             }
         }
         return cell
@@ -362,20 +438,20 @@ extension ListViewController: PersistenceStackClient {
         //        self.dataPersistence = stack
     }
 }
-extension ListViewController: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard let searchText = searchBar.text, !searchText.isEmpty else {
+
+extension ListViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let searchText = searchController.searchBar.text, !searchText.isEmpty else {
             currentlySearching = false
             tableView.reloadData()
             return
         }
         currentlySearching = true
         loadAllData()
-//        if !searchText.isEmpty {
-            self.searchText = searchText
-            searchList(searchText, listType: currentListType)
-            tableView.reloadData()
-//        }
+        //        if !searchText.isEmpty {
+        self.searchText = searchText
+        searchList(searchText, listType: currentListType)
+        tableView.reloadData()
     }
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(true, animated: true)
@@ -386,5 +462,6 @@ extension ListViewController: UISearchBarDelegate {
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.text = ""
         loadAllData()
+        tableView.reloadData()
     }
 }
