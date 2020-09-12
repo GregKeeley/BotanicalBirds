@@ -96,6 +96,7 @@ class ListViewController: UIViewController {
             controller.searchResultsUpdater = self
             controller.searchBar.sizeToFit()
             controller.obscuresBackgroundDuringPresentation = false
+            controller.automaticallyShowsSearchResultsController = false
             tableView.tableHeaderView = controller.searchBar
             return controller
     })()
@@ -106,6 +107,7 @@ class ListViewController: UIViewController {
         navigationItem.leftBarButtonItem?.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
         shuffleBarButton.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
         sortMethodBarButton.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
+        navigationItem.hidesSearchBarWhenScrolling = true
         setSearchBarPlaceHolderText(currentListType)
     }
     private func getFavoritesFromRandomPairVC() {
@@ -171,13 +173,13 @@ class ListViewController: UIViewController {
     private func setSearchBarPlaceHolderText(_ listType: ListType) {
         switch listType {
         case .birds:
-            resultSearchController.title = "Search Birds"
+            resultSearchController.searchBar.placeholder = "Search Birds"
         case .favorites:
-            resultSearchController.title = "Search Favorites"
+            resultSearchController.searchBar.placeholder = "Search Favorites"
         case .plants:
-            resultSearchController.title = "Search Plants"
+            resultSearchController.searchBar.placeholder = "Search Plants"
         case .randomDuos:
-            resultSearchController.title = "Search Random Pairs"
+            resultSearchController.searchBar.placeholder = "Search Random Pairs"
         }
     }
     //MARK:- IBActions
@@ -427,7 +429,16 @@ extension ListViewController: UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if currentlySearching {
-            return ("Showing Results for: \(searchText)")
+            switch currentListType {
+            case .birds:
+                return ("\(filteredBirdData.count) items found")
+            case .plants:
+                return ("\(filteredPlantData.count) items found")
+            case .favorites:
+                return ("\(filteredFavorites?.count ?? 0) items found")
+            case .randomDuos:
+                return ("\(filteredRandoms.count) items found")
+            }
         }
         return ""
     }
