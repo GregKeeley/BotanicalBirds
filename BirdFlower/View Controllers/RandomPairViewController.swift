@@ -19,7 +19,7 @@ enum SearchType {
 @IBDesignable class RoundedImageView: UIImageView {
     override func layoutSubviews() {
         super.layoutSubviews()
-        layer.borderWidth = 1.0
+        layer.borderWidth = 0.0
         layer.borderColor = UIColor.white.cgColor
         layer.cornerRadius = min(bounds.width, bounds.height) / 2
     }
