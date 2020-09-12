@@ -48,7 +48,13 @@ class ListViewController: UIViewController {
     
     public var dataPersistence: DataPersistence<FavoriteDuo>?
     
+    // Determines whether the sorting method is ascending or descending
     var currentSortMethod = SortMethod.ascending
+    
+    // Set to true when a user is using the search bar
+    var currentlySearching = false
+    // Used to capture what the user is searching for, to be displayed as section header
+    var searchText = ""
     
     var currentListType = ListType.randomDuos {
         didSet {
@@ -340,6 +346,15 @@ extension ListViewController: UITableViewDataSource {
             print("...")
         }
     }
+    func numberOfSections(in tableView: UITableView) -> Int {
+       return 1
+    }
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if currentlySearching {
+            return ("Showing Results for: \(searchText)")
+        }
+        return ""
+    }
 }
 
 extension ListViewController: PersistenceStackClient {
@@ -350,18 +365,23 @@ extension ListViewController: PersistenceStackClient {
 extension ListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard let searchText = searchBar.text, !searchText.isEmpty else {
+            currentlySearching = false
+            tableView.reloadData()
             return
         }
+        currentlySearching = true
         loadAllData()
-        if !searchText.isEmpty {
+//        if !searchText.isEmpty {
+            self.searchText = searchText
             searchList(searchText, listType: currentListType)
             tableView.reloadData()
-        }
+//        }
     }
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(true, animated: true)
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        currentlySearching = false
         searchBar.resignFirstResponder()
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.text = ""
