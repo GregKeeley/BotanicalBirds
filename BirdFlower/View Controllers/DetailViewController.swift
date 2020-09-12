@@ -118,20 +118,20 @@ class DetailViewController: UIViewController {
         loadPhotoFromURL(with: flickerPhotoEndpoint, imageView: plantImageView)
     }
     @IBAction func birdButtonPressed(_ sender: UIButton) {
-        if let imageZoomVC = UIStoryboard(name: "ImageZoomViewController", bundle: nil).instantiateViewController(identifier: "ImageZoomViewController") as? ImageZoomViewController {
-            imageZoomVC.imageData = flickerBirdImageData
-            if let navigator = navigationController {
-                navigator.pushViewController(imageZoomVC, animated: true)
-            }
-        }
+//        if let imageZoomVC = UIStoryboard(name: "ImageZoomViewController", bundle: nil).instantiateViewController(identifier: "ImageZoomViewController") as? ImageZoomViewController {
+//            imageZoomVC.imageData = flickerBirdImageData
+//            if let navigator = navigationController {
+//                navigator.pushViewController(imageZoomVC, animated: true)
+//            }
+//        }
     }
     @IBAction func plantButtonPressed(_ sender: UIButton) {
-        if let imageZoomVC = UIStoryboard(name: "ImageZoomViewController", bundle: nil).instantiateViewController(identifier: "ImageZoomViewController") as? ImageZoomViewController {
-            imageZoomVC.imageData = flickerPlantImageData
-            if let navigator = navigationController {
-                navigator.pushViewController(imageZoomVC, animated: true)
-            }
-        }
+//        if let imageZoomVC = UIStoryboard(name: "ImageZoomViewController", bundle: nil).instantiateViewController(identifier: "ImageZoomViewController") as? ImageZoomViewController {
+//            imageZoomVC.imageData = flickerPlantImageData
+//            if let navigator = navigationController {
+//                navigator.pushViewController(imageZoomVC, animated: true)
+//            }
+//        }
     }
     
 }
