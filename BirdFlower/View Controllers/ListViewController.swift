@@ -34,20 +34,28 @@ class ListViewController: UIViewController {
     
     var birdData = [BirdsSpecies]() {
         didSet {
-            if currentSortMethod == .ascending {
-                birdData = birdData.sorted(by: {$0.commonName < $1.commonName})
-            } else {
-                birdData = birdData.sorted(by: {$0.commonName > $1.commonName})
-            }
+            //            if currentSortMethod == .ascending {
+            //                birdData = birdData.sorted(by: {$0.commonName < $1.commonName})
+            //                plantData = plantData.sorted(by: {$0.name < $1.name})
+            //                favoriteDuos = favoriteDuos?.sorted(by: {$0.birdCommonName < $1.birdCommonName})
+            //                randomDuos = randomDuos.sorted(by: {$0.birdCommonName < $1.birdCommonName})
+            //            } else {
+            //                birdData = birdData.sorted(by: {$0.commonName > $1.commonName})
+            //                plantData = plantData.sorted(by: {$0.name > $1.name})
+            //                favoriteDuos = favoriteDuos?.sorted(by: {$0.birdCommonName > $1.birdCommonName})
+            //                randomDuos = randomDuos.sorted(by: {$0.birdCommonName > $1.birdCommonName})
+            //            }
+            tableView.reloadData()
         }
     }
     var plantData = [PlantsSpecies]() {
         didSet {
-            if currentSortMethod == .ascending {
-                plantData = plantData.sorted(by: {$0.name < $1.name})
-            } else {
-                plantData = plantData.sorted(by: {$0.name > $1.name})
-            }
+            //            if currentSortMethod == .ascending {
+            //                plantData = plantData.sorted(by: {$0.name < $1.name})
+            //            } else {
+            //                plantData = plantData.sorted(by: {$0.name > $1.name})
+            //            }
+            tableView.reloadData()
         }
     }
     var favoriteDuos: [FavoriteDuo]? {
@@ -58,21 +66,22 @@ class ListViewController: UIViewController {
                 tableView.separatorStyle = .none
             } else {
                 tableView.backgroundView = nil
-                if currentSortMethod == .ascending {
-                    favoriteDuos = favoriteDuos?.sorted(by: {$0.birdCommonName < $1.birdCommonName})
-                } else {
-                    favoriteDuos = favoriteDuos?.sorted(by: {$0.birdCommonName > $1.birdCommonName})
-                }
+                //                if currentSortMethod == .ascending {
+                //                    favoriteDuos = favoriteDuos?.sorted(by: {$0.birdCommonName < $1.birdCommonName})
+                //                } else {
+                //                    favoriteDuos = favoriteDuos?.sorted(by: {$0.birdCommonName > $1.birdCommonName})
+                //                }
             }
+            tableView.reloadData()
         }
     }
     var randomDuos = [FavoriteDuo]() {
         didSet {
-            if currentSortMethod == .ascending {
-                randomDuos = randomDuos.sorted(by: {$0.birdCommonName < $1.birdCommonName})
-            } else {
-                randomDuos = randomDuos.sorted(by: {$0.birdCommonName > $1.birdCommonName})
-            }
+            //            if currentSortMethod == .ascending {
+            //                randomDuos = randomDuos.sorted(by: {$0.birdCommonName < $1.birdCommonName})
+            //            } else {
+            //                randomDuos = randomDuos.sorted(by: {$0.birdCommonName > $1.birdCommonName})
+            //            }
             tableView.reloadData()
         }
     }
@@ -84,7 +93,11 @@ class ListViewController: UIViewController {
     public var dataPersistence: DataPersistence<FavoriteDuo>?
     
     // Determines whether the sorting method is ascending or descending
-    var currentSortMethod = SortMethod.ascending
+    var currentSortMethod = SortMethod.ascending {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     // Set to true when a user is using the search bar
     var currentlySearching = false
@@ -107,6 +120,7 @@ class ListViewController: UIViewController {
         loadAllData()
         setupNavigationBar()
         setupSearchController()
+        sortAllDataCollections()
     }
     override func viewWillAppear(_ animated: Bool) {
         fetchFavoriteDuos()
@@ -135,6 +149,20 @@ class ListViewController: UIViewController {
         sortMethodBarButton.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
         navigationItem.hidesSearchBarWhenScrolling = true
         setSearchBarPlaceHolderText(currentListType)
+    }
+    private func sortAllDataCollections() {
+        if currentSortMethod == .ascending {
+            birdData = birdData.sorted(by: {$0.commonName < $1.commonName})
+            plantData = plantData.sorted(by: {$0.name < $1.name})
+            favoriteDuos = favoriteDuos?.sorted(by: {$0.birdCommonName < $1.birdCommonName})
+            randomDuos = randomDuos.sorted(by: {$0.birdCommonName < $1.birdCommonName})
+        } else {
+            birdData = birdData.sorted(by: {$0.commonName > $1.commonName})
+            plantData = plantData.sorted(by: {$0.name > $1.name})
+            favoriteDuos = favoriteDuos?.sorted(by: {$0.birdCommonName > $1.birdCommonName})
+            randomDuos = randomDuos.sorted(by: {$0.birdCommonName > $1.birdCommonName})
+        }
+        tableView.reloadData()
     }
     private func getFavoritesFromRandomPairVC() {
         let barViewControllers = self.tabBarController?.viewControllers
@@ -241,9 +269,11 @@ class ListViewController: UIViewController {
     @IBAction func changeSortMethodButtonPressed(_ sender: UIBarButtonItem) {
         if currentSortMethod == .ascending {
             currentSortMethod = .descending
+            sortAllDataCollections()
             sortMethodBarButton.title = "Zz-Aa"
         } else {
             currentSortMethod = .ascending
+            sortAllDataCollections()
             sortMethodBarButton.title = "Aa-Zz"
         }
         tableView.reloadData()
