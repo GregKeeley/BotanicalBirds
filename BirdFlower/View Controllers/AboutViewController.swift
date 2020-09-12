@@ -19,10 +19,14 @@ class AboutViewController: UIViewController {
         setupUI()
     }
     private func setupUI() {
-        websiteButton.clearColorForTitle()
+//        websiteButton.clearColorForTitle()
         websiteButton.sizeToFit()
         websiteButton.layer.cornerRadius = 4
         bkgdView.layer.cornerRadius = 4
+        websiteButton.titleLabel?.text = "MeghanKeeley.com/botanicalbirds"
+        websiteButton.titleLabel?.textAlignment = .center
+        websiteButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        websiteButton.titleLabel?.baselineAdjustment = .alignCenters
     }
     @IBAction func websiteButtonPressed(_ sender: UIButton) {
         guard let url = URL(string: "https://www.meghankeeley.com/botanicalbirds") else {

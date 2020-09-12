@@ -83,6 +83,10 @@ class RandomPairViewController: UIViewController {
         generateRandomPair()
     }
     override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(false, animated: false)
     }
     //MARK:- Funcs
     // These functions generate random pairs, or individually random data to use in the app
@@ -227,7 +231,16 @@ class RandomPairViewController: UIViewController {
         }
         fetchFavoriteDuos()
     }
-    
+    @IBAction func aboutButtonPressed(_ sender: UIButton) {
+        if let aboutVC = UIStoryboard(name: "AboutViewController", bundle: nil).instantiateViewController(identifier: "aboutViewController") as? AboutViewController {
+            if let navigator = navigationController {
+                navigator.navigationBar.prefersLargeTitles = true
+                navigator.pushViewController(aboutVC, animated: true)
+            }
+        }
+        self.navigationController?.navigationBar.tintColor = UIColor.white
+        self.navigationController?.navigationBar.isTranslucent = true
+    }
 }
 
 //MARK:- Extensions
