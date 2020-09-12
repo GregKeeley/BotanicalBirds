@@ -90,15 +90,6 @@ class ListViewController: UIViewController {
             let randomDuo = FavoriteDuo(birdCommonName: birdCommonName, birdScientificName: birdScientificName, plantName: plantName)
             randomDuos.append(randomDuo)
         }
-//        var i = 0
-//        for _ in 0..<min(plantData.count, birdData.count) {
-//            let birdCommonName = birdData[i].commonName
-//            let birdScientificName = birdData[i].scientificName
-//            let plantName = plantData[i].name
-//            let randomDuo = FavoriteDuo(birdCommonName: birdCommonName, birdScientificName: birdScientificName, plantName: plantName)
-//            randomDuos.append(randomDuo)
-//            i += 1
-//        }
     }
     private func fetchFavoriteDuos() {
         do {
@@ -203,11 +194,6 @@ extension ListViewController: UITableViewDataSource {
             return plantData.count
         case .favorites:
             return favoriteDuos?.count ?? 0
-            //            if favoriteDuos?.count ?? 0 >= 1 {
-            //                return favoriteDuos?.count ?? 0
-            //            } else {
-            //                return 0
-            //            }
         }
     }
     
@@ -217,27 +203,31 @@ extension ListViewController: UITableViewDataSource {
         case .randomDuos:
             navigationItem.title = "Random Pairs"
             navigationController?.navigationBar.prefersLargeTitles = true
-            let randomDuo = randomDuos[indexPath.row]
+            let sortRandomDuos = randomDuos.sorted(by: {$0.birdCommonName < $1.birdCommonName})
+            let randomDuo = sortRandomDuos[indexPath.row]
             cell.textLabel?.text = ("\(randomDuo.birdCommonName) + \(randomDuo.plantName)")
             cell.detailTextLabel?.text = ""
         case .birds:
             navigationItem.title = "Birds"
             navigationController?.navigationBar.prefersLargeTitles = true
-            let bird = birdData[indexPath.row]
+            let sortedBirds = birdData.sorted(by: {$0.commonName < $1.commonName })
+            let bird = sortedBirds[indexPath.row]
             cell.textLabel?.text = "\(bird.commonName)"
             // Scinetific name
             cell.detailTextLabel?.text = "\(bird.scientificName)"
         case .plants:
             navigationItem.title = "Plants"
             navigationController?.navigationBar.prefersLargeTitles = true
-            let flower = plantData[indexPath.row]
-            cell.textLabel?.text = ("\(flower.name )")
+            let sortedPlants = plantData.sorted(by: {$0.name < $1.name })
+            let plant = sortedPlants[indexPath.row]
+            cell.textLabel?.text = ("\(plant.name )")
             cell.detailTextLabel?.text = ""
         case .favorites:
             navigationItem.title = "Favorites"
             navigationController?.navigationBar.prefersLargeTitles = true
-            if favoriteDuos?.count ?? 0 >= 1 {
-                let favorite = favoriteDuos?[indexPath.row]
+            let sortedFavorites = favoriteDuos?.sorted(by: { $0.birdCommonName < $1.birdCommonName })
+            if sortedFavorites?.count ?? 0 >= 1 {
+                let favorite = sortedFavorites?[indexPath.row]
                 cell.textLabel?.text = ("\(favorite?.birdCommonName ?? "Bird") + \(favorite?.plantName ?? "Plant")")
                 cell.detailTextLabel?.text = ""
             }
