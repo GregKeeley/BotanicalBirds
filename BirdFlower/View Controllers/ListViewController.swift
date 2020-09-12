@@ -10,17 +10,21 @@ import UIKit
 import DataPersistence
 import SafariServices
 
-enum SortType {
+enum ListType {
     case birds
     case plants
     case favorites
     case randomDuos
 }
-
+enum SortMethod {
+    case ascending
+    case descending
+}
 class ListViewController: UIViewController {
     //MARK:- IBOutlets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var shuffleBarButton: UIBarButtonItem!
+    @IBOutlet weak var sortMethodBarButton: UIBarButtonItem!
     
     //MARK:- Variables/Constants
     var birdData = [BirdsSpecies]()
@@ -43,7 +47,9 @@ class ListViewController: UIViewController {
     
     public var dataPersistence: DataPersistence<FavoriteDuo>?
     
-    var currentSortType = SortType.randomDuos {
+    var currentSortMethod = SortMethod.ascending
+    
+    var currentListType = ListType.randomDuos {
         didSet {
             tableView.reloadData()
             checkToEnableShuffle()
@@ -70,6 +76,7 @@ class ListViewController: UIViewController {
         navigationItem.rightBarButtonItem?.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
         navigationItem.leftBarButtonItem?.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
         shuffleBarButton.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
+        sortMethodBarButton.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
     }
     private func getFavoritesFromRandomPairVC() {
         let barViewControllers = self.tabBarController?.viewControllers
@@ -104,24 +111,25 @@ class ListViewController: UIViewController {
         }
     }
     private func checkToEnableShuffle() {
-        if currentSortType == .randomDuos {
+        if currentListType == .randomDuos {
             shuffleBarButton.isEnabled = true
         } else {
             shuffleBarButton.isEnabled = false
         }
+        
     }
     
     //MARK:- IBActions
     @IBAction func toggleButtonPressed(_ sender: UIBarButtonItem) {
-        switch currentSortType {
+        switch currentListType {
         case .birds:
-            currentSortType = .plants
+            currentListType = .plants
         case .plants:
-            currentSortType = .favorites
+            currentListType = .favorites
         case .favorites:
-            currentSortType = .randomDuos
+            currentListType = .randomDuos
         case .randomDuos:
-            currentSortType = .birds
+            currentListType = .birds
         }
     }
     
@@ -137,12 +145,22 @@ class ListViewController: UIViewController {
         randomDuos.removeAll()
         generateRandomDuos()
     }
+    @IBAction func changeSortMethodButtonPressed(_ sender: UIBarButtonItem) {
+        if currentSortMethod == .ascending {
+            currentSortMethod = .descending
+            sortMethodBarButton.title = "Zz-Aa"
+        } else {
+            currentSortMethod = .ascending
+            sortMethodBarButton.title = "Aa-Zz"
+        }
+        tableView.reloadData()
+    }
 }
 
 //MARK:- Extensions
 extension ListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch currentSortType {
+        switch currentListType {
         case .randomDuos:
             let item = randomDuos[indexPath.row]
             if let detailVC = UIStoryboard(name: "DetailViewController", bundle: nil).instantiateViewController(identifier: "DetailViewController") as? DetailViewController {
@@ -185,7 +203,7 @@ extension ListViewController: UITableViewDelegate {
 }
 extension ListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch currentSortType {
+        switch currentListType {
         case .randomDuos:
             return randomDuos.count
         case .birds:
@@ -199,18 +217,24 @@ extension ListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "basicCell", for: indexPath)
-        switch currentSortType {
+        switch currentListType {
         case .randomDuos:
             navigationItem.title = "Random Pairs"
             navigationController?.navigationBar.prefersLargeTitles = true
-            let sortRandomDuos = randomDuos.sorted(by: {$0.birdCommonName < $1.birdCommonName})
+            var sortRandomDuos = randomDuos.sorted(by: {$0.birdCommonName < $1.birdCommonName})
+            if currentSortMethod == .descending {
+                sortRandomDuos = randomDuos.sorted(by: {$0.birdCommonName > $1.birdCommonName})
+            }
             let randomDuo = sortRandomDuos[indexPath.row]
             cell.textLabel?.text = ("\(randomDuo.birdCommonName) + \(randomDuo.plantName)")
             cell.detailTextLabel?.text = ""
         case .birds:
             navigationItem.title = "Birds"
             navigationController?.navigationBar.prefersLargeTitles = true
-            let sortedBirds = birdData.sorted(by: {$0.commonName < $1.commonName })
+            var sortedBirds = birdData.sorted(by: {$0.commonName < $1.commonName })
+            if currentSortMethod == .descending {
+                sortedBirds = birdData.sorted(by: {$0.commonName > $1.commonName})
+            }
             let bird = sortedBirds[indexPath.row]
             cell.textLabel?.text = "\(bird.commonName)"
             // Scinetific name
@@ -218,14 +242,20 @@ extension ListViewController: UITableViewDataSource {
         case .plants:
             navigationItem.title = "Plants"
             navigationController?.navigationBar.prefersLargeTitles = true
-            let sortedPlants = plantData.sorted(by: {$0.name < $1.name })
+            var sortedPlants = plantData.sorted(by: {$0.name < $1.name })
+            if currentSortMethod == .descending {
+                sortedPlants = plantData.sorted(by: {$0.name > $1.name })
+            }
             let plant = sortedPlants[indexPath.row]
             cell.textLabel?.text = ("\(plant.name )")
             cell.detailTextLabel?.text = ""
         case .favorites:
             navigationItem.title = "Favorites"
             navigationController?.navigationBar.prefersLargeTitles = true
-            let sortedFavorites = favoriteDuos?.sorted(by: { $0.birdCommonName < $1.birdCommonName })
+            var sortedFavorites = favoriteDuos?.sorted(by: { $0.birdCommonName < $1.birdCommonName })
+            if currentSortMethod == .descending {
+                sortedFavorites = favoriteDuos?.sorted(by: { $0.birdCommonName > $1.birdCommonName })
+            }
             if sortedFavorites?.count ?? 0 >= 1 {
                 let favorite = sortedFavorites?[indexPath.row]
                 cell.textLabel?.text = ("\(favorite?.birdCommonName ?? "Bird") + \(favorite?.plantName ?? "Plant")")
@@ -236,7 +266,7 @@ extension ListViewController: UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         if favoriteDuos?.count ?? 0 > 0 {
-            return currentSortType == .favorites
+            return currentListType == .favorites
         } else {
             return false
         }
@@ -245,7 +275,7 @@ extension ListViewController: UITableViewDataSource {
         switch editingStyle {
         case .delete:
             // Check sort type is favorites (We dont want to be able to delete anything else)
-            if currentSortType == .favorites {
+            if currentListType == .favorites {
                 // Make sure we have a favorite item
                 guard let favoriteItem = favoriteDuos?[indexPath.row] else {
                     return

@@ -9,7 +9,7 @@
 import Foundation
 
 struct FlickerAPI {
-    static func searchPhotos(searchQuery: String, contentType: SortType, completion: @escaping (Result<FlickerSearchResult, AppError>) -> ()) {
+    static func searchPhotos(searchQuery: String, contentType: ListType, completion: @escaping (Result<FlickerSearchResult, AppError>) -> ()) {
         var tag = ""
         if contentType == .birds {
             tag = "bird"

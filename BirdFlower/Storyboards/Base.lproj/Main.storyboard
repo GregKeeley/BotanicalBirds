@@ -10,7 +10,7 @@
         <!--BotanicalBirds-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ListViewController" customModule="BirdFlower" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ListViewController" customModule="BotanicalBirds" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -68,14 +68,22 @@
                                 </connections>
                             </barButtonItem>
                         </leftBarButtonItems>
-                        <barButtonItem key="rightBarButtonItem" image="info.circle.fill" catalog="system" id="fzB-Gw-IbS">
-                            <connections>
-                                <action selector="aboutButtonPressed:" destination="BYZ-38-t0r" id="8Sb-a6-ftC"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem image="info.circle.fill" catalog="system" id="fzB-Gw-IbS">
+                                <connections>
+                                    <action selector="aboutButtonPressed:" destination="BYZ-38-t0r" id="8Sb-a6-ftC"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Aa-Zz" id="rnR-c4-tG3">
+                                <connections>
+                                    <action selector="changeSortMethodButtonPressed:" destination="BYZ-38-t0r" id="KAg-Go-l7u"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="shuffleBarButton" destination="fS3-fp-D6Y" id="lMn-f0-TQe"/>
+                        <outlet property="sortMethodBarButton" destination="rnR-c4-tG3" id="Zhi-Lb-vrT"/>
                         <outlet property="tableView" destination="KTB-99-LpB" id="Qlg-Hf-ze4"/>
                     </connections>
                 </viewController>
@@ -86,7 +94,7 @@
         <!--Shuffle-->
         <scene sceneID="2P6-Xx-C3v">
             <objects>
-                <viewController id="goj-t6-H1T" customClass="RandomPairViewController" customModule="BirdFlower" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="goj-t6-H1T" customClass="RandomPairViewController" customModule="BotanicalBirds" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="M5e-cl-3TT">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -154,14 +162,14 @@
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="E33-Lp-tSS" customClass="RoundedImageView" customModule="BirdFlower" customModuleProvider="target">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="E33-Lp-tSS" customClass="RoundedImageView" customModule="BotanicalBirds" customModuleProvider="target">
                                 <rect key="frame" x="20" y="265" width="155" height="155"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="E33-Lp-tSS" secondAttribute="height" multiplier="1:1" constant="-2.5" id="z0n-gK-TGG"/>
                                 </constraints>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="SQW-tj-qVE" customClass="RoundedImageView" customModule="BirdFlower" customModuleProvider="target">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="SQW-tj-qVE" customClass="RoundedImageView" customModule="BotanicalBirds" customModuleProvider="target">
                                 <rect key="frame" x="236.5" y="265" width="155" height="155"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -273,7 +281,7 @@
         <!--Main Tab Bar Controller-->
         <scene sceneID="8ew-di-NaB">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="ZhX-Xf-mZc" customClass="MainTabBarController" customModule="BirdFlower" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="ZhX-Xf-mZc" customClass="MainTabBarController" customModule="BotanicalBirds" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="tHp-JG-L7e">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
