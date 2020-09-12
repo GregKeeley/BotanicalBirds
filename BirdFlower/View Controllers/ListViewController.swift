@@ -25,6 +25,7 @@ class ListViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var shuffleBarButton: UIBarButtonItem!
     @IBOutlet weak var sortMethodBarButton: UIBarButtonItem!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     //MARK:- Variables/Constants
     var birdData = [BirdsSpecies]()
@@ -61,6 +62,7 @@ class ListViewController: UIViewController {
         setupDataPersistence()
         tableView.dataSource = self
         tableView.delegate = self
+        searchBar.delegate = self
         loadAllData()
         setupNavigationBar()
         
@@ -77,6 +79,7 @@ class ListViewController: UIViewController {
         navigationItem.leftBarButtonItem?.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
         shuffleBarButton.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
         sortMethodBarButton.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
+        setSearchBarPlaceHolderText(currentListType)
     }
     private func getFavoritesFromRandomPairVC() {
         let barViewControllers = self.tabBarController?.viewControllers
@@ -87,6 +90,7 @@ class ListViewController: UIViewController {
         birdData = BirdsSpecies.decodeBirdSpeciesData()!
         plantData = PlantsSpecies.decodeFlowers()!
         generateRandomDuos()
+        fetchFavoriteDuos()
     }
     // Note: This is a great example of indexing into the smaller of two arrays for data!
     private func generateRandomDuos() {
@@ -118,18 +122,53 @@ class ListViewController: UIViewController {
         }
         
     }
-    
+    private func searchList(_ query: String, listType: ListType) {
+        switch listType {
+        case .birds:
+            birdData = birdData.filter {
+                $0.commonName.lowercased().contains(query.lowercased())
+            }
+        case .plants:
+            plantData = plantData.filter {
+                $0.name.lowercased().contains(query.lowercased())
+            }
+        case .randomDuos:
+            randomDuos = randomDuos.filter {
+                $0.birdCommonName.lowercased().contains(query.lowercased()) || $0.plantName.lowercased().contains(query.lowercased())
+            }
+        case .favorites:
+            favoriteDuos = favoriteDuos?.filter {
+                $0.birdCommonName.lowercased().contains(query.lowercased()) || $0.plantName.lowercased().contains(query.lowercased())
+            }
+        }
+    }
+    private func setSearchBarPlaceHolderText(_ listType: ListType) {
+        switch listType {
+        case .birds:
+            searchBar.placeholder = "Search Birds"
+        case .favorites:
+            searchBar.placeholder = "Search Favorites"
+        case .plants:
+            searchBar.placeholder = "Search Plants"
+        case .randomDuos:
+            searchBar.placeholder = "Search Random Pairs"
+        }
+    }
     //MARK:- IBActions
     @IBAction func toggleButtonPressed(_ sender: UIBarButtonItem) {
         switch currentListType {
         case .birds:
             currentListType = .plants
+            setSearchBarPlaceHolderText(currentListType)
         case .plants:
             currentListType = .favorites
+            setSearchBarPlaceHolderText(currentListType)
         case .favorites:
             currentListType = .randomDuos
+            setSearchBarPlaceHolderText(currentListType)
         case .randomDuos:
             currentListType = .birds
+            setSearchBarPlaceHolderText(currentListType)
         }
     }
     
@@ -237,7 +276,6 @@ extension ListViewController: UITableViewDataSource {
             }
             let bird = sortedBirds[indexPath.row]
             cell.textLabel?.text = "\(bird.commonName)"
-            // Scinetific name
             cell.detailTextLabel?.text = "\(bird.scientificName)"
         case .plants:
             navigationItem.title = "Plants"
@@ -307,5 +345,26 @@ extension ListViewController: UITableViewDataSource {
 extension ListViewController: PersistenceStackClient {
     func setStack(stack: DataPersistence<String>) {
         //        self.dataPersistence = stack
+    }
+}
+extension ListViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard let searchText = searchBar.text, !searchText.isEmpty else {
+            return
+        }
+        loadAllData()
+        if !searchText.isEmpty {
+            searchList(searchText, listType: currentListType)
+            tableView.reloadData()
+        }
+    }
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(true, animated: true)
+    }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        searchBar.setShowsCancelButton(false, animated: true)
+        searchBar.text = ""
+        loadAllData()
     }
 }
