@@ -21,13 +21,28 @@ class DetailViewController: UIViewController {
     var duo: FavoriteDuo?
     var flickerBirdImageData: FlickerSearchResult? {
         didSet {
-            loadBirdFlickerPhoto(for: (flickerBirdImageData?.photos.photo)!)
+            guard let photo = flickerBirdImageData?.photos.photo, !photo.isEmpty else {
+                DispatchQueue.main.async {
+                    self.birdImageView.contentMode = .scaleAspectFit
+                    self.birdImageView.tintColor = .white
+                    self.birdImageView.image = UIImage(systemName: "questionmark")
+                }
+                return
+            }
+            loadBirdFlickerPhoto(for: photo)
         }
     }
     var flickerPlantImageData: FlickerSearchResult? {
         didSet {
-            loadFlickerPlantPhoto(for: (flickerPlantImageData?.photos.photo)!)
-            
+            guard let photo = flickerPlantImageData?.photos.photo, !photo.isEmpty else {
+                DispatchQueue.main.async {
+                    self.plantImageView.contentMode = .scaleAspectFit
+                    self.plantImageView.tintColor = .white
+                    self.plantImageView.image = UIImage(systemName: "questionmark")
+                }
+                return
+            }
+            loadFlickerPlantPhoto(for: photo)
         }
     }
     var birdImage: UIImage!

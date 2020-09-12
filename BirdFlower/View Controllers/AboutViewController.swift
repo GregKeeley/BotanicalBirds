@@ -18,6 +18,9 @@ class AboutViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
     }
+    override func viewWillDisappear(_ animated: Bool) {
+        self.tabBarController?.tabBar.isHidden = false
+    }
     private func setupUI() {
 //        websiteButton.clearColorForTitle()
         websiteButton.sizeToFit()
@@ -27,6 +30,7 @@ class AboutViewController: UIViewController {
         websiteButton.titleLabel?.textAlignment = .center
         websiteButton.titleLabel?.adjustsFontSizeToFitWidth = true
         websiteButton.titleLabel?.baselineAdjustment = .alignCenters
+        self.tabBarController?.tabBar.isHidden = true
     }
     @IBAction func websiteButtonPressed(_ sender: UIButton) {
         guard let url = URL(string: "https://www.meghankeeley.com/botanicalbirds") else {
