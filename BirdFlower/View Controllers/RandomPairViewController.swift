@@ -98,6 +98,9 @@ class RandomPairViewController: UIViewController {
 //        configureUI()
         fetchFavoriteDuos()
         generateRandomPair()
+        
+//        plantImageView.enableZoom()
+//        birdImageView.enableZoom()
     }
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: false)
@@ -190,6 +193,7 @@ class RandomPairViewController: UIViewController {
 
     private func loadBirdFlickerPhoto(for photo: [PhotoResult]) {
         let flickerPhotoEndpoint = "https://farm\(photo.first?.farm ?? 0).staticflickr.com/\(photo.first?.server ?? "")/\(photo.first?.id ?? "")_\(photo.first?.secret ?? "")_m.jpg".lowercased()
+        print(flickerPhotoEndpoint)
         loadPhotoFromURL(with: flickerPhotoEndpoint, imageView: birdImageView)
     }
     private func loadFlickerPlantPhoto(for photo: [PhotoResult]) {
