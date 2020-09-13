@@ -10,40 +10,101 @@ import UIKit
 import DataPersistence
 import SafariServices
 
-enum SortType {
+enum ListType {
     case birds
     case plants
     case favorites
     case randomDuos
 }
-
+enum SortMethod {
+    case ascending
+    case descending
+}
 class ListViewController: UIViewController {
+    
+    
     //MARK:- IBOutlets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var shuffleBarButton: UIBarButtonItem!
+    @IBOutlet weak var sortMethodBarButton: UIBarButtonItem!
     
     //MARK:- Variables/Constants
-    var birdData = [BirdsSpecies]()
-    var plantData = [PlantsSpecies]()
+    
+    var resultSearchController = UISearchController()
+    
+    var birdData = [BirdsSpecies]() {
+        didSet {
+            //            if currentSortMethod == .ascending {
+            //                birdData = birdData.sorted(by: {$0.commonName < $1.commonName})
+            //                plantData = plantData.sorted(by: {$0.name < $1.name})
+            //                favoriteDuos = favoriteDuos?.sorted(by: {$0.birdCommonName < $1.birdCommonName})
+            //                randomDuos = randomDuos.sorted(by: {$0.birdCommonName < $1.birdCommonName})
+            //            } else {
+            //                birdData = birdData.sorted(by: {$0.commonName > $1.commonName})
+            //                plantData = plantData.sorted(by: {$0.name > $1.name})
+            //                favoriteDuos = favoriteDuos?.sorted(by: {$0.birdCommonName > $1.birdCommonName})
+            //                randomDuos = randomDuos.sorted(by: {$0.birdCommonName > $1.birdCommonName})
+            //            }
+            tableView.reloadData()
+        }
+    }
+    var plantData = [PlantsSpecies]() {
+        didSet {
+            //            if currentSortMethod == .ascending {
+            //                plantData = plantData.sorted(by: {$0.name < $1.name})
+            //            } else {
+            //                plantData = plantData.sorted(by: {$0.name > $1.name})
+            //            }
+            tableView.reloadData()
+        }
+    }
     var favoriteDuos: [FavoriteDuo]? {
         didSet {
             if favoriteDuos?.isEmpty ?? true {
+                //                resultSearchController.searchBar.isUserInteractionEnabled = true
                 tableView.backgroundView = EmptyView.init(title: "Looks like you don't have any favorites :(", message: "Head over to the \"Shuffle\" tab and tap the heart button on any pair you want to save and come back here to check them out", imageName: "heart.fill")
                 tableView.separatorStyle = .none
             } else {
                 tableView.backgroundView = nil
+                //                if currentSortMethod == .ascending {
+                //                    favoriteDuos = favoriteDuos?.sorted(by: {$0.birdCommonName < $1.birdCommonName})
+                //                } else {
+                //                    favoriteDuos = favoriteDuos?.sorted(by: {$0.birdCommonName > $1.birdCommonName})
+                //                }
             }
+            tableView.reloadData()
         }
     }
     var randomDuos = [FavoriteDuo]() {
+        didSet {
+            //            if currentSortMethod == .ascending {
+            //                randomDuos = randomDuos.sorted(by: {$0.birdCommonName < $1.birdCommonName})
+            //            } else {
+            //                randomDuos = randomDuos.sorted(by: {$0.birdCommonName > $1.birdCommonName})
+            //            }
+            tableView.reloadData()
+        }
+    }
+    var filteredBirdData = [BirdsSpecies]()
+    var filteredPlantData = [PlantsSpecies]()
+    var filteredFavorites: [FavoriteDuo]?
+    var filteredRandoms = [FavoriteDuo]()
+    
+    public var dataPersistence: DataPersistence<FavoriteDuo>?
+    
+    // Determines whether the sorting method is ascending or descending
+    var currentSortMethod = SortMethod.ascending {
         didSet {
             tableView.reloadData()
         }
     }
     
-    public var dataPersistence: DataPersistence<FavoriteDuo>?
+    // Set to true when a user is using the search bar
+    var currentlySearching = false
+    // Used to capture what the user is searching for, to be displayed as section header
+    var searchText = ""
     
-    var currentSortType = SortType.randomDuos {
+    var currentListType = ListType.randomDuos {
         didSet {
             tableView.reloadData()
             checkToEnableShuffle()
@@ -55,21 +116,61 @@ class ListViewController: UIViewController {
         setupDataPersistence()
         tableView.dataSource = self
         tableView.delegate = self
+        //        searchBar.delegate = self
         loadAllData()
         setupNavigationBar()
-        
+        setupSearchController()
+        sortAllDataCollections()
     }
     override func viewWillAppear(_ animated: Bool) {
         fetchFavoriteDuos()
+        generateRandomDuos()
         tableView.reloadData()
         checkToEnableShuffle()
     }
     
     //MARK:- Functions
+    private func setupSearchController() {
+        resultSearchController = ({
+            let controller = UISearchController(searchResultsController: nil)
+            controller.searchResultsUpdater = self
+            controller.searchBar.sizeToFit()
+            controller.obscuresBackgroundDuringPresentation = false
+            controller.automaticallyShowsSearchResultsController = false
+            tableView.tableHeaderView = controller.searchBar
+            return controller
+        })()
+        
+    }
     private func setupNavigationBar() {
         navigationItem.rightBarButtonItem?.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
         navigationItem.leftBarButtonItem?.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
         shuffleBarButton.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
+        sortMethodBarButton.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
+        navigationItem.hidesSearchBarWhenScrolling = true
+        setSearchBarPlaceHolderText(currentListType)
+    }
+    private func sortAllDataCollections() {
+        if currentSortMethod == .ascending {
+            birdData = birdData.sorted(by: {$0.commonName < $1.commonName})
+            plantData = plantData.sorted(by: {$0.name < $1.name})
+            favoriteDuos = favoriteDuos?.sorted(by: {$0.birdCommonName < $1.birdCommonName})
+            randomDuos = randomDuos.sorted(by: {$0.birdCommonName < $1.birdCommonName})
+            filteredRandoms = filteredRandoms.sorted(by: {$0.birdCommonName < $1.birdCommonName})
+            filteredFavorites = filteredFavorites?.sorted(by: {$0.birdCommonName < $1.birdCommonName})
+            filteredBirdData = filteredBirdData.sorted(by: {$0.commonName < $1.commonName})
+            filteredPlantData = filteredPlantData.sorted(by: {$0.name < $1.name})
+        } else {
+            birdData = birdData.sorted(by: {$0.commonName > $1.commonName})
+            plantData = plantData.sorted(by: {$0.name > $1.name})
+            favoriteDuos = favoriteDuos?.sorted(by: {$0.birdCommonName > $1.birdCommonName})
+            randomDuos = randomDuos.sorted(by: {$0.birdCommonName > $1.birdCommonName})
+            filteredRandoms = filteredRandoms.sorted(by: {$0.birdCommonName > $1.birdCommonName})
+            filteredFavorites = filteredFavorites?.sorted(by: {$0.birdCommonName > $1.birdCommonName})
+            filteredBirdData = filteredBirdData.sorted(by: {$0.commonName > $1.commonName})
+            filteredPlantData = filteredPlantData.sorted(by: {$0.name > $1.name})
+        }
+        tableView.reloadData()
     }
     private func getFavoritesFromRandomPairVC() {
         let barViewControllers = self.tabBarController?.viewControllers
@@ -79,7 +180,7 @@ class ListViewController: UIViewController {
     private func loadAllData() {
         birdData = BirdsSpecies.decodeBirdSpeciesData()!
         plantData = PlantsSpecies.decodeFlowers()!
-        generateRandomDuos()
+        fetchFavoriteDuos()
     }
     // Note: This is a great example of indexing into the smaller of two arrays for data!
     private func generateRandomDuos() {
@@ -90,15 +191,6 @@ class ListViewController: UIViewController {
             let randomDuo = FavoriteDuo(birdCommonName: birdCommonName, birdScientificName: birdScientificName, plantName: plantName)
             randomDuos.append(randomDuo)
         }
-//        var i = 0
-//        for _ in 0..<min(plantData.count, birdData.count) {
-//            let birdCommonName = birdData[i].commonName
-//            let birdScientificName = birdData[i].scientificName
-//            let plantName = plantData[i].name
-//            let randomDuo = FavoriteDuo(birdCommonName: birdCommonName, birdScientificName: birdScientificName, plantName: plantName)
-//            randomDuos.append(randomDuo)
-//            i += 1
-//        }
     }
     private func fetchFavoriteDuos() {
         do {
@@ -113,24 +205,60 @@ class ListViewController: UIViewController {
         }
     }
     private func checkToEnableShuffle() {
-        if currentSortType == .randomDuos {
+        if currentListType == .randomDuos {
             shuffleBarButton.isEnabled = true
         } else {
             shuffleBarButton.isEnabled = false
         }
+        
     }
-    
+    private func searchList(_ query: String, listType: ListType) {
+        switch listType {
+        case .birds:
+            filteredBirdData = birdData.filter {
+                $0.commonName.lowercased().contains(query.lowercased())
+            }
+        case .plants:
+            filteredPlantData = plantData.filter {
+                $0.name.lowercased().contains(query.lowercased())
+            }
+        case .randomDuos:
+            filteredRandoms = randomDuos.filter {
+                $0.birdCommonName.lowercased().contains(query.lowercased()) || $0.plantName.lowercased().contains(query.lowercased())
+            }
+        case .favorites:
+            filteredFavorites = favoriteDuos?.filter  {
+                $0.birdCommonName.lowercased().contains(query.lowercased()) || $0.plantName.lowercased().contains(query.lowercased())
+            }
+        }
+    }
+    private func setSearchBarPlaceHolderText(_ listType: ListType) {
+        switch listType {
+        case .birds:
+            resultSearchController.searchBar.placeholder = "Search Birds"
+        case .favorites:
+            resultSearchController.searchBar.placeholder = "Search Favorites"
+        case .plants:
+            resultSearchController.searchBar.placeholder = "Search Plants"
+        case .randomDuos:
+            resultSearchController.searchBar.placeholder = "Search Random Pairs"
+        }
+    }
     //MARK:- IBActions
     @IBAction func toggleButtonPressed(_ sender: UIBarButtonItem) {
-        switch currentSortType {
+        switch currentListType {
         case .birds:
-            currentSortType = .plants
+            currentListType = .plants
+            setSearchBarPlaceHolderText(currentListType)
         case .plants:
-            currentSortType = .favorites
+            currentListType = .favorites
+            setSearchBarPlaceHolderText(currentListType)
         case .favorites:
-            currentSortType = .randomDuos
+            currentListType = .randomDuos
+            setSearchBarPlaceHolderText(currentListType)
         case .randomDuos:
-            currentSortType = .birds
+            currentListType = .birds
+            setSearchBarPlaceHolderText(currentListType)
         }
     }
     
@@ -146,45 +274,79 @@ class ListViewController: UIViewController {
         randomDuos.removeAll()
         generateRandomDuos()
     }
+    @IBAction func changeSortMethodButtonPressed(_ sender: UIBarButtonItem) {
+        if currentSortMethod == .ascending {
+            currentSortMethod = .descending
+            sortAllDataCollections()
+            sortMethodBarButton.title = "Zz-Aa"
+        } else {
+            currentSortMethod = .ascending
+            sortAllDataCollections()
+            sortMethodBarButton.title = "Aa-Zz"
+        }
+        tableView.reloadData()
+    }
 }
 
 //MARK:- Extensions
 extension ListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch currentSortType {
+        switch currentListType {
         case .randomDuos:
-            let item = randomDuos[indexPath.row]
+            let randomDuo: FavoriteDuo?
+            if currentlySearching {
+                randomDuo = filteredRandoms[indexPath.row]
+            } else {
+                randomDuo = randomDuos[indexPath.row]
+            }
             if let detailVC = UIStoryboard(name: "DetailViewController", bundle: nil).instantiateViewController(identifier: "DetailViewController") as? DetailViewController {
-                detailVC.duo = item
+                detailVC.duo = randomDuo
                 if let navigator = navigationController {
+                    dismiss(animated: true, completion: nil)
                     navigator.pushViewController(detailVC, animated: true)
                 }
             }
         case .birds:
-            let item = birdData[indexPath.row]
-            let itemToPass = FavoriteDuo(birdCommonName: item.commonName, birdScientificName: item.scientificName, plantName: "")
+            let bird: BirdsSpecies?
+            if currentlySearching {
+                bird = filteredBirdData[indexPath.row]
+            } else {
+                bird = birdData[indexPath.row]
+            }
             if let detailVC = UIStoryboard(name: "DetailViewController", bundle: nil).instantiateViewController(identifier: "DetailViewController") as? DetailViewController {
-                detailVC.duo = itemToPass
+                let birdToPass = FavoriteDuo(birdCommonName: bird?.commonName ?? "Bird", birdScientificName: bird?.scientificName ?? "Plant", plantName: "")
+                detailVC.duo = birdToPass
                 if let navigator = navigationController {
+                    dismiss(animated: true, completion: nil)
                     navigator.pushViewController(detailVC, animated: true)
                 }
             }
         case .plants:
-            let item = plantData[indexPath.row]
-            let itemToPass = FavoriteDuo(birdCommonName: "", birdScientificName: "", plantName: item.name)
+            let plant: PlantsSpecies?
+            if currentlySearching {
+                plant = filteredPlantData[indexPath.row]
+            } else {
+                plant = plantData[indexPath.row]
+            }
             if let detailVC = UIStoryboard(name: "DetailViewController", bundle: nil).instantiateViewController(identifier: "DetailViewController") as? DetailViewController {
-                detailVC.duo = itemToPass
+                let plantToPass = FavoriteDuo(birdCommonName: "", birdScientificName: "", plantName: plant?.name ?? "Plant")
+                detailVC.duo = plantToPass
                 if let navigator = navigationController {
+                    dismiss(animated: true, completion: nil)
                     navigator.pushViewController(detailVC, animated: true)
                 }
             }
         case .favorites:
-            guard let item = favoriteDuos?[indexPath.row] else {
-                return
+            let favoriteDuo: FavoriteDuo?
+            if currentlySearching {
+                favoriteDuo = filteredFavorites?[indexPath.row]
+            } else {
+                favoriteDuo = favoriteDuos?[indexPath.row]
             }
             if let detailVC = UIStoryboard(name: "DetailViewController", bundle: nil).instantiateViewController(identifier: "DetailViewController") as? DetailViewController {
-                detailVC.duo = item
+                detailVC.duo = favoriteDuo
                 if let navigator = navigationController {
+                    dismiss(animated: true, completion: nil)
                     navigator.pushViewController(detailVC, animated: true)
                 }
             }
@@ -194,59 +356,93 @@ extension ListViewController: UITableViewDelegate {
 }
 extension ListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch currentSortType {
+        switch currentListType {
         case .randomDuos:
-            return randomDuos.count
+            if currentlySearching {
+                return filteredRandoms.count
+            } else {
+                return randomDuos.count
+            }
         case .birds:
-            return birdData.count
+            if currentlySearching {
+                return filteredBirdData.count
+            } else {
+                return birdData.count
+            }
         case .plants:
-            return plantData.count
+            if currentlySearching {
+                return filteredPlantData.count
+            } else {
+                return plantData.count
+            }
         case .favorites:
-            return favoriteDuos?.count ?? 0
-            //            if favoriteDuos?.count ?? 0 >= 1 {
-            //                return favoriteDuos?.count ?? 0
-            //            } else {
-            //                return 0
-            //            }
+            if currentlySearching {
+                return filteredFavorites?.count ?? 0
+            } else {
+                return favoriteDuos?.count ?? 0
+            }
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "basicCell", for: indexPath)
-        switch currentSortType {
+        switch currentListType {
         case .randomDuos:
             navigationItem.title = "Random Pairs"
             navigationController?.navigationBar.prefersLargeTitles = true
-            let randomDuo = randomDuos[indexPath.row]
-            cell.textLabel?.text = ("\(randomDuo.birdCommonName) + \(randomDuo.plantName)")
+            var randomDuo: FavoriteDuo?
+            if currentlySearching {
+                randomDuo = filteredRandoms[indexPath.row]
+            } else {
+                randomDuo = randomDuos[indexPath.row]
+            }
+            cell.textLabel?.text = ("\(randomDuo?.birdCommonName ?? "Bird") + \(randomDuo?.plantName ?? "Plant")")
             cell.detailTextLabel?.text = ""
         case .birds:
             navigationItem.title = "Birds"
             navigationController?.navigationBar.prefersLargeTitles = true
-            let bird = birdData[indexPath.row]
-            cell.textLabel?.text = "\(bird.commonName)"
-            // Scinetific name
-            cell.detailTextLabel?.text = "\(bird.scientificName)"
+            let bird: BirdsSpecies?
+            if currentlySearching {
+                bird = filteredBirdData[indexPath.row]
+            } else {
+                bird = birdData[indexPath.row]
+            }
+            cell.textLabel?.text = "\(bird?.commonName ?? "Bird")"
+            cell.detailTextLabel?.text = "\(bird?.scientificName ?? "Scientific")"
         case .plants:
             navigationItem.title = "Plants"
             navigationController?.navigationBar.prefersLargeTitles = true
-            let flower = plantData[indexPath.row]
-            cell.textLabel?.text = ("\(flower.name )")
+            let plant: PlantsSpecies?
+            if currentlySearching {
+                plant = filteredPlantData[indexPath.row]
+            } else {
+                plant = plantData[indexPath.row]
+            }
+            cell.textLabel?.text = ("\(plant?.name ?? "")")
             cell.detailTextLabel?.text = ""
         case .favorites:
             navigationItem.title = "Favorites"
             navigationController?.navigationBar.prefersLargeTitles = true
-            if favoriteDuos?.count ?? 0 >= 1 {
-                let favorite = favoriteDuos?[indexPath.row]
-                cell.textLabel?.text = ("\(favorite?.birdCommonName ?? "Bird") + \(favorite?.plantName ?? "Plant")")
-                cell.detailTextLabel?.text = ""
+            let favorite: FavoriteDuo?
+            if currentlySearching {
+                if filteredFavorites?.count ?? 0 >= 1 {
+                    favorite = filteredFavorites?[indexPath.row]
+                    cell.textLabel?.text = ("\(favorite?.birdCommonName ?? "Bird") + \(favorite?.plantName ?? "Plant")")
+                    cell.detailTextLabel?.text = ""
+                }
+            } else {
+                if favoriteDuos?.count ?? 0 >= 1 {
+                    let favorite = favoriteDuos?[indexPath.row]
+                    cell.textLabel?.text = ("\(favorite?.birdCommonName ?? "Bird") + \(favorite?.plantName ?? "Plant")")
+                    cell.detailTextLabel?.text = ""
+                }
             }
         }
         return cell
     }
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         if favoriteDuos?.count ?? 0 > 0 {
-            return currentSortType == .favorites
+            return currentListType == .favorites
         } else {
             return false
         }
@@ -255,7 +451,7 @@ extension ListViewController: UITableViewDataSource {
         switch editingStyle {
         case .delete:
             // Check sort type is favorites (We dont want to be able to delete anything else)
-            if currentSortType == .favorites {
+            if currentListType == .favorites {
                 // Make sure we have a favorite item
                 guard let favoriteItem = favoriteDuos?[indexPath.row] else {
                     return
@@ -282,10 +478,54 @@ extension ListViewController: UITableViewDataSource {
             print("...")
         }
     }
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if currentlySearching {
+            switch currentListType {
+            case .birds:
+                return ("\(filteredBirdData.count) items found")
+            case .plants:
+                return ("\(filteredPlantData.count) items found")
+            case .favorites:
+                return ("\(filteredFavorites?.count ?? 0) items found")
+            case .randomDuos:
+                return ("\(filteredRandoms.count) items found")
+            }
+        }
+        return ""
+    }
 }
 
 extension ListViewController: PersistenceStackClient {
     func setStack(stack: DataPersistence<String>) {
-        //        self.dataPersistence = stack
+    }
+}
+
+extension ListViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let searchText = searchController.searchBar.text, !searchText.isEmpty else {
+            currentlySearching = false
+            tableView.reloadData()
+            return
+        }
+        currentlySearching = true
+        loadAllData()
+        //        if !searchText.isEmpty {
+        self.searchText = searchText
+        searchList(searchText, listType: currentListType)
+        tableView.reloadData()
+    }
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(true, animated: true)
+    }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        currentlySearching = false
+        searchBar.resignFirstResponder()
+        searchBar.setShowsCancelButton(false, animated: true)
+        searchBar.text = ""
+        loadAllData()
+        tableView.reloadData()
     }
 }

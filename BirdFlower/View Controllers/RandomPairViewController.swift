@@ -19,7 +19,7 @@ enum SearchType {
 @IBDesignable class RoundedImageView: UIImageView {
     override func layoutSubviews() {
         super.layoutSubviews()
-        layer.borderWidth = 1.0
+        layer.borderWidth = 0.0
         layer.borderColor = UIColor.white.cgColor
         layer.cornerRadius = min(bounds.width, bounds.height) / 2
     }
@@ -42,14 +42,31 @@ class RandomPairViewController: UIViewController {
     var plantImageURL: String?
     var flickerBirdImageData: FlickerSearchResult? {
         didSet {
-            loadBirdFlickerPhoto(for: (flickerBirdImageData?.photos.photo)!)
+            guard let photo = flickerBirdImageData?.photos.photo, !photo.isEmpty else {
+                DispatchQueue.main.async {
+                    self.birdImageView.contentMode = .scaleAspectFit
+                    self.birdImageView.tintColor = .white
+                    self.birdImageView.image = UIImage(systemName: "questionmark")
+                }
+                return
+            }
+            loadBirdFlickerPhoto(for: photo)
         }
     }
     var flickerPlantImageData: FlickerSearchResult? {
         didSet {
-            loadFlickerPlantPhoto(for: (flickerPlantImageData?.photos.photo)!)
+            guard let photo = flickerPlantImageData?.photos.photo, !photo.isEmpty else {
+                DispatchQueue.main.async {
+                    self.plantImageView.contentMode = .scaleAspectFit
+                    self.plantImageView.tintColor = .white
+                    self.plantImageView.image = UIImage(systemName: "questionmark")
+                }
+                return
+            }
+            loadFlickerPlantPhoto(for: photo)
         }
     }
+    
     var flickerBirdImageURL: String?
     var flickerPlantImageURL: String?
     var randomPair: FavoriteDuo?
@@ -81,8 +98,15 @@ class RandomPairViewController: UIViewController {
 //        configureUI()
         fetchFavoriteDuos()
         generateRandomPair()
+        
+//        plantImageView.enableZoom()
+//        birdImageView.enableZoom()
     }
     override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(false, animated: false)
     }
     //MARK:- Funcs
     // These functions generate random pairs, or individually random data to use in the app
@@ -169,6 +193,7 @@ class RandomPairViewController: UIViewController {
 
     private func loadBirdFlickerPhoto(for photo: [PhotoResult]) {
         let flickerPhotoEndpoint = "https://farm\(photo.first?.farm ?? 0).staticflickr.com/\(photo.first?.server ?? "")/\(photo.first?.id ?? "")_\(photo.first?.secret ?? "")_m.jpg".lowercased()
+        print(flickerPhotoEndpoint)
         loadPhotoFromURL(with: flickerPhotoEndpoint, imageView: birdImageView)
     }
     private func loadFlickerPlantPhoto(for photo: [PhotoResult]) {
@@ -184,6 +209,21 @@ class RandomPairViewController: UIViewController {
         isFavorite = false
         favoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
         favoriteButton.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+    }
+    @objc private func pushImageZoomController(for imageView: UIImageView) {
+        if let imageZoomVC = UIStoryboard(name: "ImageZoomViewController", bundle: nil).instantiateViewController(identifier: "ImageZoomViewController") as? ImageZoomViewController {
+            if imageView == plantImageView {
+            imageZoomVC.imageData = flickerPlantImageData
+                imageZoomVC.nameForPhoto = randomPlant?.name ?? "Plant"
+            } else {
+                imageZoomVC.nameForPhoto = randomBird?.commonName ?? "Bird"
+                imageZoomVC.imageData = flickerBirdImageData
+            }
+            if let navigator = navigationController {
+                navigator.pushViewController(imageZoomVC, animated: true)
+            }
+        }
+
     }
     //MARK:- IBActions
     @IBAction func shuffleButtonPressed(_ sender: UIButton) {
@@ -227,7 +267,16 @@ class RandomPairViewController: UIViewController {
         }
         fetchFavoriteDuos()
     }
-    
+    @IBAction func aboutButtonPressed(_ sender: UIButton) {
+        if let aboutVC = UIStoryboard(name: "AboutViewController", bundle: nil).instantiateViewController(identifier: "aboutViewController") as? AboutViewController {
+            if let navigator = navigationController {
+                navigator.navigationBar.prefersLargeTitles = true
+                navigator.pushViewController(aboutVC, animated: true)
+            }
+        }
+        self.navigationController?.navigationBar.tintColor = UIColor.white
+        self.navigationController?.navigationBar.isTranslucent = true
+    }
 }
 
 //MARK:- Extensions

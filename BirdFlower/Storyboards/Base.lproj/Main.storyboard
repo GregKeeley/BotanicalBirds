@@ -10,7 +10,7 @@
         <!--BotanicalBirds-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ListViewController" customModule="BirdFlower" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ListViewController" customModule="BotanicalBirds" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -19,22 +19,22 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="basicCell" textLabel="ZkY-xZ-C8x" detailTextLabel="HOd-RK-UmO" style="IBUITableViewCellStyleSubtitle" id="eaJ-rb-KBP">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="55.5"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="basicCell" textLabel="ZkY-xZ-C8x" detailTextLabel="HOd-RK-UmO" rowHeight="114" style="IBUITableViewCellStyleSubtitle" id="eaJ-rb-KBP">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="114"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="eaJ-rb-KBP" id="40F-su-Eg8">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="55.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="114"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZkY-xZ-C8x">
-                                                    <rect key="frame" x="20" y="10" width="33.5" height="20.5"/>
+                                                    <rect key="frame" x="20" y="37" width="33.5" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HOd-RK-UmO">
-                                                    <rect key="frame" x="20" y="31.5" width="44" height="14.5"/>
+                                                    <rect key="frame" x="20" y="60.5" width="44" height="14.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="textColor"/>
@@ -48,7 +48,7 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="KTB-99-LpB" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="gi2-XS-oN8"/>
+                            <constraint firstItem="KTB-99-LpB" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="afC-xK-4OB"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="KTB-99-LpB" secondAttribute="trailing" id="nD3-3X-gLU"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="KTB-99-LpB" secondAttribute="bottom" id="sbO-lJ-Qif"/>
                             <constraint firstItem="KTB-99-LpB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="tUV-v3-RiE"/>
@@ -68,14 +68,22 @@
                                 </connections>
                             </barButtonItem>
                         </leftBarButtonItems>
-                        <barButtonItem key="rightBarButtonItem" image="info.circle.fill" catalog="system" id="fzB-Gw-IbS">
-                            <connections>
-                                <action selector="aboutButtonPressed:" destination="BYZ-38-t0r" id="8Sb-a6-ftC"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem image="info.circle.fill" catalog="system" id="fzB-Gw-IbS">
+                                <connections>
+                                    <action selector="aboutButtonPressed:" destination="BYZ-38-t0r" id="8Sb-a6-ftC"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Aa-Zz" id="rnR-c4-tG3">
+                                <connections>
+                                    <action selector="changeSortMethodButtonPressed:" destination="BYZ-38-t0r" id="KAg-Go-l7u"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="shuffleBarButton" destination="fS3-fp-D6Y" id="lMn-f0-TQe"/>
+                        <outlet property="sortMethodBarButton" destination="rnR-c4-tG3" id="Zhi-Lb-vrT"/>
                         <outlet property="tableView" destination="KTB-99-LpB" id="Qlg-Hf-ze4"/>
                     </connections>
                 </viewController>
@@ -83,10 +91,10 @@
             </objects>
             <point key="canvasLocation" x="1802.8985507246377" y="-309.375"/>
         </scene>
-        <!--Shuffle-->
+        <!--Random Pair View Controller-->
         <scene sceneID="2P6-Xx-C3v">
             <objects>
-                <viewController id="goj-t6-H1T" customClass="RandomPairViewController" customModule="BirdFlower" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="goj-t6-H1T" customClass="RandomPairViewController" customModule="BotanicalBirds" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="M5e-cl-3TT">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -99,7 +107,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eId-ct-eu9">
-                                <rect key="frame" x="172" y="585" width="70" height="31.5"/>
+                                <rect key="frame" x="172" y="629" width="70" height="31.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="70" id="YeD-yf-mZb"/>
@@ -118,13 +126,13 @@
                                     <action selector="shuffleButtonPressed:" destination="goj-t6-H1T" eventType="touchUpInside" id="6Dw-ey-XTR"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XHL-Ay-L7n">
-                                <rect key="frame" x="20" y="441.5" width="157.5" height="78.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XHL-Ay-L7n">
+                                <rect key="frame" x="20" y="485.5" width="157.5" height="27.5"/>
                                 <attributedString key="attributedText">
                                     <fragment content="BIRD NAME">
                                         <attributes>
                                             <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="30" name="Futura-MediumItalic"/>
+                                            <font key="NSFont" size="21" name="Futura-MediumItalic"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -132,7 +140,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zTM-bv-szX">
-                                <rect key="frame" x="177.5" y="646.5" width="59" height="50.5"/>
+                                <rect key="frame" x="177.5" y="690.5" width="59" height="50.5"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" image="heart" catalog="system">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="48"/>
@@ -141,59 +149,43 @@
                                     <action selector="favoriteButtonPressed:" destination="goj-t6-H1T" eventType="touchUpInside" id="J2d-xO-HCI"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HHS-c6-Pyr">
-                                <rect key="frame" x="236.5" y="441.5" width="157.5" height="78.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HHS-c6-Pyr">
+                                <rect key="frame" x="236.5" y="485.5" width="157.5" height="26.5"/>
                                 <attributedString key="attributedText">
                                     <fragment content="PLANT NAME">
                                         <attributes>
                                             <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="30" name="Futura-MediumItalic"/>
+                                            <font key="NSFont" size="20" name="Futura-MediumItalic"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="E33-Lp-tSS" customClass="RoundedImageView" customModule="BirdFlower" customModuleProvider="target">
-                                <rect key="frame" x="20" y="265" width="155" height="155"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kingfisher-10.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="E33-Lp-tSS" customClass="RoundedImageView" customModule="BotanicalBirds" customModuleProvider="target">
+                                <rect key="frame" x="20" y="308" width="155" height="157.5"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="E33-Lp-tSS" secondAttribute="height" multiplier="1:1" constant="-2.5" id="z0n-gK-TGG"/>
                                 </constraints>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="SQW-tj-qVE" customClass="RoundedImageView" customModule="BirdFlower" customModuleProvider="target">
-                                <rect key="frame" x="236.5" y="265" width="155" height="155"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Parakeet_+_Zebra_Plant" translatesAutoresizingMaskIntoConstraints="NO" id="SQW-tj-qVE" customClass="RoundedImageView" customModule="BotanicalBirds" customModuleProvider="target">
+                                <rect key="frame" x="236.5" y="308" width="155" height="157.5"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="SQW-tj-qVE" secondAttribute="height" multiplier="1:1" constant="-2.5" id="LZg-ll-WNp"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="csm-Z7-xKh">
-                                <rect key="frame" x="89.5" y="230" width="18" height="22"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="18" id="Dk6-mH-uVw"/>
-                                    <constraint firstAttribute="height" constant="22" id="s9J-6I-gkS"/>
-                                </constraints>
+                                <rect key="frame" x="157" y="443.5" width="18" height="22"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" image="arrow.clockwise" catalog="system"/>
                                 <connections>
                                     <action selector="randomBirdButtonPressed:" destination="goj-t6-H1T" eventType="touchUpInside" id="5y2-Ic-sXp"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mnn-bb-Uar">
-                                <rect key="frame" x="306.5" y="230" width="18" height="22"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="18" id="SJH-kY-RYe"/>
-                                    <constraint firstAttribute="height" constant="22" id="eph-Qf-hiN"/>
-                                </constraints>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="arrow.clockwise" catalog="system"/>
-                                <connections>
-                                    <action selector="randomPlantButtonPressed:" destination="goj-t6-H1T" eventType="touchUpInside" id="jtM-D2-bLb"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y1H-ev-Fht">
-                                <rect key="frame" x="42" y="94" width="330" height="130"/>
+                                <rect key="frame" x="42" y="138" width="330" height="130"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="330" id="Ly7-Q3-IK8"/>
                                 </constraints>
@@ -209,54 +201,79 @@
                                 <color key="highlightedColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wbs-z6-jHV">
-                                <rect key="frame" x="187" y="310" width="41" height="66"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="55"/>
+                                <rect key="frame" x="186.5" y="352" width="39" height="69.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="58"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Me1-m5-fZf">
+                                <rect key="frame" x="370" y="96" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="nE7-aA-vd7"/>
+                                    <constraint firstAttribute="height" constant="30" id="p18-Q2-S2G"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="info.circle" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24"/>
+                                </state>
+                                <connections>
+                                    <action selector="aboutButtonPressed:" destination="goj-t6-H1T" eventType="touchUpInside" id="5Ce-Yo-aQP"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mnn-bb-Uar">
+                                <rect key="frame" x="373.5" y="443.5" width="18" height="22"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="arrow.clockwise" catalog="system"/>
+                                <connections>
+                                    <action selector="randomPlantButtonPressed:" destination="goj-t6-H1T" eventType="touchUpInside" id="jtM-D2-bLb"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="Mnn-bb-Uar" firstAttribute="centerX" secondItem="SQW-tj-qVE" secondAttribute="centerX" constant="1.5" id="0OK-Dc-7n7"/>
                             <constraint firstItem="y1H-ev-Fht" firstAttribute="top" secondItem="s1I-TA-Ynq" secondAttribute="top" constant="50" id="4nk-sM-YOW"/>
+                            <constraint firstItem="SQW-tj-qVE" firstAttribute="bottom" secondItem="E33-Lp-tSS" secondAttribute="bottom" id="56W-1f-ICQ"/>
                             <constraint firstItem="E33-Lp-tSS" firstAttribute="width" secondItem="M5e-cl-3TT" secondAttribute="width" multiplier="0.38" constant="-2.3199999999999932" id="7cF-su-W4h"/>
                             <constraint firstItem="E33-Lp-tSS" firstAttribute="centerY" secondItem="SQW-tj-qVE" secondAttribute="centerY" id="8hm-9y-bLC"/>
                             <constraint firstItem="XHL-Ay-L7n" firstAttribute="centerX" secondItem="E33-Lp-tSS" secondAttribute="centerX" constant="1.25" id="A0X-V4-2PR"/>
                             <constraint firstItem="eId-ct-eu9" firstAttribute="top" secondItem="s1I-TA-Ynq" secondAttribute="top" constant="541" id="AT9-ud-aPf"/>
                             <constraint firstItem="HTI-Zz-KWl" firstAttribute="bottom" secondItem="s1I-TA-Ynq" secondAttribute="bottom" id="D2O-TP-6cw"/>
+                            <constraint firstItem="csm-Z7-xKh" firstAttribute="bottom" secondItem="E33-Lp-tSS" secondAttribute="bottom" id="EGj-JZ-jzO"/>
+                            <constraint firstItem="Mnn-bb-Uar" firstAttribute="bottom" secondItem="csm-Z7-xKh" secondAttribute="bottom" id="Fzk-CI-AnL"/>
                             <constraint firstItem="s1I-TA-Ynq" firstAttribute="trailing" secondItem="NgB-h2-A8g" secondAttribute="trailing" id="Ghl-GC-Av1"/>
-                            <constraint firstItem="csm-Z7-xKh" firstAttribute="centerX" secondItem="E33-Lp-tSS" secondAttribute="centerX" constant="1" id="Icz-Qc-OG1"/>
                             <constraint firstItem="HTI-Zz-KWl" firstAttribute="leading" secondItem="s1I-TA-Ynq" secondAttribute="leading" id="Ij1-Wd-Z7S"/>
                             <constraint firstItem="wbs-z6-jHV" firstAttribute="centerY" secondItem="SQW-tj-qVE" secondAttribute="centerY" id="L6I-9o-Zeb"/>
                             <constraint firstItem="NgB-h2-A8g" firstAttribute="top" secondItem="M5e-cl-3TT" secondAttribute="top" id="LhW-KU-e6k"/>
                             <constraint firstItem="s1I-TA-Ynq" firstAttribute="trailing" secondItem="HHS-c6-Pyr" secondAttribute="trailing" constant="20" id="Nam-wL-L7p"/>
                             <constraint firstItem="zTM-bv-szX" firstAttribute="centerX" secondItem="M5e-cl-3TT" secondAttribute="centerX" id="RVN-OS-L9p"/>
+                            <constraint firstItem="SQW-tj-qVE" firstAttribute="top" secondItem="E33-Lp-tSS" secondAttribute="top" id="W7P-wn-bj0"/>
                             <constraint firstItem="eId-ct-eu9" firstAttribute="centerX" secondItem="M5e-cl-3TT" secondAttribute="centerX" id="XOi-F1-TWm"/>
                             <constraint firstItem="y1H-ev-Fht" firstAttribute="centerX" secondItem="M5e-cl-3TT" secondAttribute="centerX" id="Y1W-TX-3nq"/>
-                            <constraint firstItem="SQW-tj-qVE" firstAttribute="top" secondItem="Mnn-bb-Uar" secondAttribute="bottom" constant="12" id="a3A-jI-clL"/>
+                            <constraint firstItem="s1I-TA-Ynq" firstAttribute="trailing" secondItem="Me1-m5-fZf" secondAttribute="trailing" constant="14" id="YdW-Ig-B3g"/>
+                            <constraint firstItem="Mnn-bb-Uar" firstAttribute="trailing" secondItem="SQW-tj-qVE" secondAttribute="trailing" id="Zvl-vD-9Up"/>
                             <constraint firstItem="NgB-h2-A8g" firstAttribute="leading" secondItem="s1I-TA-Ynq" secondAttribute="leading" id="aXS-Ih-7dJ"/>
                             <constraint firstItem="HHS-c6-Pyr" firstAttribute="top" secondItem="SQW-tj-qVE" secondAttribute="bottom" constant="20" id="aYO-v5-NnH"/>
                             <constraint firstItem="s1I-TA-Ynq" firstAttribute="trailing" secondItem="SQW-tj-qVE" secondAttribute="trailing" constant="22.5" id="dg2-6C-WLo"/>
                             <constraint firstItem="XHL-Ay-L7n" firstAttribute="leading" secondItem="s1I-TA-Ynq" secondAttribute="leading" constant="20" id="dog-dA-PEc"/>
                             <constraint firstItem="E33-Lp-tSS" firstAttribute="leading" secondItem="s1I-TA-Ynq" secondAttribute="leading" constant="20" id="eVC-hB-nUE"/>
-                            <constraint firstItem="SQW-tj-qVE" firstAttribute="leading" secondItem="wbs-z6-jHV" secondAttribute="trailing" constant="8.5" id="hL5-qt-WuH"/>
+                            <constraint firstItem="SQW-tj-qVE" firstAttribute="leading" secondItem="wbs-z6-jHV" secondAttribute="trailing" constant="11.25" id="hL5-qt-WuH"/>
                             <constraint firstItem="XHL-Ay-L7n" firstAttribute="top" secondItem="E33-Lp-tSS" secondAttribute="bottom" constant="20" id="ihu-CE-X4j"/>
-                            <constraint firstItem="wbs-z6-jHV" firstAttribute="leading" secondItem="E33-Lp-tSS" secondAttribute="trailing" constant="12" id="ijT-Tl-9Nn"/>
+                            <constraint firstItem="wbs-z6-jHV" firstAttribute="leading" secondItem="E33-Lp-tSS" secondAttribute="trailing" constant="11.25" id="ijT-Tl-9Nn"/>
+                            <constraint firstItem="csm-Z7-xKh" firstAttribute="trailing" secondItem="E33-Lp-tSS" secondAttribute="trailing" id="jqr-sI-bUM"/>
+                            <constraint firstItem="Mnn-bb-Uar" firstAttribute="bottom" secondItem="SQW-tj-qVE" secondAttribute="bottom" id="kwT-wx-GCX"/>
                             <constraint firstItem="zTM-bv-szX" firstAttribute="top" secondItem="eId-ct-eu9" secondAttribute="bottom" constant="30" id="nWP-8M-kLH"/>
                             <constraint firstItem="HTI-Zz-KWl" firstAttribute="trailing" secondItem="s1I-TA-Ynq" secondAttribute="trailing" id="npC-72-Fpw"/>
                             <constraint firstItem="NgB-h2-A8g" firstAttribute="bottom" secondItem="s1I-TA-Ynq" secondAttribute="bottom" id="oNb-uA-Kfz"/>
                             <constraint firstItem="SQW-tj-qVE" firstAttribute="width" secondItem="M5e-cl-3TT" secondAttribute="width" multiplier="0.38" constant="-2.3199999999999932" id="pJz-cP-fZE"/>
                             <constraint firstItem="HTI-Zz-KWl" firstAttribute="top" secondItem="M5e-cl-3TT" secondAttribute="top" id="q25-fw-EgM"/>
                             <constraint firstItem="E33-Lp-tSS" firstAttribute="top" secondItem="s1I-TA-Ynq" secondAttribute="top" constant="220" id="qCE-qO-0RJ"/>
-                            <constraint firstItem="SQW-tj-qVE" firstAttribute="top" secondItem="s1I-TA-Ynq" secondAttribute="top" constant="220" id="rlO-gK-fzz"/>
-                            <constraint firstItem="E33-Lp-tSS" firstAttribute="top" secondItem="csm-Z7-xKh" secondAttribute="bottom" constant="12" id="vcB-0r-3Pq"/>
+                            <constraint firstItem="Me1-m5-fZf" firstAttribute="top" secondItem="s1I-TA-Ynq" secondAttribute="top" constant="8" id="wos-Mo-eyN"/>
                             <constraint firstItem="HHS-c6-Pyr" firstAttribute="centerX" secondItem="SQW-tj-qVE" secondAttribute="centerX" constant="1.25" id="zvj-Od-aNy"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="s1I-TA-Ynq"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Shuffle" image="questionmark" catalog="system" selectedImage="questionmark" id="lkL-IF-sYh">
-                        <color key="badgeColor" red="0.30840110780000002" green="0.5618229508" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </tabBarItem>
+                    <navigationItem key="navigationItem" id="Rtp-v3-Ulf"/>
                     <connections>
                         <outlet property="birdImageView" destination="E33-Lp-tSS" id="01g-lZ-XHD"/>
                         <outlet property="birdNameLabel" destination="XHL-Ay-L7n" id="Q82-c3-sGo"/>
@@ -268,12 +285,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0uS-rK-Wnu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="918.84057971014499" y="362.94642857142856"/>
+            <point key="canvasLocation" x="1803" y="340"/>
         </scene>
         <!--Main Tab Bar Controller-->
         <scene sceneID="8ew-di-NaB">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="ZhX-Xf-mZc" customClass="MainTabBarController" customModule="BirdFlower" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="ZhX-Xf-mZc" customClass="MainTabBarController" customModule="BotanicalBirds" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="tHp-JG-L7e">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
@@ -281,7 +298,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="goj-t6-H1T" kind="relationship" relationship="viewControllers" id="5iw-OF-XbF"/>
+                        <segue destination="uJp-WW-Qsp" kind="relationship" relationship="viewControllers" id="5iw-OF-XbF"/>
                         <segue destination="39x-MQ-eJv" kind="relationship" relationship="viewControllers" id="4fJ-xm-Bh9"/>
                     </connections>
                 </tabBarController>
@@ -308,6 +325,27 @@
             </objects>
             <point key="canvasLocation" x="892.75362318840587" y="-309.375"/>
         </scene>
+        <!--Shuffle-->
+        <scene sceneID="Kvf-Ni-UBC">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mBo-Mr-S4X" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="uJp-WW-Qsp" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Shuffle" image="questionmark" catalog="system" selectedImage="questionmark" id="lkL-IF-sYh">
+                        <color key="badgeColor" red="0.30840110780000002" green="0.5618229508" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </tabBarItem>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="yP5-fD-9Ar">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="goj-t6-H1T" kind="relationship" relationship="rootViewController" id="Bjs-S9-5Rl"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="893" y="340"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Parakeet_+_Zebra_Plant" width="2100" height="2100"/>
@@ -316,8 +354,9 @@
         <image name="book" catalog="system" width="128" height="101"/>
         <image name="book.fill" catalog="system" width="128" height="100"/>
         <image name="heart" catalog="system" width="128" height="109"/>
+        <image name="info.circle" catalog="system" width="128" height="121"/>
         <image name="info.circle.fill" catalog="system" width="128" height="121"/>
-        <image name="photo" catalog="system" width="128" height="93"/>
+        <image name="kingfisher-10.jpg" width="250" height="250"/>
         <image name="questionmark" catalog="system" width="96" height="128"/>
         <image name="shuffle" catalog="system" width="128" height="93"/>
     </resources>

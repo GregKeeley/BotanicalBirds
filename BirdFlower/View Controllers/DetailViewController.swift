@@ -21,13 +21,28 @@ class DetailViewController: UIViewController {
     var duo: FavoriteDuo?
     var flickerBirdImageData: FlickerSearchResult? {
         didSet {
-            loadBirdFlickerPhoto(for: (flickerBirdImageData?.photos.photo)!)
+            guard let photo = flickerBirdImageData?.photos.photo, !photo.isEmpty else {
+                DispatchQueue.main.async {
+                    self.birdImageView.contentMode = .scaleAspectFit
+                    self.birdImageView.tintColor = .white
+                    self.birdImageView.image = UIImage(systemName: "questionmark")
+                }
+                return
+            }
+            loadBirdFlickerPhoto(for: photo)
         }
     }
     var flickerPlantImageData: FlickerSearchResult? {
         didSet {
-            loadFlickerPlantPhoto(for: (flickerPlantImageData?.photos.photo)!)
-            
+            guard let photo = flickerPlantImageData?.photos.photo, !photo.isEmpty else {
+                DispatchQueue.main.async {
+                    self.plantImageView.contentMode = .scaleAspectFit
+                    self.plantImageView.tintColor = .white
+                    self.plantImageView.image = UIImage(systemName: "questionmark")
+                }
+                return
+            }
+            loadFlickerPlantPhoto(for: photo)
         }
     }
     var birdImage: UIImage!
@@ -120,7 +135,12 @@ class DetailViewController: UIViewController {
     @IBAction func birdButtonPressed(_ sender: UIButton) {
         if let imageZoomVC = UIStoryboard(name: "ImageZoomViewController", bundle: nil).instantiateViewController(identifier: "ImageZoomViewController") as? ImageZoomViewController {
             imageZoomVC.imageData = flickerBirdImageData
+            imageZoomVC.nameForPhoto = duo?.birdCommonName ?? "Bird"
             if let navigator = navigationController {
+                navigator.navigationController?.navigationBar.tintColor = .white
+                navigator.navigationController?.navigationBar.prefersLargeTitles = false
+                navigator.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+                navigator.navigationController?.navigationBar.topItem?.title = duo?.birdCommonName ?? "Bird"
                 navigator.pushViewController(imageZoomVC, animated: true)
             }
         }
@@ -128,7 +148,12 @@ class DetailViewController: UIViewController {
     @IBAction func plantButtonPressed(_ sender: UIButton) {
         if let imageZoomVC = UIStoryboard(name: "ImageZoomViewController", bundle: nil).instantiateViewController(identifier: "ImageZoomViewController") as? ImageZoomViewController {
             imageZoomVC.imageData = flickerPlantImageData
+            imageZoomVC.nameForPhoto = duo?.plantName ?? "Plant"
             if let navigator = navigationController {
+                navigator.navigationController?.navigationBar.tintColor = .white
+                navigator.navigationController?.navigationBar.prefersLargeTitles = false
+                navigator.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+                navigator.navigationController?.navigationItem.title = duo?.plantName ?? "Plant"
                 navigator.pushViewController(imageZoomVC, animated: true)
             }
         }
