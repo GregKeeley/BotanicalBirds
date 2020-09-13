@@ -15,27 +15,36 @@ class ImageZoomViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     
     var imageData: FlickerSearchResult?
+    var nameForPhoto = "" {
+        didSet {
+            navigationController?.navigationBar.barStyle = UIBarStyle.black
+            navigationController?.navigationBar.tintColor = UIColor.white
+            navigationItem.title = nameForPhoto
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    override func viewDidAppear(_ animated: Bool) {
         setupUI()
+        navigationController?.navigationBar.prefersLargeTitles = false
         scrollView.delegate = self
-//        let normalScale = scrollView.bounds.width / imageView.bounds.width
         scrollView.maximumZoomScale = 4
         scrollView.minimumZoomScale = 1
-//        scrollView.bouncesZoom = true
-        //        scrollView.contentSize = imageView.frame.size
-//        scrollView.zoomScale = normalScale
+//        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        }
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        navigationController?.navigationBar.tintColor = .clear
+    }
+    override func viewDidDisappear(_ animated: Bool) {
         
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
     private func setupUI() {
         let flickerEndPoint = "https://farm\(imageData?.photos.photo.first?.farm ?? 0).staticflickr.com/\(imageData?.photos.photo.first?.server ?? "")/\(imageData?.photos.photo.first?.id ?? "")_\(imageData?.photos.photo.first?.secret ?? "")_b.jpg".lowercased()
         print(flickerEndPoint)
         DispatchQueue.main.async {
-        self.imageView.kf.indicatorType = .activity
-        self.imageView.kf.setImage(with: URL(string: flickerEndPoint))
+            self.imageView.kf.indicatorType = .activity
+            self.imageView.kf.setImage(with: URL(string: flickerEndPoint))
         }
     }
 }

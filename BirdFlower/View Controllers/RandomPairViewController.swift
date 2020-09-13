@@ -210,6 +210,21 @@ class RandomPairViewController: UIViewController {
         favoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
         favoriteButton.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
     }
+    @objc private func pushImageZoomController(for imageView: UIImageView) {
+        if let imageZoomVC = UIStoryboard(name: "ImageZoomViewController", bundle: nil).instantiateViewController(identifier: "ImageZoomViewController") as? ImageZoomViewController {
+            if imageView == plantImageView {
+            imageZoomVC.imageData = flickerPlantImageData
+                imageZoomVC.nameForPhoto = randomPlant?.name ?? "Plant"
+            } else {
+                imageZoomVC.nameForPhoto = randomBird?.commonName ?? "Bird"
+                imageZoomVC.imageData = flickerBirdImageData
+            }
+            if let navigator = navigationController {
+                navigator.pushViewController(imageZoomVC, animated: true)
+            }
+        }
+
+    }
     //MARK:- IBActions
     @IBAction func shuffleButtonPressed(_ sender: UIButton) {
         isFavorite = false
