@@ -156,11 +156,19 @@ class ListViewController: UIViewController {
             plantData = plantData.sorted(by: {$0.name < $1.name})
             favoriteDuos = favoriteDuos?.sorted(by: {$0.birdCommonName < $1.birdCommonName})
             randomDuos = randomDuos.sorted(by: {$0.birdCommonName < $1.birdCommonName})
+            filteredRandoms = filteredRandoms.sorted(by: {$0.birdCommonName < $1.birdCommonName})
+            filteredFavorites = filteredFavorites?.sorted(by: {$0.birdCommonName < $1.birdCommonName})
+            filteredBirdData = filteredBirdData.sorted(by: {$0.commonName < $1.commonName})
+            filteredPlantData = filteredPlantData.sorted(by: {$0.name < $1.name})
         } else {
             birdData = birdData.sorted(by: {$0.commonName > $1.commonName})
             plantData = plantData.sorted(by: {$0.name > $1.name})
             favoriteDuos = favoriteDuos?.sorted(by: {$0.birdCommonName > $1.birdCommonName})
             randomDuos = randomDuos.sorted(by: {$0.birdCommonName > $1.birdCommonName})
+            filteredRandoms = filteredRandoms.sorted(by: {$0.birdCommonName > $1.birdCommonName})
+            filteredFavorites = filteredFavorites?.sorted(by: {$0.birdCommonName > $1.birdCommonName})
+            filteredBirdData = filteredBirdData.sorted(by: {$0.commonName > $1.commonName})
+            filteredPlantData = filteredPlantData.sorted(by: {$0.name > $1.name})
         }
         tableView.reloadData()
     }
