@@ -45,8 +45,6 @@ class DetailViewController: UIViewController {
             loadFlickerPlantPhoto(for: photo)
         }
     }
-    var birdImage: UIImage!
-    var plantImage: UIImage!
     
     //MARK:- Init
     init(duo: FavoriteDuo) {
@@ -70,12 +68,12 @@ class DetailViewController: UIViewController {
         plantNameLabel.text = duo?.plantName
         searchFlickerImageData()
         
-        birdImageView.layer.borderColor = UIColor.white.cgColor
-        birdImageView.layer.borderWidth = 1
-        plantImageView.layer.borderWidth = 1
-        plantImageView.layer.borderColor = UIColor.white.cgColor
-        plantImageView.layer.cornerRadius = 8
-        birdImageView.layer.cornerRadius = 8
+//        birdImageView.layer.borderColor = UIColor.white.cgColor
+//        birdImageView.layer.borderWidth = 1
+//        plantImageView.layer.borderWidth = 1
+//        plantImageView.layer.borderColor = UIColor.white.cgColor
+        plantImageView.layer.cornerRadius = 4
+        birdImageView.layer.cornerRadius = 4
     }
     
     private func searchFlickerImageData() {
@@ -137,9 +135,8 @@ class DetailViewController: UIViewController {
             imageZoomVC.imageData = flickerBirdImageData
             imageZoomVC.nameForPhoto = duo?.birdCommonName ?? "Bird"
             if let navigator = navigationController {
-                navigator.navigationController?.navigationBar.tintColor = .white
                 navigator.navigationController?.navigationBar.prefersLargeTitles = false
-                navigator.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+//                navigator.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.red]
                 navigator.navigationController?.navigationBar.topItem?.title = duo?.birdCommonName ?? "Bird"
                 navigator.pushViewController(imageZoomVC, animated: true)
             }
@@ -150,9 +147,8 @@ class DetailViewController: UIViewController {
             imageZoomVC.imageData = flickerPlantImageData
             imageZoomVC.nameForPhoto = duo?.plantName ?? "Plant"
             if let navigator = navigationController {
-                navigator.navigationController?.navigationBar.tintColor = .white
                 navigator.navigationController?.navigationBar.prefersLargeTitles = false
-                navigator.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+//                navigator.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.red]
                 navigator.navigationController?.navigationItem.title = duo?.plantName ?? "Plant"
                 navigator.pushViewController(imageZoomVC, animated: true)
             }
