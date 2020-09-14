@@ -49,7 +49,6 @@ class ImageZoomViewController: UIViewController {
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        
         if let zoomImage = zoomImage {
             setMinZoomScaleForImageSize(zoomImage.size)
         }

@@ -104,11 +104,24 @@ class RandomPairViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: false)
+        guard let randomPairToCheck = randomPair else {
+            return
+        }
+        if checkFavoriteSaved(randomPairToCheck) {
+            isFavorite = true
+            favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            favoriteButton.tintColor = #colorLiteral(red: 0.8201736992, green: 0.1226904487, blue: 0.007086123212, alpha: 1)
+        } else {
+            resetFavoriteButton()
+        }
     }
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(false, animated: false)
     }
     //MARK:- Funcs
+    private func checkFavoriteSaved(_ favorite: FavoriteDuo) -> Bool {
+        return dataPersistence?.hasItemBeenSaved(favorite) ?? false
+    }
     // These functions generate random pairs, or individually random data to use in the app
     private func fetchFavoriteDuos() {
         do {

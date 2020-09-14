@@ -195,6 +195,7 @@ class ListViewController: UIViewController {
     private func fetchFavoriteDuos() {
         do {
             favoriteDuos = try dataPersistence?.loadItems()
+            filteredFavorites = favoriteDuos?.sorted(by: {$0.birdCommonName < $1.birdCommonName})
         } catch {
             print("Failed to load favorites")
         }
@@ -441,10 +442,10 @@ extension ListViewController: UITableViewDataSource {
         return cell
     }
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if favoriteDuos?.count ?? 0 > 0 {
+        if favoriteDuos?.count ?? 0 > 0 && !currentlySearching {
             return currentListType == .favorites
         } else {
-            return false
+            return true
         }
     }
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -464,16 +465,66 @@ extension ListViewController: UITableViewDataSource {
                 do {
                     // Delete the favorite item from data persistence
                     try dataPersistence?.deleteItem(at: favoriteIndex)
+                    // Finally, we can remove the item from the array of favorites, and reload the tableview
+                    favoriteDuos?.remove(at: indexPath.row)
+                    
+//                    tableView.deleteRows(at: [indexPath], with: .automatic)
                 } catch {
                     showAlert(title: "Failed to remove favorite", message: "Your guess is as good as mine")
                 }
-                // Finally, we can remove the item from the array of favorites, and reload the tableview
-                favoriteDuos?.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .automatic)
-                //                tableView.reloadData()
             }
         case .insert:
-            break
+            if currentListType != .favorites {
+                switch currentListType {
+                case .birds:
+                    var item = BirdsSpecies(commonName: "", scientificName: "")
+                    if currentlySearching {
+                        item = filteredBirdData[indexPath.row]
+                    } else {
+                        item = birdData[indexPath.row]
+                    }
+                    let itemToBeSaved = FavoriteDuo(birdCommonName: item.commonName, birdScientificName: item.scientificName, plantName: "")
+                    if !(dataPersistence?.hasItemBeenSaved(itemToBeSaved) ?? true) {
+                        do {
+                            try dataPersistence?.createItem(itemToBeSaved)
+                        } catch {
+                            showAlert(title: "Failed to save item", message: "Uh oh!")
+                        }
+                    }
+                case .plants:
+                    var item = PlantsSpecies(name: "")
+                    if currentlySearching {
+                        item = filteredPlantData[indexPath.row]
+                    } else {
+                        item = plantData[indexPath.row]
+                    }
+                    let itemToBeSaved = FavoriteDuo(birdCommonName: "", birdScientificName: "", plantName: item.name)
+                    if !(dataPersistence?.hasItemBeenSaved(itemToBeSaved) ?? true) {
+                        do {
+                            try dataPersistence?.createItem(itemToBeSaved)
+                        } catch {
+                            showAlert(title: "Failed to save item", message: "Uh oh!")
+                        }
+                    }
+                case .randomDuos:
+                    var item = FavoriteDuo(birdCommonName: "", birdScientificName: "", plantName: "")
+                    if currentlySearching {
+                        item = filteredRandoms[indexPath.row]
+                    } else {
+                        item = randomDuos[indexPath.row]
+                    }
+                    let itemToBeSaved = FavoriteDuo(birdCommonName: item.birdCommonName, birdScientificName: item.birdScientificName, plantName: item.plantName)
+                    if !(dataPersistence?.hasItemBeenSaved(itemToBeSaved) ?? true) {
+                        do {
+                            try dataPersistence?.createItem(itemToBeSaved)
+                        } catch {
+                            showAlert(title: "Failed to save item", message: "Uh oh!")
+                        }
+                    }
+                default:
+                    break
+                }
+            }
         default:
             print("...")
         }
