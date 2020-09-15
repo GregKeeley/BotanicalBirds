@@ -15,11 +15,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentInsetAdjustmentBehavior="never" translatesAutoresizingMaskIntoConstraints="NO" id="c1G-or-3Rm">
-                                <rect key="frame" x="0.0" y="44" width="414" height="808"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" translatesAutoresizingMaskIntoConstraints="NO" id="c1G-or-3Rm">
+                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="896" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Zpy-pP-P1g" userLabel="ImageView">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="893"/>
+                                        <rect key="frame" x="0.0" y="1" width="414" height="893"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <gestureRecognizers/>
                                         <connections>
@@ -31,8 +31,8 @@
                                 <constraints>
                                     <constraint firstItem="Zpy-pP-P1g" firstAttribute="leading" secondItem="c1G-or-3Rm" secondAttribute="leading" id="9De-dk-7uz"/>
                                     <constraint firstAttribute="trailing" secondItem="Zpy-pP-P1g" secondAttribute="trailing" id="9RI-8N-Lcc"/>
-                                    <constraint firstAttribute="bottom" secondItem="Zpy-pP-P1g" secondAttribute="bottom" constant="-86.5" id="d4G-wH-mHN"/>
-                                    <constraint firstItem="Zpy-pP-P1g" firstAttribute="top" secondItem="c1G-or-3Rm" secondAttribute="top" constant="-1" id="kTJ-aj-gWn"/>
+                                    <constraint firstAttribute="bottom" secondItem="Zpy-pP-P1g" secondAttribute="bottom" id="d4G-wH-mHN"/>
+                                    <constraint firstItem="Zpy-pP-P1g" firstAttribute="top" secondItem="c1G-or-3Rm" secondAttribute="top" id="kTJ-aj-gWn"/>
                                 </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="tXu-vg-ixZ"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="LAo-dW-F2A"/>
@@ -41,10 +41,10 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="c1G-or-3Rm" firstAttribute="centerY" secondItem="tow-YH-cYN" secondAttribute="centerY" id="2uc-I3-afc"/>
+                            <constraint firstItem="c1G-or-3Rm" firstAttribute="centerY" secondItem="tow-YH-cYN" secondAttribute="centerY" constant="22" id="2uc-I3-afc"/>
                             <constraint firstItem="c1G-or-3Rm" firstAttribute="centerX" secondItem="tow-YH-cYN" secondAttribute="centerX" id="M6n-vi-Snq"/>
                             <constraint firstItem="c1G-or-3Rm" firstAttribute="leading" secondItem="DuJ-vL-i5n" secondAttribute="leading" id="TWF-ke-lDR"/>
-                            <constraint firstItem="DuJ-vL-i5n" firstAttribute="bottom" secondItem="c1G-or-3Rm" secondAttribute="bottom" constant="10" id="jUc-RN-xqU"/>
+                            <constraint firstAttribute="bottom" secondItem="c1G-or-3Rm" secondAttribute="bottom" id="jUc-RN-xqU"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="DuJ-vL-i5n"/>
                     </view>

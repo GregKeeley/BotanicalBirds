@@ -35,12 +35,13 @@ class ImageZoomViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         scrollView.delegate = self
-        scrollView.maximumZoomScale = 4
+        scrollView.maximumZoomScale = 2
         scrollView.minimumZoomScale = 1
     }
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationBar.barTintColor = .clear
+        navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
     }
     override func viewWillDisappear(_ animated: Bool) {

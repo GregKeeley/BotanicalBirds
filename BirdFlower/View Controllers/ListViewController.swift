@@ -22,7 +22,6 @@ enum SortMethod {
 }
 class ListViewController: UIViewController {
     
-    
     //MARK:- IBOutlets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var shuffleBarButton: UIBarButtonItem!
@@ -99,6 +98,7 @@ class ListViewController: UIViewController {
         generateRandomDuos()
         tableView.reloadData()
         checkToEnableShuffle()
+        
     }
     
     //MARK:- Functions

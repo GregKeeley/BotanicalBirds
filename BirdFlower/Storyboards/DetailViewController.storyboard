@@ -114,8 +114,10 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black"/>
                     <connections>
                         <outlet property="birdCommonNameLabel" destination="kby-ce-mtL" id="ym8-0R-BGQ"/>
+                        <outlet property="birdImageButton" destination="Igg-RL-lgj" id="3Fj-rK-VjM"/>
                         <outlet property="birdImageView" destination="hYh-t6-JEv" id="1p1-Gq-Ku5"/>
                         <outlet property="birdScientificNameLabel" destination="sdn-KB-wPb" id="1A5-14-ImM"/>
+                        <outlet property="plantImageButton" destination="tjg-Km-V2Y" id="iXJ-5P-PMj"/>
                         <outlet property="plantImageView" destination="Rkj-C2-srf" id="cnE-2b-e3U"/>
                         <outlet property="plantNameLabel" destination="DtR-of-uoX" id="krD-kP-9gl"/>
                     </connections>
