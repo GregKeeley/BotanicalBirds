@@ -22,39 +22,20 @@ enum SortMethod {
 }
 class ListViewController: UIViewController {
     
-    
     //MARK:- IBOutlets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var shuffleBarButton: UIBarButtonItem!
     @IBOutlet weak var sortMethodBarButton: UIBarButtonItem!
     
     //MARK:- Variables/Constants
-    
     var resultSearchController = UISearchController()
-    
     var birdData = [BirdsSpecies]() {
         didSet {
-            //            if currentSortMethod == .ascending {
-            //                birdData = birdData.sorted(by: {$0.commonName < $1.commonName})
-            //                plantData = plantData.sorted(by: {$0.name < $1.name})
-            //                favoriteDuos = favoriteDuos?.sorted(by: {$0.birdCommonName < $1.birdCommonName})
-            //                randomDuos = randomDuos.sorted(by: {$0.birdCommonName < $1.birdCommonName})
-            //            } else {
-            //                birdData = birdData.sorted(by: {$0.commonName > $1.commonName})
-            //                plantData = plantData.sorted(by: {$0.name > $1.name})
-            //                favoriteDuos = favoriteDuos?.sorted(by: {$0.birdCommonName > $1.birdCommonName})
-            //                randomDuos = randomDuos.sorted(by: {$0.birdCommonName > $1.birdCommonName})
-            //            }
             tableView.reloadData()
         }
     }
     var plantData = [PlantsSpecies]() {
         didSet {
-            //            if currentSortMethod == .ascending {
-            //                plantData = plantData.sorted(by: {$0.name < $1.name})
-            //            } else {
-            //                plantData = plantData.sorted(by: {$0.name > $1.name})
-            //            }
             tableView.reloadData()
         }
     }
@@ -66,22 +47,12 @@ class ListViewController: UIViewController {
                 tableView.separatorStyle = .none
             } else {
                 tableView.backgroundView = nil
-                //                if currentSortMethod == .ascending {
-                //                    favoriteDuos = favoriteDuos?.sorted(by: {$0.birdCommonName < $1.birdCommonName})
-                //                } else {
-                //                    favoriteDuos = favoriteDuos?.sorted(by: {$0.birdCommonName > $1.birdCommonName})
-                //                }
             }
             tableView.reloadData()
         }
     }
     var randomDuos = [FavoriteDuo]() {
         didSet {
-            //            if currentSortMethod == .ascending {
-            //                randomDuos = randomDuos.sorted(by: {$0.birdCommonName < $1.birdCommonName})
-            //            } else {
-            //                randomDuos = randomDuos.sorted(by: {$0.birdCommonName > $1.birdCommonName})
-            //            }
             tableView.reloadData()
         }
     }
@@ -127,6 +98,7 @@ class ListViewController: UIViewController {
         generateRandomDuos()
         tableView.reloadData()
         checkToEnableShuffle()
+        
     }
     
     //MARK:- Functions
@@ -195,6 +167,7 @@ class ListViewController: UIViewController {
     private func fetchFavoriteDuos() {
         do {
             favoriteDuos = try dataPersistence?.loadItems()
+            filteredFavorites = favoriteDuos?.sorted(by: {$0.birdCommonName < $1.birdCommonName})
         } catch {
             print("Failed to load favorites")
         }
@@ -427,55 +400,116 @@ extension ListViewController: UITableViewDataSource {
             if currentlySearching {
                 if filteredFavorites?.count ?? 0 >= 1 {
                     favorite = filteredFavorites?[indexPath.row]
+                    if favorite?.plantName == "" {
+                        cell.textLabel?.text = ("\(favorite?.birdCommonName ?? "Bird")")
+                        cell.detailTextLabel?.text = "Bird only"
+                    } else if favorite?.birdCommonName == "" {
+                        cell.textLabel?.text = ("\(favorite?.plantName ?? "Plant")")
+                        cell.detailTextLabel?.text = "Plant only"
+                    } else {
                     cell.textLabel?.text = ("\(favorite?.birdCommonName ?? "Bird") + \(favorite?.plantName ?? "Plant")")
                     cell.detailTextLabel?.text = ""
+                    }
                 }
             } else {
                 if favoriteDuos?.count ?? 0 >= 1 {
-                    let favorite = favoriteDuos?[indexPath.row]
-                    cell.textLabel?.text = ("\(favorite?.birdCommonName ?? "Bird") + \(favorite?.plantName ?? "Plant")")
-                    cell.detailTextLabel?.text = ""
+                    favorite = favoriteDuos?[indexPath.row]
+                    if favorite?.plantName == "" {
+                        cell.textLabel?.text = ("\(favorite?.birdCommonName ?? "Bird")")
+                        cell.detailTextLabel?.text = "Bird only"
+                    } else if favorite?.birdCommonName == "" {
+                        cell.textLabel?.text = ("\(favorite?.plantName ?? "Plant")")
+                        cell.detailTextLabel?.text = "Plant only"
+                    } else {
+                        cell.textLabel?.text = ("\(favorite?.birdCommonName ?? "Bird") + \(favorite?.plantName ?? "Plant")")
+                        cell.detailTextLabel?.text = ""
+                    }
                 }
             }
         }
         return cell
     }
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if favoriteDuos?.count ?? 0 > 0 {
-            return currentListType == .favorites
-        } else {
-            return false
-        }
+            return true
     }
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        switch editingStyle {
-        case .delete:
-            // Check sort type is favorites (We dont want to be able to delete anything else)
-            if currentListType == .favorites {
-                // Make sure we have a favorite item
-                guard let favoriteItem = favoriteDuos?[indexPath.row] else {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
+            if self.currentListType == .favorites {
+                guard let favoriteItem = self.favoriteDuos?[indexPath.row] else {
                     return
                 }
-                // Get the index of the item to remove later
-                guard let favoriteIndex = favoriteDuos?.firstIndex(of: favoriteItem ) else {
-                    showAlert(title: "Could not find favorite", message: "Failed to remove favorite, or it wasn't a favorite to begin with")
+                guard let favoriteIndex = self.favoriteDuos?.firstIndex(of: favoriteItem ) else {
+                    self.showAlert(title: "Could not find favorite", message: "Failed to remove favorite, or it wasn't a favorite to begin with")
                     return
                 }
                 do {
-                    // Delete the favorite item from data persistence
-                    try dataPersistence?.deleteItem(at: favoriteIndex)
+                    try self.dataPersistence?.deleteItem(at: favoriteIndex)
+                    self.favoriteDuos?.remove(at: indexPath.row)
                 } catch {
-                    showAlert(title: "Failed to remove favorite", message: "Your guess is as good as mine")
+                    self.showAlert(title: "Failed to remove favorite", message: "Your guess is as good as mine")
                 }
-                // Finally, we can remove the item from the array of favorites, and reload the tableview
-                favoriteDuos?.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .automatic)
-                //                tableView.reloadData()
             }
-        case .insert:
-            break
-        default:
-            print("...")
+        }
+        
+        let favorite = UITableViewRowAction(style: .normal, title: "Favorite") { (action, indexPath) in
+            if self.currentListType != .favorites {
+                switch self.currentListType {
+                case .birds:
+                    var item = BirdsSpecies(commonName: "", scientificName: "")
+                    if self.currentlySearching {
+                        item = self.filteredBirdData[indexPath.row]
+                    } else {
+                        item = self.birdData[indexPath.row]
+                    }
+                    let itemToBeSaved = FavoriteDuo(birdCommonName: item.commonName, birdScientificName: item.scientificName, plantName: "")
+                    if !(self.dataPersistence?.hasItemBeenSaved(itemToBeSaved) ?? true) {
+                        do {
+                            try self.dataPersistence?.createItem(itemToBeSaved)
+                        } catch {
+                            self.showAlert(title: "Failed to save item", message: "Uh oh!")
+                        }
+                    }
+                case .plants:
+                    var item = PlantsSpecies(name: "")
+                    if self.currentlySearching {
+                        item = self.filteredPlantData[indexPath.row]
+                    } else {
+                        item = self.plantData[indexPath.row]
+                    }
+                    let itemToBeSaved = FavoriteDuo(birdCommonName: "", birdScientificName: "", plantName: item.name)
+                    if !(self.dataPersistence?.hasItemBeenSaved(itemToBeSaved) ?? true) {
+                        do {
+                            try self.dataPersistence?.createItem(itemToBeSaved)
+                        } catch {
+                            self.showAlert(title: "Failed to save item", message: "Uh oh!")
+                        }
+                    }
+                case .randomDuos:
+                    var item = FavoriteDuo(birdCommonName: "", birdScientificName: "", plantName: "")
+                    if self.currentlySearching {
+                        item = self.filteredRandoms[indexPath.row]
+                    } else {
+                        item = self.randomDuos[indexPath.row]
+                    }
+                    let itemToBeSaved = FavoriteDuo(birdCommonName: item.birdCommonName, birdScientificName: item.birdScientificName, plantName: item.plantName)
+                    if !(self.dataPersistence?.hasItemBeenSaved(itemToBeSaved) ?? true) {
+                        do {
+                            try self.dataPersistence?.createItem(itemToBeSaved)
+                        } catch {
+                            self.showAlert(title: "Failed to save item", message: "Uh oh!")
+                        }
+                    }
+                default:
+                    break
+                }
+            }
+            self.fetchFavoriteDuos()
+        }
+        favorite.backgroundColor = #colorLiteral(red: 0, green: 0.6940027566, blue: 0, alpha: 1)
+        if currentListType == .favorites {
+            return [delete]
+        } else {
+            return [favorite]
         }
     }
     func numberOfSections(in tableView: UITableView) -> Int {

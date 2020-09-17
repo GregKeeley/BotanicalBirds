@@ -315,6 +315,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="tZ0-5z-9cY">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -328,7 +329,6 @@
         <!--Shuffle-->
         <scene sceneID="Kvf-Ni-UBC">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="mBo-Mr-S4X" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="uJp-WW-Qsp" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Shuffle" image="questionmark" catalog="system" selectedImage="questionmark" id="lkL-IF-sYh">
                         <color key="badgeColor" red="0.30840110780000002" green="0.5618229508" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -343,6 +343,7 @@
                         <segue destination="goj-t6-H1T" kind="relationship" relationship="rootViewController" id="Bjs-S9-5Rl"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mBo-Mr-S4X" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="893" y="340"/>
         </scene>

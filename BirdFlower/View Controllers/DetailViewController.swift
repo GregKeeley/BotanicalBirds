@@ -16,6 +16,8 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var birdCommonNameLabel: UILabel!
     @IBOutlet weak var birdScientificNameLabel: UILabel!
     @IBOutlet weak var plantNameLabel: UILabel!
+    @IBOutlet weak var birdImageButton: UIButton!
+    @IBOutlet weak var plantImageButton: UIButton!
     
     //MARK:- Variables and Constants
     var duo: FavoriteDuo?
@@ -45,8 +47,6 @@ class DetailViewController: UIViewController {
             loadFlickerPlantPhoto(for: photo)
         }
     }
-    var birdImage: UIImage!
-    var plantImage: UIImage!
     
     //MARK:- Init
     init(duo: FavoriteDuo) {
@@ -62,7 +62,11 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
     }
-    
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.navigationBar.tintColor = .black
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.black]
+        navigationController?.navigationBar.barTintColor = .white
+    }
     //MARK:- Functions
     private func setupUI() {
         birdCommonNameLabel.text = duo?.birdCommonName
@@ -70,12 +74,12 @@ class DetailViewController: UIViewController {
         plantNameLabel.text = duo?.plantName
         searchFlickerImageData()
         
-        birdImageView.layer.borderColor = UIColor.white.cgColor
-        birdImageView.layer.borderWidth = 1
-        plantImageView.layer.borderWidth = 1
-        plantImageView.layer.borderColor = UIColor.white.cgColor
-        plantImageView.layer.cornerRadius = 8
-        birdImageView.layer.cornerRadius = 8
+//        birdImageView.layer.borderColor = UIColor.white.cgColor
+//        birdImageView.layer.borderWidth = 1
+//        plantImageView.layer.borderWidth = 1
+//        plantImageView.layer.borderColor = UIColor.white.cgColor
+        plantImageView.layer.cornerRadius = 4
+        birdImageView.layer.cornerRadius = 4
     }
     
     private func searchFlickerImageData() {
@@ -91,8 +95,10 @@ class DetailViewController: UIViewController {
                     DispatchQueue.main.async {
                         if searchType == .bird {
                             self?.birdImageView.isHidden = true
+                            self?.birdImageButton.isEnabled = false
                         } else if searchType == .plant {
                             self?.plantImageView.isHidden = true
+                            self?.plantImageButton.isEnabled = false
                         }
                     }
                 case .success(let results):
@@ -107,8 +113,10 @@ class DetailViewController: UIViewController {
                     DispatchQueue.main.async {
                         if searchType == .bird {
                             self?.birdImageView.isHidden = true
+                            self?.birdImageButton.isEnabled = false
                         } else if searchType == .plant {
                             self?.plantImageView.isHidden = true
+                            self?.plantImageButton.isEnabled = false
                         }
                     }
                 case .success(let results):
@@ -137,9 +145,8 @@ class DetailViewController: UIViewController {
             imageZoomVC.imageData = flickerBirdImageData
             imageZoomVC.nameForPhoto = duo?.birdCommonName ?? "Bird"
             if let navigator = navigationController {
-                navigator.navigationController?.navigationBar.tintColor = .white
                 navigator.navigationController?.navigationBar.prefersLargeTitles = false
-                navigator.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+//                navigator.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.red]
                 navigator.navigationController?.navigationBar.topItem?.title = duo?.birdCommonName ?? "Bird"
                 navigator.pushViewController(imageZoomVC, animated: true)
             }
@@ -150,9 +157,8 @@ class DetailViewController: UIViewController {
             imageZoomVC.imageData = flickerPlantImageData
             imageZoomVC.nameForPhoto = duo?.plantName ?? "Plant"
             if let navigator = navigationController {
-                navigator.navigationController?.navigationBar.tintColor = .white
                 navigator.navigationController?.navigationBar.prefersLargeTitles = false
-                navigator.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+                navigator.navigationController?.navigationBar.tintColor = .white
                 navigator.navigationController?.navigationItem.title = duo?.plantName ?? "Plant"
                 navigator.pushViewController(imageZoomVC, animated: true)
             }

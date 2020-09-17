@@ -15,22 +15,37 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c1G-or-3Rm">
-                                <rect key="frame" x="0.0" y="44" width="414" height="808"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" translatesAutoresizingMaskIntoConstraints="NO" id="c1G-or-3Rm">
+                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="896" image="none" translatesAutoresizingMaskIntoConstraints="NO" id="Zpy-pP-P1g" userLabel="ImageView">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="896" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Zpy-pP-P1g" userLabel="ImageView">
+                                        <rect key="frame" x="0.0" y="1" width="414" height="893"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <gestureRecognizers/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="YRK-Oc-Mib" appends="YES" id="xTF-LS-nxJ"/>
+                                        </connections>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="Zpy-pP-P1g" firstAttribute="leading" secondItem="c1G-or-3Rm" secondAttribute="leading" id="9De-dk-7uz"/>
+                                    <constraint firstAttribute="trailing" secondItem="Zpy-pP-P1g" secondAttribute="trailing" id="9RI-8N-Lcc"/>
+                                    <constraint firstAttribute="bottom" secondItem="Zpy-pP-P1g" secondAttribute="bottom" id="d4G-wH-mHN"/>
+                                    <constraint firstItem="Zpy-pP-P1g" firstAttribute="top" secondItem="c1G-or-3Rm" secondAttribute="top" id="kTJ-aj-gWn"/>
+                                </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="tXu-vg-ixZ"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="LAo-dW-F2A"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="c1G-or-3Rm" firstAttribute="centerY" secondItem="tow-YH-cYN" secondAttribute="centerY" constant="22" id="2uc-I3-afc"/>
+                            <constraint firstItem="c1G-or-3Rm" firstAttribute="centerX" secondItem="tow-YH-cYN" secondAttribute="centerX" id="M6n-vi-Snq"/>
+                            <constraint firstItem="c1G-or-3Rm" firstAttribute="leading" secondItem="DuJ-vL-i5n" secondAttribute="leading" id="TWF-ke-lDR"/>
+                            <constraint firstAttribute="bottom" secondItem="c1G-or-3Rm" secondAttribute="bottom" id="jUc-RN-xqU"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="DuJ-vL-i5n"/>
                     </view>
                     <navigationItem key="navigationItem" title="Photo" id="DRM-Vd-hkH"/>
@@ -40,6 +55,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y8t-HD-Ixx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer numberOfTapsRequired="2" id="YRK-Oc-Mib">
+                    <connections>
+                        <action selector="doubleTapGesture:" destination="iOc-DZ-IhF" id="09o-hh-4xm"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1047.8260869565217" y="134.59821428571428"/>
         </scene>
@@ -51,6 +71,9 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="aEr-Be-W32">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -63,6 +86,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="none" width="128" height="128"/>
+        <image name="photo" catalog="system" width="128" height="93"/>
     </resources>
 </document>
