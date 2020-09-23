@@ -26,6 +26,8 @@ class ListViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var shuffleBarButton: UIBarButtonItem!
     @IBOutlet weak var sortMethodBarButton: UIBarButtonItem!
+    @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var messageLabelTopConstraint: NSLayoutConstraint!
     
     //MARK:- Variables/Constants
     var resultSearchController = UISearchController()
@@ -87,7 +89,6 @@ class ListViewController: UIViewController {
         setupDataPersistence()
         tableView.dataSource = self
         tableView.delegate = self
-        //        searchBar.delegate = self
         loadAllData()
         setupNavigationBar()
         setupSearchController()
@@ -98,7 +99,7 @@ class ListViewController: UIViewController {
         generateRandomDuos()
         tableView.reloadData()
         checkToEnableShuffle()
-        
+        configureMessageLabel()
     }
     
     //MARK:- Functions
@@ -112,7 +113,11 @@ class ListViewController: UIViewController {
             tableView.tableHeaderView = controller.searchBar
             return controller
         })()
-        
+    }
+    private func configureMessageLabel() {
+//        messageLabel.alpha = 0.0
+        messageLabel.sizeToFit()
+        messageLabel.layer.cornerRadius = 4
     }
     private func setupNavigationBar() {
         navigationItem.rightBarButtonItem?.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
@@ -215,6 +220,53 @@ class ListViewController: UIViewController {
             resultSearchController.searchBar.placeholder = "Search Plants"
         case .randomDuos:
             resultSearchController.searchBar.placeholder = "Search Random Pairs"
+        }
+    }
+    let upperBound = CGFloat(0)
+    let lowerBound = CGFloat(100)
+//
+//    private func moveUp() {
+//        while box.frame.origin.y > upperBound {
+//            boxYPosition.constant -= 1
+//
+//            UIView.animate(withDuration: 0.5, delay: 0.0, options: [], animations: {
+//                self.view.layoutIfNeeded()
+//            }, completion: nil)
+//        }
+//    }
+    private func animateLabelForSave(success: Bool) {
+        messageLabel.alpha = 0.0
+        messageLabel.textColor = .white
+        if success {
+            let successMessage = "Favorite Saved"
+            messageLabel.backgroundColor = #colorLiteral(red: 0, green: 0.6940027566, blue: 0, alpha: 1)
+            messageLabel.text = successMessage
+            print(messageLabel.frame.origin.y)
+            while messageLabel.frame.origin.y < lowerBound {
+                messageLabelTopConstraint.constant += 1
+                UIView.animate(withDuration: 0.5, delay: 0.0, options: [], animations: {
+                    self.messageLabel.alpha = 1.0
+                    self.view.layoutIfNeeded()
+                }, completion: nil)
+                print(self.messageLabel.frame.origin.y)
+                
+//                while self.messageLabel.frame.origin.y > self.upperBound {
+//                    UIView.animate(withDuration: 0.5, delay: 0.0, options: [], animations: {
+//                        self.messageLabel.alpha = 0.0
+//                        self.view.layoutIfNeeded()
+//                    }, completion: nil)
+//                }
+            }
+        } else {
+            let failMessage = "Error"
+            messageLabel.backgroundColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
+            messageLabel.text = failMessage
+            while messageLabel.frame.origin.y < lowerBound {
+                messageLabelTopConstraint.constant += 1
+                UIView.animate(withDuration: 0.5, delay: 0.0, options: [], animations: {
+                    self.view.layoutIfNeeded()
+                }, completion: nil)
+            }
         }
     }
     //MARK:- IBActions
@@ -465,8 +517,10 @@ extension ListViewController: UITableViewDataSource {
                     if !(self.dataPersistence?.hasItemBeenSaved(itemToBeSaved) ?? true) {
                         do {
                             try self.dataPersistence?.createItem(itemToBeSaved)
+                            self.animateLabelForSave(success: true)
                         } catch {
                             self.showAlert(title: "Failed to save item", message: "Uh oh!")
+                            self.animateLabelForSave(success: false)
                         }
                     }
                 case .plants:
@@ -480,8 +534,10 @@ extension ListViewController: UITableViewDataSource {
                     if !(self.dataPersistence?.hasItemBeenSaved(itemToBeSaved) ?? true) {
                         do {
                             try self.dataPersistence?.createItem(itemToBeSaved)
+                            self.animateLabelForSave(success: true)
                         } catch {
                             self.showAlert(title: "Failed to save item", message: "Uh oh!")
+                            self.animateLabelForSave(success: false)
                         }
                     }
                 case .randomDuos:
@@ -495,8 +551,10 @@ extension ListViewController: UITableViewDataSource {
                     if !(self.dataPersistence?.hasItemBeenSaved(itemToBeSaved) ?? true) {
                         do {
                             try self.dataPersistence?.createItem(itemToBeSaved)
+                            self.animateLabelForSave(success: true)
                         } catch {
                             self.showAlert(title: "Failed to save item", message: "Uh oh!")
+                            self.animateLabelForSave(success: false)
                         }
                     }
                 default:

@@ -95,12 +95,9 @@ class RandomPairViewController: UIViewController {
         setupDataPersistence()
         loadBirdData()
         loadPlantData()
-//        configureUI()
         fetchFavoriteDuos()
         generateRandomPair()
-        
-//        plantImageView.enableZoom()
-//        birdImageView.enableZoom()
+        configureUI()
     }
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: false)
@@ -119,6 +116,12 @@ class RandomPairViewController: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: false)
     }
     //MARK:- Funcs
+    private func configureUI() {
+        shuffleButton.titleLabel?.text = "Shuffle"
+        shuffleButton.layer.cornerRadius = 4
+        shuffleButton.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
+//        shuffleButton.clearColorForTitle()
+    }
     private func checkFavoriteSaved(_ favorite: FavoriteDuo) -> Bool {
         return dataPersistence?.hasItemBeenSaved(favorite) ?? false
     }
@@ -138,10 +141,8 @@ class RandomPairViewController: UIViewController {
         plantData = PlantsSpecies.decodeFlowers()
     }
     private func generateRandomPair() {
-        generateRandomBird() // getting a random Bird, then its searching flicker
+        generateRandomBird()
         generateRandomPlant()
-
-        
     }
     private func generateRandomBird() {
         randomBird = birdData?.randomElement()
@@ -295,6 +296,5 @@ class RandomPairViewController: UIViewController {
 //MARK:- Extensions
 extension RandomPairViewController: PersistenceStackClient {
     func setStack(stack: DataPersistence<String>) {
-//        self.dataPersistence = stack
     }
 }

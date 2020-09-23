@@ -22,7 +22,7 @@ class AboutViewController: UIViewController {
         self.tabBarController?.tabBar.isHidden = false
     }
     private func setupUI() {
-//        websiteButton.clearColorForTitle()
+        websiteButton.clearColorForTitle()
         websiteButton.sizeToFit()
         websiteButton.layer.cornerRadius = 4
         bkgdView.layer.cornerRadius = 4
