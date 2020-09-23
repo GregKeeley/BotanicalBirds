@@ -93,6 +93,7 @@ class ListViewController: UIViewController {
         setupNavigationBar()
         setupSearchController()
         sortAllDataCollections()
+        configureMessageLabel()
     }
     override func viewWillAppear(_ animated: Bool) {
         fetchFavoriteDuos()
@@ -117,7 +118,9 @@ class ListViewController: UIViewController {
     private func configureMessageLabel() {
 //        messageLabel.alpha = 0.0
         messageLabel.sizeToFit()
-        messageLabel.layer.cornerRadius = 4
+        messageLabel.sizeToFit()
+        messageLabel.layer.cornerRadius = 8
+        lowerBound = view.frame.height * 0.07
     }
     private func setupNavigationBar() {
         navigationItem.rightBarButtonItem?.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
@@ -222,53 +225,60 @@ class ListViewController: UIViewController {
             resultSearchController.searchBar.placeholder = "Search Random Pairs"
         }
     }
+    // TODO: Move these variables to the proper section
     let upperBound = CGFloat(0)
-    let lowerBound = CGFloat(100)
-//
-//    private func moveUp() {
-//        while box.frame.origin.y > upperBound {
-//            boxYPosition.constant -= 1
-//
-//            UIView.animate(withDuration: 0.5, delay: 0.0, options: [], animations: {
-//                self.view.layoutIfNeeded()
-//            }, completion: nil)
-//        }
-//    }
+    var lowerBound = CGFloat(100)
+    
     private func animateLabelForSave(success: Bool) {
         messageLabel.alpha = 0.0
         messageLabel.textColor = .white
+        var message = ""
         if success {
-            let successMessage = "Favorite Saved"
+            message = "Favorite Saved"
             messageLabel.backgroundColor = #colorLiteral(red: 0, green: 0.6940027566, blue: 0, alpha: 1)
-            messageLabel.text = successMessage
-            print(messageLabel.frame.origin.y)
+        } else {
+            message = "Error"
+            messageLabel.backgroundColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
+        }
+        if currentListType == .favorites {
+            message = "Favorite removed"
+            messageLabel.backgroundColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
+        }
+            messageLabel.text = message
             while messageLabel.frame.origin.y < lowerBound {
                 messageLabelTopConstraint.constant += 1
-                UIView.animate(withDuration: 0.5, delay: 0.0, options: [], animations: {
+                UIView.animate(withDuration: 0.5,
+                               delay: 0.0,
+                               options: [],
+                               animations: {
                     self.messageLabel.alpha = 1.0
                     self.view.layoutIfNeeded()
-                }, completion: nil)
-                print(self.messageLabel.frame.origin.y)
-                
-//                while self.messageLabel.frame.origin.y > self.upperBound {
-//                    UIView.animate(withDuration: 0.5, delay: 0.0, options: [], animations: {
-//                        self.messageLabel.alpha = 0.0
-//                        self.view.layoutIfNeeded()
-//                    }, completion: nil)
-//                }
-            }
-        } else {
-            let failMessage = "Error"
-            messageLabel.backgroundColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
-            messageLabel.text = failMessage
-            while messageLabel.frame.origin.y < lowerBound {
-                messageLabelTopConstraint.constant += 1
-                UIView.animate(withDuration: 0.5, delay: 0.0, options: [], animations: {
-                    self.view.layoutIfNeeded()
-                }, completion: nil)
+                }, completion: { finished in
+                    while self.messageLabel.frame.origin.y > self.upperBound {
+                        self.messageLabelTopConstraint.constant -= 1
+                        UIView.animate(withDuration: 0.5,
+                                       delay: 1.0,
+                                       options: [],
+                                       animations: {
+                            self.messageLabel.alpha = 0.0
+                            self.view.layoutIfNeeded()
+                        }, completion: nil)
+                    }
+                })
             }
         }
-    }
+//    else {
+//            let failMessage = "Error"
+//            messageLabel.backgroundColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
+//            messageLabel.text = failMessage
+//            while messageLabel.frame.origin.y < lowerBound {
+//                messageLabelTopConstraint.constant += 1
+//                UIView.animate(withDuration: 0.5, delay: 0.0, options: [], animations: {
+//                    self.view.layoutIfNeeded()
+//                }, completion: nil)
+//            }
+//        }
+//    }
     //MARK:- IBActions
     @IBAction func toggleButtonPressed(_ sender: UIBarButtonItem) {
         switch currentListType {
@@ -496,9 +506,11 @@ extension ListViewController: UITableViewDataSource {
                 }
                 do {
                     try self.dataPersistence?.deleteItem(at: favoriteIndex)
+                    self.animateLabelForSave(success: true)
                     self.favoriteDuos?.remove(at: indexPath.row)
                 } catch {
                     self.showAlert(title: "Failed to remove favorite", message: "Your guess is as good as mine")
+                    self.animateLabelForSave(success: false)
                 }
             }
         }

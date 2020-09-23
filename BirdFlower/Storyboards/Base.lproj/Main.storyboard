@@ -17,8 +17,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X0g-dS-Tsq">
+                                <rect key="frame" x="134.5" y="-100" width="145" height="19.5"/>
+                                <color key="backgroundColor" systemColor="systemPinkColor"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KTB-99-LpB">
-                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <rect key="frame" x="0.0" y="140" width="414" height="673"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="basicCell" textLabel="ZkY-xZ-C8x" detailTextLabel="HOd-RK-UmO" rowHeight="114" style="IBUITableViewCellStyleSubtitle" id="eaJ-rb-KBP">
@@ -47,23 +54,14 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X0g-dS-Tsq">
-                                <rect key="frame" x="119.5" y="0.0" width="175" height="21"/>
-                                <color key="backgroundColor" systemColor="systemPinkColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="175" id="mjT-d2-4ms"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="X0g-dS-Tsq" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.35" id="DH1-fj-6xi"/>
                             <constraint firstItem="KTB-99-LpB" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="afC-xK-4OB"/>
                             <constraint firstItem="X0g-dS-Tsq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="n24-H9-7HS"/>
-                            <constraint firstItem="X0g-dS-Tsq" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="n4Q-s3-oAm"/>
+                            <constraint firstItem="X0g-dS-Tsq" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="-100" id="n4Q-s3-oAm"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="KTB-99-LpB" secondAttribute="trailing" id="nD3-3X-gLU"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="KTB-99-LpB" secondAttribute="bottom" id="sbO-lJ-Qif"/>
                             <constraint firstItem="KTB-99-LpB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="tUV-v3-RiE"/>
