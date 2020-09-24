@@ -229,21 +229,32 @@ class ListViewController: UIViewController {
     let upperBound = CGFloat(0)
     var lowerBound = CGFloat(100)
     
-    private func animateLabelForSave(success: Bool) {
+    private func animateLabelForSave(code: Int) {
+        // Save Codes
+        // 1: Favorite saved successfully
+        // 2: FAvorite already saved
+        // 3: Favorite removed successfully
+        // 4: Error
         messageLabel.alpha = 0.0
         messageLabel.textColor = .white
         var message = ""
-        if success {
+        switch code {
+        case 1:
             message = "Favorite Saved"
             messageLabel.backgroundColor = #colorLiteral(red: 0, green: 0.6940027566, blue: 0, alpha: 1)
-        } else {
-            message = "Error"
-            messageLabel.backgroundColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
-        }
-        if currentListType == .favorites {
+        case 2:
+            message = "Already saved"
+            messageLabel.backgroundColor = #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1)
+        case 3:
             message = "Favorite removed"
             messageLabel.backgroundColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
+        case 4:
+            message = "Error"
+            messageLabel.backgroundColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
+        default:
+            break
         }
+        
             messageLabel.text = message
             while messageLabel.frame.origin.y < lowerBound {
                 messageLabelTopConstraint.constant += 1
@@ -267,18 +278,6 @@ class ListViewController: UIViewController {
                 })
             }
         }
-//    else {
-//            let failMessage = "Error"
-//            messageLabel.backgroundColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
-//            messageLabel.text = failMessage
-//            while messageLabel.frame.origin.y < lowerBound {
-//                messageLabelTopConstraint.constant += 1
-//                UIView.animate(withDuration: 0.5, delay: 0.0, options: [], animations: {
-//                    self.view.layoutIfNeeded()
-//                }, completion: nil)
-//            }
-//        }
-//    }
     //MARK:- IBActions
     @IBAction func toggleButtonPressed(_ sender: UIBarButtonItem) {
         switch currentListType {
@@ -495,22 +494,27 @@ extension ListViewController: UITableViewDataSource {
             return true
     }
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        // Save Codes
+        // 1: Favorite saved successfully
+        // 2: FAvorite already saved
+        // 3: Favorite removed successfully
+        // 4: Error
+        
+        // Delete a favorite from favorites list
         let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
             if self.currentListType == .favorites {
                 guard let favoriteItem = self.favoriteDuos?[indexPath.row] else {
                     return
                 }
                 guard let favoriteIndex = self.favoriteDuos?.firstIndex(of: favoriteItem ) else {
-                    self.showAlert(title: "Could not find favorite", message: "Failed to remove favorite, or it wasn't a favorite to begin with")
                     return
                 }
                 do {
                     try self.dataPersistence?.deleteItem(at: favoriteIndex)
-                    self.animateLabelForSave(success: true)
                     self.favoriteDuos?.remove(at: indexPath.row)
+                    self.animateLabelForSave(code: 3)
                 } catch {
-                    self.showAlert(title: "Failed to remove favorite", message: "Your guess is as good as mine")
-                    self.animateLabelForSave(success: false)
+                    self.animateLabelForSave(code: 4)
                 }
             }
         }
@@ -529,11 +533,12 @@ extension ListViewController: UITableViewDataSource {
                     if !(self.dataPersistence?.hasItemBeenSaved(itemToBeSaved) ?? true) {
                         do {
                             try self.dataPersistence?.createItem(itemToBeSaved)
-                            self.animateLabelForSave(success: true)
+                            self.animateLabelForSave(code: 1)
                         } catch {
-                            self.showAlert(title: "Failed to save item", message: "Uh oh!")
-                            self.animateLabelForSave(success: false)
+                            self.animateLabelForSave(code: 4)
                         }
+                    } else if (self.dataPersistence?.hasItemBeenSaved(itemToBeSaved) ?? true) {
+                        self.animateLabelForSave(code: 2)
                     }
                 case .plants:
                     var item = PlantsSpecies(name: "")
@@ -546,11 +551,12 @@ extension ListViewController: UITableViewDataSource {
                     if !(self.dataPersistence?.hasItemBeenSaved(itemToBeSaved) ?? true) {
                         do {
                             try self.dataPersistence?.createItem(itemToBeSaved)
-                            self.animateLabelForSave(success: true)
+                            self.animateLabelForSave(code: 1)
                         } catch {
-                            self.showAlert(title: "Failed to save item", message: "Uh oh!")
-                            self.animateLabelForSave(success: false)
+                            self.animateLabelForSave(code: 4)
                         }
+                    } else if (self.dataPersistence?.hasItemBeenSaved(itemToBeSaved) ?? true) {
+                        self.animateLabelForSave(code: 2)
                     }
                 case .randomDuos:
                     var item = FavoriteDuo(birdCommonName: "", birdScientificName: "", plantName: "")
@@ -563,11 +569,12 @@ extension ListViewController: UITableViewDataSource {
                     if !(self.dataPersistence?.hasItemBeenSaved(itemToBeSaved) ?? true) {
                         do {
                             try self.dataPersistence?.createItem(itemToBeSaved)
-                            self.animateLabelForSave(success: true)
+                            self.animateLabelForSave(code: 1)
                         } catch {
-                            self.showAlert(title: "Failed to save item", message: "Uh oh!")
-                            self.animateLabelForSave(success: false)
+                            self.animateLabelForSave(code: 4)
                         }
+                    } else if (self.dataPersistence?.hasItemBeenSaved(itemToBeSaved) ?? true) {
+                        self.animateLabelForSave(code: 2)
                     }
                 default:
                     break
