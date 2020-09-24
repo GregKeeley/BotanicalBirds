@@ -21,6 +21,9 @@ class DetailViewController: UIViewController {
     
     //MARK:- Variables and Constants
     var duo: FavoriteDuo?
+    var birdImage: UIImage?
+    var plantImage: UIImage?
+    
     var flickerBirdImageData: FlickerSearchResult? {
         didSet {
             guard let photo = flickerBirdImageData?.photos.photo, !photo.isEmpty else {
@@ -122,26 +125,47 @@ class DetailViewController: UIViewController {
     }
     
     private func loadPhotoFromURL(with url: String, imageView: UIImageView) {
-        DispatchQueue.main.async {
-            imageView.kf.indicatorType = .activity
-            imageView.kf.setImage(with: URL(string: url))
+        if imageView == self.birdImageView {
+            self.birdImageView.getImage(with: url, completion: { [weak self] (results) in
+                switch results {
+                case .failure(let appError):
+                    print(appError.localizedDescription)
+                case .success(let image):
+                    self?.birdImage = image
+                    DispatchQueue.main.async {
+                        self?.birdImageView.image = image
+                    }
+                }
+            })
+        } else {
+            self.plantImageView.getImage(with: url, completion: { [weak self] (results) in
+                switch results {
+                case .failure(let appError):
+                    print(appError.localizedDescription)
+                case .success(let image):
+                    self?.plantImage = image
+                    DispatchQueue.main.async {
+                        self?.plantImageView.image = image
+                    }
+                }
+            })
         }
     }
     private func loadBirdFlickerPhoto(for photo: [PhotoResult]) {
-        let flickerPhotoEndpoint = "https://farm\(photo.first?.farm ?? 0).staticflickr.com/\(photo.first?.server ?? "")/\(photo.first?.id ?? "")_\(photo.first?.secret ?? "")_m.jpg".lowercased()
+        let flickerPhotoEndpoint = "https://farm\(photo.first?.farm ?? 0).staticflickr.com/\(photo.first?.server ?? "")/\(photo.first?.id ?? "")_\(photo.first?.secret ?? "")_b.jpg".lowercased()
         loadPhotoFromURL(with: flickerPhotoEndpoint, imageView: birdImageView)
     }
     private func loadFlickerPlantPhoto(for photo: [PhotoResult]) {
-        let flickerPhotoEndpoint = "https://farm\(photo.first?.farm ?? 0).staticflickr.com/\(photo.first?.server ?? "")/\(photo.first?.id ?? "")_\(photo.first?.secret ?? "")_m.jpg".lowercased()
+        let flickerPhotoEndpoint = "https://farm\(photo.first?.farm ?? 0).staticflickr.com/\(photo.first?.server ?? "")/\(photo.first?.id ?? "")_\(photo.first?.secret ?? "")_b.jpg".lowercased()
         loadPhotoFromURL(with: flickerPhotoEndpoint, imageView: plantImageView)
     }
     @IBAction func birdButtonPressed(_ sender: UIButton) {
         if let imageZoomVC = UIStoryboard(name: "ImageZoomViewController", bundle: nil).instantiateViewController(identifier: "ImageZoomViewController") as? ImageZoomViewController {
             imageZoomVC.imageData = flickerBirdImageData
+            imageZoomVC.zoomImage = birdImage
             imageZoomVC.nameForPhoto = duo?.birdCommonName ?? "Bird"
             if let navigator = navigationController {
                 navigator.navigationController?.navigationBar.prefersLargeTitles = false
-//                navigator.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.red]
                 navigator.navigationController?.navigationBar.topItem?.title = duo?.birdCommonName ?? "Bird"
                 navigator.pushViewController(imageZoomVC, animated: true)
             }
@@ -150,7 +174,9 @@ class DetailViewController: UIViewController {
     @IBAction func plantButtonPressed(_ sender: UIButton) {
         if let imageZoomVC = UIStoryboard(name: "ImageZoomViewController", bundle: nil).instantiateViewController(identifier: "ImageZoomViewController") as? ImageZoomViewController {
             imageZoomVC.imageData = flickerPlantImageData
+            imageZoomVC.zoomImage = plantImage
             imageZoomVC.nameForPhoto = duo?.plantName ?? "Plant"
+            
             if let navigator = navigationController {
                 navigator.navigationController?.navigationBar.prefersLargeTitles = false
                 navigator.navigationController?.navigationBar.tintColor = .white

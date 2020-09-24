@@ -16,10 +16,9 @@ class ImageZoomViewController: UIViewController {
     
     var imageData: FlickerSearchResult?
     
-    var zoomImage = UIImage(systemName: "photo.fill") {
+    var zoomImage: UIImage? {
         didSet {
             DispatchQueue.main.async {
-                self.imageView.kf.indicatorType = .activity
                 self.imageView.image = self.zoomImage
             }
         }
@@ -29,6 +28,15 @@ class ImageZoomViewController: UIViewController {
         didSet {
             navigationItem.title = nameForPhoto
         }
+    }
+    
+    init(_ image: UIImage) {
+        super.init(nibName: nil, bundle: nil)
+        zoomImage = image
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
     }
     
     override func viewDidLoad() {
@@ -43,7 +51,7 @@ class ImageZoomViewController: UIViewController {
         navigationController?.navigationBar.barTintColor = .clear
         navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
-        configureData()
+//        configureData()
     }
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.navigationBar.tintColor = .white
@@ -59,22 +67,22 @@ class ImageZoomViewController: UIViewController {
     private func setupUI() {
         self.tabBarController?.tabBar.isHidden = true
     }
-    private func configureData() {
-        let flickerEndPoint = "https://farm\(imageData?.photos.photo.first?.farm ?? 0).staticflickr.com/\(imageData?.photos.photo.first?.server ?? "")/\(imageData?.photos.photo.first?.id ?? "")_\(imageData?.photos.photo.first?.secret ?? "")_b.jpg".lowercased()
-        downloadImage(from: (URL(string: flickerEndPoint) ?? URL(string: "https://i.kym-cdn.com/photos/images/original/000/839/182/45a.gif"))!)
-    }
-    private func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
-        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
-    }
-    private func downloadImage(from url: URL) {
-        getData(from: url) { data, response, error in
-            guard let data = data, error == nil else { return }
-            print(response?.suggestedFilename ?? url.lastPathComponent)
-            DispatchQueue.main.async() { [weak self] in
-                self?.zoomImage = UIImage(data: data)
-            }
-        }
-    }
+//    private func configureData() {
+//        let flickerEndPoint = "https://farm\(imageData?.photos.photo.first?.farm ?? 0).staticflickr.com/\(imageData?.photos.photo.first?.server ?? "")/\(imageData?.photos.photo.first?.id ?? "")_\(imageData?.photos.photo.first?.secret ?? "")_b.jpg".lowercased()
+//        downloadImage(from: (URL(string: flickerEndPoint) ?? URL(string: "https://i.kym-cdn.com/photos/images/original/000/839/182/45a.gif"))!)
+//    }
+//    private func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+//        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
+//    }
+//    private func downloadImage(from url: URL) {
+//        getData(from: url) { data, response, error in
+//            guard let data = data, error == nil else { return }
+//            print(response?.suggestedFilename ?? url.lastPathComponent)
+//            DispatchQueue.main.async() { [weak self] in
+//                self?.zoomImage = UIImage(data: data)
+//            }
+//        }
+//    }
     private func setMinZoomScaleForImageSize(_ imageSize: CGSize) {
         let widthScale = view.frame.width / imageSize.width
         let heightScale = view.frame.height / imageSize.height

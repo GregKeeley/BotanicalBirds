@@ -40,6 +40,10 @@ class RandomPairViewController: UIViewController {
     var plantData: [PlantsSpecies]?
     var birdImageURL: String?
     var plantImageURL: String?
+    
+    var birdImage: UIImage?
+    var plantImage: UIImage? 
+    
     var flickerBirdImageData: FlickerSearchResult? {
         didSet {
             guard let photo = flickerBirdImageData?.photos.photo, !photo.isEmpty else {
@@ -116,16 +120,19 @@ class RandomPairViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(false, animated: false)
     }
+    
     //MARK:- Funcs
     private func configureUI() {
         shuffleButton.titleLabel?.text = "Shuffle"
         shuffleButton.layer.cornerRadius = 4
         shuffleButton.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
-//        shuffleButton.clearColorForTitle()
+        //        shuffleButton.clearColorForTitle()
     }
+    
     private func checkFavoriteSaved(_ favorite: FavoriteDuo) -> Bool {
         return dataPersistence?.hasItemBeenSaved(favorite) ?? false
     }
+    
     // These functions generate random pairs, or individually random data to use in the app
     private func fetchFavoriteDuos() {
         do {
@@ -135,40 +142,72 @@ class RandomPairViewController: UIViewController {
             showAlert(title: "Well, this is embarassing", message: "Failed to load favorites...")
         }
     }
+    
     private func loadBirdData() {
         birdData = BirdsSpecies.decodeBirdSpeciesData()
     }
+    
     private func loadPlantData() {
         plantData = PlantsSpecies.decodeFlowers()
     }
+    
     private func generateRandomPair() {
         generateRandomBird()
         generateRandomPlant()
     }
+    
     private func generateRandomBird() {
+        birdImage = nil
         randomBird = birdData?.randomElement()
         makeRandomPair()
         searchFlickerPhotos(for: randomBird?.commonName ?? "", searchType: .bird)
     }
+    
     private func generateRandomPlant() {
+        plantImage = nil
         randomPlant = plantData?.randomElement()
         makeRandomPair()
         searchFlickerPhotos(for: randomPlant?.name ?? "", searchType: .plant)
     }
+    
     private func makeRandomPair() {
         randomPair = FavoriteDuo(birdCommonName: randomBird?.commonName ?? "Bird", birdScientificName: randomBird?.scientificName ?? "Scientific name", plantName: randomPlant?.name ?? "Plant name")
     }
+    
+    /// Loads images for the bird and plant to pass to the detail view
     /// Sets the image view using KingFisher to set a UIImageView
     ///
     /// - Parameters:
     ///   - url: URL address for the pic generated from the search func
     ///   - imageView: The UIImageView that needs to be set
     private func loadPhotoFromURL(with url: String, imageView: UIImageView) {
-        DispatchQueue.main.async {
-            imageView.kf.indicatorType = .activity
-            imageView.kf.setImage(with: URL(string: url))
+        if imageView == self.birdImageView {
+            self.birdImageView.getImage(with: url, completion: { [weak self] (results) in
+                switch results {
+                case .failure(let appError):
+                    print(appError.localizedDescription)
+                case .success(let image):
+                    self?.birdImage = image
+                    DispatchQueue.main.async {
+                        imageView.image = image
+                    }
+                }
+            })
+        } else {
+            self.plantImageView.getImage(with: url, completion: { [weak self] (results) in
+                switch results {
+                case .failure(let appError):
+                    print(appError.localizedDescription)
+                case .success(let image):
+                    self?.plantImage = image
+                    DispatchQueue.main.async {
+                        imageView.image = image
+                    }
+                }
+            })
         }
     }
+    
     private func configureTapGestures() {
         let birdPhotoTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.birdPhotoHasBeenTapped(gesture:)))
         birdImageView.addGestureRecognizer(birdPhotoTapGesture)
@@ -179,32 +218,38 @@ class RandomPairViewController: UIViewController {
         plantImageView.isUserInteractionEnabled = true
     }
     @IBAction func birdPhotoHasBeenTapped(gesture: UITapGestureRecognizer) {
-        if let imageZoomVC = UIStoryboard(name: "ImageZoomViewController", bundle: nil).instantiateViewController(identifier: "ImageZoomViewController") as? ImageZoomViewController {
-            imageZoomVC.imageData = flickerBirdImageData
-            imageZoomVC.nameForPhoto = randomBird?.commonName ?? "Bird"
-            if let navigator = navigationController {
-                navigator.navigationController?.navigationBar.prefersLargeTitles = false
-//                navigator.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.red]
-                navigator.navigationController?.navigationBar.topItem?.title = randomBird?.commonName ?? "Bird"
-                navigator.pushViewController(imageZoomVC, animated: true)
+        if birdImage != nil {
+            if let imageZoomVC = UIStoryboard(name: "ImageZoomViewController", bundle: nil).instantiateViewController(identifier: "ImageZoomViewController") as? ImageZoomViewController {
+                imageZoomVC.zoomImage = birdImage
+                //            imageZoomVC.imageData = flickerBirdImageData
+                imageZoomVC.nameForPhoto = randomBird?.commonName ?? "Bird"
+                if let navigator = navigationController {
+                    navigator.navigationController?.navigationBar.prefersLargeTitles = false
+                    //                navigator.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.red]
+                    navigator.navigationController?.navigationBar.topItem?.title = randomBird?.commonName ?? "Bird"
+                    navigator.pushViewController(imageZoomVC, animated: true)
+                }
             }
         }
     }
     @IBAction func plantPhotoHasBeenTapped(gesture: UITapGestureRecognizer) {
-        if let imageZoomVC = UIStoryboard(name: "ImageZoomViewController", bundle: nil).instantiateViewController(identifier: "ImageZoomViewController") as? ImageZoomViewController {
-            imageZoomVC.imageData = flickerPlantImageData
-            imageZoomVC.nameForPhoto = randomPlant?.name ?? "Plant"
-            if let navigator = navigationController {
-                navigator.navigationController?.navigationBar.prefersLargeTitles = false
-                navigator.navigationController?.navigationBar.tintColor = .white
-                navigator.navigationController?.navigationItem.title = randomPlant?.name ?? "Plant"
-                navigator.pushViewController(imageZoomVC, animated: true)
+        if plantImage != nil {
+            if let imageZoomVC = UIStoryboard(name: "ImageZoomViewController", bundle: nil).instantiateViewController(identifier: "ImageZoomViewController") as? ImageZoomViewController {
+                imageZoomVC.zoomImage = plantImage
+                //            imageZoomVC.imageData = flickerPlantImageData
+                imageZoomVC.nameForPhoto = randomPlant?.name ?? "Plant"
+                if let navigator = navigationController {
+                    navigator.navigationController?.navigationBar.prefersLargeTitles = false
+                    navigator.navigationController?.navigationBar.tintColor = .white
+                    navigator.navigationController?.navigationItem.title = randomPlant?.name ?? "Plant"
+                    navigator.pushViewController(imageZoomVC, animated: true)
+                }
             }
         }
     }
     //MARK:- Flicker functions
     private func searchFlickerPhotos(for query: String, searchType: SearchType) {
-     if searchType == .bird {
+        if searchType == .bird {
             FlickerAPI.searchPhotos(searchQuery: query, contentType: .birds) { [weak self] (results) in
                 switch results {
                 case .failure(let appError):
@@ -238,14 +283,13 @@ class RandomPairViewController: UIViewController {
             }
         }
     }
-
+    
     private func loadBirdFlickerPhoto(for photo: [PhotoResult]) {
-        let flickerPhotoEndpoint = "https://farm\(photo.first?.farm ?? 0).staticflickr.com/\(photo.first?.server ?? "")/\(photo.first?.id ?? "")_\(photo.first?.secret ?? "")_m.jpg".lowercased()
-        print(flickerPhotoEndpoint)
+        let flickerPhotoEndpoint = "https://farm\(photo.first?.farm ?? 0).staticflickr.com/\(photo.first?.server ?? "")/\(photo.first?.id ?? "")_\(photo.first?.secret ?? "")_b.jpg".lowercased()
         loadPhotoFromURL(with: flickerPhotoEndpoint, imageView: birdImageView)
     }
     private func loadFlickerPlantPhoto(for photo: [PhotoResult]) {
-        let flickerPhotoEndpoint = "https://farm\(photo.first?.farm ?? 0).staticflickr.com/\(photo.first?.server ?? "")/\(photo.first?.id ?? "")_\(photo.first?.secret ?? "")_m.jpg".lowercased()
+        let flickerPhotoEndpoint = "https://farm\(photo.first?.farm ?? 0).staticflickr.com/\(photo.first?.server ?? "")/\(photo.first?.id ?? "")_\(photo.first?.secret ?? "")_b.jpg".lowercased()
         loadPhotoFromURL(with: flickerPhotoEndpoint, imageView: plantImageView)
     }
     private func setupDataPersistence() {
@@ -278,6 +322,8 @@ class RandomPairViewController: UIViewController {
     @IBAction func shuffleButtonPressed(_ sender: UIButton) {
         isFavorite = false
         resetFavoriteButton()
+        birdImageView.image = nil
+        plantImageView.image = nil
         generateRandomPair()
     }
     @IBAction func randomBirdButtonPressed(_ sender: UIButton) {
@@ -308,8 +354,8 @@ class RandomPairViewController: UIViewController {
             }
             do {
                 try dataPersistence?.deleteItem(at: index)
-            favoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
-            favoriteButton.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+                favoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
+                favoriteButton.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
             } catch {
                 showAlert(title: "Failed to remove favorite", message: "Your guess is as good as mine")
             }
@@ -326,7 +372,7 @@ class RandomPairViewController: UIViewController {
         self.navigationController?.navigationBar.tintColor = UIColor.white
         self.navigationController?.navigationBar.isTranslucent = true
     }
-
+    
 }
 
 //MARK:- Extensions
