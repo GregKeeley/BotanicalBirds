@@ -68,7 +68,11 @@ class DetailViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.navigationBar.tintColor = .black
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.black]
-        navigationController?.navigationBar.barTintColor = .white
+        navigationController?.navigationBar.barTintColor = .systemBackground
+        self.tabBarController?.tabBar.isHidden = false
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        self.tabBarController?.tabBar.isHidden = true
     }
     //MARK:- Functions
     private func setupUI() {
@@ -179,7 +183,6 @@ class DetailViewController: UIViewController {
             
             if let navigator = navigationController {
                 navigator.navigationController?.navigationBar.prefersLargeTitles = false
-                navigator.navigationController?.navigationBar.tintColor = .white
                 navigator.navigationController?.navigationItem.title = duo?.plantName ?? "Plant"
                 navigator.pushViewController(imageZoomVC, animated: true)
             }

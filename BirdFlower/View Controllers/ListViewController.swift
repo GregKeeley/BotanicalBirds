@@ -116,7 +116,6 @@ class ListViewController: UIViewController {
         })()
     }
     private func configureMessageLabel() {
-//        messageLabel.alpha = 0.0
         messageLabel.sizeToFit()
         messageLabel.sizeToFit()
         messageLabel.layer.cornerRadius = 8
@@ -129,6 +128,7 @@ class ListViewController: UIViewController {
         sortMethodBarButton.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
         navigationItem.hidesSearchBarWhenScrolling = true
         setSearchBarPlaceHolderText(currentListType)
+        view.backgroundColor = .systemBackground
     }
     private func sortAllDataCollections() {
         if currentSortMethod == .ascending {
