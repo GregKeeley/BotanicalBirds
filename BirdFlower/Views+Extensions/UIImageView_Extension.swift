@@ -37,4 +37,19 @@ extension UIImageView {
             }
         }
     }
+    
+    func createShadows() -> UIImageView {
+        let outerView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        outerView.clipsToBounds = false
+        outerView.layer.shadowColor = UIColor.black.cgColor
+        outerView.layer.shadowOpacity = 1
+        outerView.layer.shadowRadius = 3
+        outerView.layer.shadowOffset = CGSize(width: 4, height: 4)
+        outerView.layer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: 8).cgPath
+        let imageView = UIImageView(frame: outerView.bounds)
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 10
+        outerView.addSubview(self)
+        return imageView
+    }
 }

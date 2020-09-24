@@ -18,6 +18,7 @@ enum SearchType {
 
 @IBDesignable class RoundedImageView: UIImageView {
     override func layoutSubviews() {
+        
         super.layoutSubviews()
         layer.borderWidth = 0.0
         layer.borderColor = UIColor.white.cgColor
@@ -132,6 +133,9 @@ class RandomPairViewController: UIViewController {
         botanicalBirdsTitleLabel.createShadows()
         birdNameLabel.createShadows()
         plantNameLabel.createShadows()
+        
+//        birdImageView = birdImageView.createShadows()
+//        plantImageView = plantImageView.createShadows()
     }
     private func addShadowToImages(image: UIImage) {
         
