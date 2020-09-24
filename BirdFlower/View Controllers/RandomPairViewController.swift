@@ -97,6 +97,7 @@ class RandomPairViewController: UIViewController {
         loadPlantData()
         fetchFavoriteDuos()
         generateRandomPair()
+        configureTapGestures()
         configureUI()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -168,6 +169,39 @@ class RandomPairViewController: UIViewController {
             imageView.kf.setImage(with: URL(string: url))
         }
     }
+    private func configureTapGestures() {
+        let birdPhotoTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.birdPhotoHasBeenTapped(gesture:)))
+        birdImageView.addGestureRecognizer(birdPhotoTapGesture)
+        birdImageView.isUserInteractionEnabled = true
+        
+        let plantPhotoTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.plantPhotoHasBeenTapped(gesture:)))
+        plantImageView.addGestureRecognizer(plantPhotoTapGesture)
+        plantImageView.isUserInteractionEnabled = true
+    }
+    @IBAction func birdPhotoHasBeenTapped(gesture: UITapGestureRecognizer) {
+        if let imageZoomVC = UIStoryboard(name: "ImageZoomViewController", bundle: nil).instantiateViewController(identifier: "ImageZoomViewController") as? ImageZoomViewController {
+            imageZoomVC.imageData = flickerBirdImageData
+            imageZoomVC.nameForPhoto = randomBird?.commonName ?? "Bird"
+            if let navigator = navigationController {
+                navigator.navigationController?.navigationBar.prefersLargeTitles = false
+//                navigator.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.red]
+                navigator.navigationController?.navigationBar.topItem?.title = randomBird?.commonName ?? "Bird"
+                navigator.pushViewController(imageZoomVC, animated: true)
+            }
+        }
+    }
+    @IBAction func plantPhotoHasBeenTapped(gesture: UITapGestureRecognizer) {
+        if let imageZoomVC = UIStoryboard(name: "ImageZoomViewController", bundle: nil).instantiateViewController(identifier: "ImageZoomViewController") as? ImageZoomViewController {
+            imageZoomVC.imageData = flickerPlantImageData
+            imageZoomVC.nameForPhoto = randomPlant?.name ?? "Plant"
+            if let navigator = navigationController {
+                navigator.navigationController?.navigationBar.prefersLargeTitles = false
+                navigator.navigationController?.navigationBar.tintColor = .white
+                navigator.navigationController?.navigationItem.title = randomPlant?.name ?? "Plant"
+                navigator.pushViewController(imageZoomVC, animated: true)
+            }
+        }
+    }
     //MARK:- Flicker functions
     private func searchFlickerPhotos(for query: String, searchType: SearchType) {
      if searchType == .bird {
@@ -226,18 +260,19 @@ class RandomPairViewController: UIViewController {
     }
     @objc private func pushImageZoomController(for imageView: UIImageView) {
         if let imageZoomVC = UIStoryboard(name: "ImageZoomViewController", bundle: nil).instantiateViewController(identifier: "ImageZoomViewController") as? ImageZoomViewController {
-            if imageView == plantImageView {
-            imageZoomVC.imageData = flickerPlantImageData
-                imageZoomVC.nameForPhoto = randomPlant?.name ?? "Plant"
-            } else {
-                imageZoomVC.nameForPhoto = randomBird?.commonName ?? "Bird"
-                imageZoomVC.imageData = flickerBirdImageData
-            }
-            if let navigator = navigationController {
-                navigator.pushViewController(imageZoomVC, animated: true)
+            if imageView.image != nil {
+                if imageView == plantImageView {
+                    imageZoomVC.imageData = flickerPlantImageData
+                    imageZoomVC.nameForPhoto = randomPlant?.name ?? "Plant"
+                } else {
+                    imageZoomVC.nameForPhoto = randomBird?.commonName ?? "Bird"
+                    imageZoomVC.imageData = flickerBirdImageData
+                }
+                if let navigator = navigationController {
+                    navigator.pushViewController(imageZoomVC, animated: true)
+                }
             }
         }
-
     }
     //MARK:- IBActions
     @IBAction func shuffleButtonPressed(_ sender: UIButton) {
@@ -291,6 +326,7 @@ class RandomPairViewController: UIViewController {
         self.navigationController?.navigationBar.tintColor = UIColor.white
         self.navigationController?.navigationBar.isTranslucent = true
     }
+
 }
 
 //MARK:- Extensions

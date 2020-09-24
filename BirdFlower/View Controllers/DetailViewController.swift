@@ -73,11 +73,6 @@ class DetailViewController: UIViewController {
         birdScientificNameLabel.text = duo?.birdScientificName
         plantNameLabel.text = duo?.plantName
         searchFlickerImageData()
-        
-//        birdImageView.layer.borderColor = UIColor.white.cgColor
-//        birdImageView.layer.borderWidth = 1
-//        plantImageView.layer.borderWidth = 1
-//        plantImageView.layer.borderColor = UIColor.white.cgColor
         plantImageView.layer.cornerRadius = 4
         birdImageView.layer.cornerRadius = 4
     }
