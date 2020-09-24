@@ -34,6 +34,7 @@ class RandomPairViewController: UIViewController {
     @IBOutlet weak var birdImageView: UIImageView!
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var shuffleButton: UIButton!
+    @IBOutlet weak var botanicalBirdsTitleLabel: UILabel!
     
     //MARK:- Variables
     var birdData: [BirdsSpecies]?
@@ -106,6 +107,7 @@ class RandomPairViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: false)
+        self.tabBarController?.tabBar.isHidden = false
         guard let randomPairToCheck = randomPair else {
             return
         }
@@ -127,8 +129,13 @@ class RandomPairViewController: UIViewController {
         shuffleButton.layer.cornerRadius = 4
         shuffleButton.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
         //        shuffleButton.clearColorForTitle()
+        botanicalBirdsTitleLabel.createShadows()
+        birdNameLabel.createShadows()
+        plantNameLabel.createShadows()
     }
-    
+    private func addShadowToImages(image: UIImage) {
+        
+    }
     private func checkFavoriteSaved(_ favorite: FavoriteDuo) -> Bool {
         return dataPersistence?.hasItemBeenSaved(favorite) ?? false
     }
