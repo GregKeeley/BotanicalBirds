@@ -93,7 +93,7 @@ class ListViewController: UIViewController {
         setupNavigationBar()
         setupSearchController()
         sortAllDataCollections()
-        configureMessageLabel()
+//        configureMessageLabel()
     }
     override func viewWillAppear(_ animated: Bool) {
         fetchFavoriteDuos()
@@ -117,8 +117,8 @@ class ListViewController: UIViewController {
     }
     private func configureMessageLabel() {
         messageLabel.sizeToFit()
-        messageLabel.sizeToFit()
-        messageLabel.layer.cornerRadius = 8
+        messageLabel.layer.cornerRadius = 4
+        messageLabel.clipsToBounds = true
         lowerBound = view.frame.height * 0.07
     }
     private func setupNavigationBar() {
