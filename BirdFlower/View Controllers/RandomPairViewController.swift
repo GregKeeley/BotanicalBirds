@@ -56,6 +56,9 @@ class RandomPairViewController: UIViewController {
                 }
                 return
             }
+            DispatchQueue.main.async {
+                self.birdImageView.contentMode = .scaleAspectFill
+            }
             loadBirdFlickerPhoto(for: photo)
         }
     }
@@ -68,6 +71,9 @@ class RandomPairViewController: UIViewController {
                     self.plantImageView.image = UIImage(systemName: "questionmark")
                 }
                 return
+            }
+            DispatchQueue.main.async {
+                self.plantImageView.contentMode = .scaleAspectFill
             }
             loadFlickerPlantPhoto(for: photo)
         }

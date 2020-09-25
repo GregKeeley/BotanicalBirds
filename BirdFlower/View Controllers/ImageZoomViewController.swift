@@ -18,9 +18,7 @@ class ImageZoomViewController: UIViewController {
     
     var zoomImage: UIImage? {
         didSet {
-            DispatchQueue.main.async {
-                self.imageView.image = self.zoomImage
-            }
+
         }
     }
     
@@ -67,6 +65,9 @@ class ImageZoomViewController: UIViewController {
     }
     private func setupUI() {
         self.tabBarController?.tabBar.isHidden = true
+        DispatchQueue.main.async {
+            self.imageView.image = self.zoomImage
+        }
     }
 //    private func configureData() {
 //        let flickerEndPoint = "https://farm\(imageData?.photos.photo.first?.farm ?? 0).staticflickr.com/\(imageData?.photos.photo.first?.server ?? "")/\(imageData?.photos.photo.first?.id ?? "")_\(imageData?.photos.photo.first?.secret ?? "")_b.jpg".lowercased()
