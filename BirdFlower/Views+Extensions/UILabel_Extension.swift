@@ -9,6 +9,7 @@
 import UIKit
 
 extension UILabel {
+    // Example of a class method (not protocol)
     func createShadows() {
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowRadius = 3.0

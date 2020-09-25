@@ -173,14 +173,14 @@ class RandomPairViewController: UIViewController {
         generateRandomPlant()
     }
     
-    private func generateRandomBird() {
+    @objc private func generateRandomBird() {
         birdImage = nil
         randomBird = birdData?.randomElement()
         makeRandomPair()
         searchFlickerPhotos(for: randomBird?.commonName ?? "", searchType: .bird)
     }
     
-    private func generateRandomPlant() {
+    @objc private func generateRandomPlant() {
         plantImage = nil
         randomPlant = plantData?.randomElement()
         makeRandomPair()
@@ -233,6 +233,15 @@ class RandomPairViewController: UIViewController {
         let plantPhotoTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.plantPhotoHasBeenTapped(gesture:)))
         plantImageView.addGestureRecognizer(plantPhotoTapGesture)
         plantImageView.isUserInteractionEnabled = true
+        
+        let birdPhotoSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(generateRandomBird))
+        birdPhotoSwipeGesture.direction = [.up, .down]
+        birdImageView.addGestureRecognizer(birdPhotoSwipeGesture)
+        
+        let plantPhotoSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(generateRandomPlant))
+        plantPhotoSwipeGesture.direction = [.up, .down]
+        plantImageView.addGestureRecognizer(plantPhotoSwipeGesture)
+        
     }
     @IBAction func birdPhotoHasBeenTapped(gesture: UITapGestureRecognizer) {
         if birdImage != nil {
