@@ -16,12 +16,9 @@ class ImageZoomViewController: UIViewController {
     
     var imageData: FlickerSearchResult?
     
-    var zoomImage = UIImage(systemName: "photo.fill") {
+    var zoomImage: UIImage? {
         didSet {
-            DispatchQueue.main.async {
-                self.imageView.kf.indicatorType = .activity
-                self.imageView.image = self.zoomImage
-            }
+
         }
     }
     
@@ -29,6 +26,15 @@ class ImageZoomViewController: UIViewController {
         didSet {
             navigationItem.title = nameForPhoto
         }
+    }
+    
+    init(_ image: UIImage) {
+        super.init(nibName: nil, bundle: nil)
+        zoomImage = image
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
     }
     
     override func viewDidLoad() {
@@ -43,10 +49,13 @@ class ImageZoomViewController: UIViewController {
         navigationController?.navigationBar.barTintColor = .clear
         navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
+        setupUI()
+//        configureData()
     }
     override func viewWillDisappear(_ animated: Bool) {
-        navigationController?.navigationBar.tintColor = .white
+//        navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.prefersLargeTitles = true
+//        self.tabBarController?.tabBar.isHidden = false
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -55,21 +64,27 @@ class ImageZoomViewController: UIViewController {
         }
     }
     private func setupUI() {
-        let flickerEndPoint = "https://farm\(imageData?.photos.photo.first?.farm ?? 0).staticflickr.com/\(imageData?.photos.photo.first?.server ?? "")/\(imageData?.photos.photo.first?.id ?? "")_\(imageData?.photos.photo.first?.secret ?? "")_b.jpg".lowercased()
-        downloadImage(from: (URL(string: flickerEndPoint) ?? URL(string: "https://i.kym-cdn.com/photos/images/original/000/839/182/45a.gif"))!)
-    }
-    private func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
-        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
-    }
-    private func downloadImage(from url: URL) {
-        getData(from: url) { data, response, error in
-            guard let data = data, error == nil else { return }
-            print(response?.suggestedFilename ?? url.lastPathComponent)
-            DispatchQueue.main.async() { [weak self] in
-                self?.zoomImage = UIImage(data: data)
-            }
+        self.tabBarController?.tabBar.isHidden = true
+        DispatchQueue.main.async {
+            self.imageView.image = self.zoomImage
         }
     }
+//    private func configureData() {
+//        let flickerEndPoint = "https://farm\(imageData?.photos.photo.first?.farm ?? 0).staticflickr.com/\(imageData?.photos.photo.first?.server ?? "")/\(imageData?.photos.photo.first?.id ?? "")_\(imageData?.photos.photo.first?.secret ?? "")_b.jpg".lowercased()
+//        downloadImage(from: (URL(string: flickerEndPoint) ?? URL(string: "https://i.kym-cdn.com/photos/images/original/000/839/182/45a.gif"))!)
+//    }
+//    private func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+//        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
+//    }
+//    private func downloadImage(from url: URL) {
+//        getData(from: url) { data, response, error in
+//            guard let data = data, error == nil else { return }
+//            print(response?.suggestedFilename ?? url.lastPathComponent)
+//            DispatchQueue.main.async() { [weak self] in
+//                self?.zoomImage = UIImage(data: data)
+//            }
+//        }
+//    }
     private func setMinZoomScaleForImageSize(_ imageSize: CGSize) {
         let widthScale = view.frame.width / imageSize.width
         let heightScale = view.frame.height / imageSize.height
@@ -84,7 +99,6 @@ class ImageZoomViewController: UIViewController {
         let imageHeight = imageSize.height * minScale
         let newImageFrame = CGRect(x: 0, y: 0, width: imageWidth, height: imageHeight)
         imageView.frame = newImageFrame
-        
         centerImage()
     }
     private func centerImage() {
@@ -109,27 +123,14 @@ class ImageZoomViewController: UIViewController {
             scrollView.setZoomScale(scrollView.minimumZoomScale, animated: true)
         }
     }
-    
-    
-    
-    
 }
+
 extension ImageZoomViewController: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView
     }
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
         centerImage()
-//        if imageView.frame.height <= scrollView.frame.height {
-//            let shiftHeight = scrollView.frame.height/2.0 - scrollView.contentSize.height/2.0
-//            scrollView.contentInset.top = shiftHeight
-//        }
-//        if imageView.frame.width <= scrollView.frame.width {
-//            let shiftWidth = scrollView.frame.width/2.0 - scrollView.contentSize.width/2.0
-//            scrollView.contentInset.left = shiftWidth
-//        } else {
-//            scrollView.contentInset.top = 0
-//        }
     }
 }
 
