@@ -9,6 +9,7 @@
 import UIKit
 import Kingfisher
 import DataPersistence
+import simd
 
 enum SearchType {
     case bird
@@ -37,14 +38,29 @@ class RandomPairViewController: UIViewController {
     @IBOutlet weak var shuffleButton: UIButton!
     @IBOutlet weak var botanicalBirdsTitleLabel: UILabel!
     
+    
+    @IBOutlet weak var birdPickerView: UIPickerView!
+    @IBOutlet weak var plantPickerView: UIPickerView!
+    
     //MARK:- Variables
-    var birdData: [BirdsSpecies]?
-    var plantData: [PlantsSpecies]?
+    var birdData: [BirdsSpecies]? {
+        didSet {
+            print("Birds: \(birdData?.count)")
+        }
+    }
+    var plantData: [PlantsSpecies]? {
+        didSet {
+            print("plants: \(plantData?.count)")
+        }
+    }
     var birdImageURL: String?
     var plantImageURL: String?
     
     var birdImage: UIImage?
-    var plantImage: UIImage? 
+    var plantImage: UIImage?
+    
+    var birdImageCollection: [UIImage]?
+    var plantImageCollection: [UIImage]?
     
     var flickerBirdImageData: FlickerSearchResult? {
         didSet {
@@ -52,23 +68,26 @@ class RandomPairViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.birdImageView.contentMode = .scaleAspectFit
                     self.birdImageView.tintColor = .white
-                    self.birdImageView.image = UIImage(systemName: "questionmark")
+                    UIView.animate(withDuration: 1.0, delay: 0.0, options: [.transitionCurlUp]) {
+                        self.birdImageView.image = UIImage(systemName: "questionmark")
+                    }
                 }
                 return
             }
             DispatchQueue.main.async {
+                self.loadBirdFlickerPhoto(for: photo)
                 self.birdImageView.contentMode = .scaleAspectFill
             }
-            loadBirdFlickerPhoto(for: photo)
+        
         }
     }
     var flickerPlantImageData: FlickerSearchResult? {
         didSet {
             guard let photo = flickerPlantImageData?.photos.photo, !photo.isEmpty else {
                 DispatchQueue.main.async {
-                    self.plantImageView.contentMode = .scaleAspectFit
                     self.plantImageView.tintColor = .white
                     self.plantImageView.image = UIImage(systemName: "questionmark")
+                    self.plantImageView.contentMode = .scaleAspectFit
                 }
                 return
             }
@@ -111,6 +130,7 @@ class RandomPairViewController: UIViewController {
         generateRandomPair()
         configureTapGestures()
         configureUI()
+        configurePickerViews()
     }
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: false)
@@ -131,6 +151,14 @@ class RandomPairViewController: UIViewController {
     }
     
     //MARK:- Funcs
+    private func configurePickerViews() {
+        birdPickerView.delegate = self
+        birdPickerView.dataSource = self
+        
+        plantPickerView.delegate = self
+        plantPickerView.dataSource = self
+    }
+    
     private func configureUI() {
         shuffleButton.titleLabel?.text = "Shuffle"
         shuffleButton.layer.cornerRadius = 4
@@ -161,34 +189,34 @@ class RandomPairViewController: UIViewController {
     }
     
     private func loadBirdData() {
-        birdData = BirdsSpecies.decodeBirdSpeciesData()
+        birdData = BirdsSpecies.decodeBirdSpeciesData()?.shuffled()
     }
     
     private func loadPlantData() {
-        plantData = PlantsSpecies.decodeFlowers()
+        plantData = PlantsSpecies.decodeFlowers()?.shuffled()
     }
-    
+
     private func generateRandomPair() {
-        generateRandomBird()
-        generateRandomPlant()
+//        generateRandomBird()
+//        generateRandomPlant()
     }
-    
+//
     @objc private func generateRandomBird() {
-        birdImage = nil
-        randomBird = birdData?.randomElement()
-        makeRandomPair()
-        searchFlickerPhotos(for: randomBird?.commonName ?? "", searchType: .bird)
+//        birdImage = nil
+//        randomBird = birdData?.randomElement()
+//        makeRandomPair()
+//        searchFlickerPhotos(for: randomBird?.commonName ?? "", searchType: .bird)
     }
-    
+//
     @objc private func generateRandomPlant() {
-        plantImage = nil
-        randomPlant = plantData?.randomElement()
-        makeRandomPair()
-        searchFlickerPhotos(for: randomPlant?.name ?? "", searchType: .plant)
+//        plantImage = nil
+//        randomPlant = plantData?.randomElement()
+//        makeRandomPair()
+//        searchFlickerPhotos(for: randomPlant?.name ?? "", searchType: .plant)
     }
-    
+//
     private func makeRandomPair() {
-        randomPair = FavoriteDuo(birdCommonName: randomBird?.commonName ?? "Bird", birdScientificName: randomBird?.scientificName ?? "Scientific name", plantName: randomPlant?.name ?? "Plant name")
+//        randomPair = FavoriteDuo(birdCommonName: randomBird?.commonName ?? "Bird", birdScientificName: randomBird?.scientificName ?? "Scientific name", plantName: randomPlant?.name ?? "Plant name")
     }
     
     /// Loads images for the bird and plant to pass to the detail view
@@ -226,21 +254,21 @@ class RandomPairViewController: UIViewController {
     }
     
     private func configureTapGestures() {
-        let birdPhotoTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.birdPhotoHasBeenTapped(gesture:)))
-        birdImageView.addGestureRecognizer(birdPhotoTapGesture)
-        birdImageView.isUserInteractionEnabled = true
-        
-        let plantPhotoTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.plantPhotoHasBeenTapped(gesture:)))
-        plantImageView.addGestureRecognizer(plantPhotoTapGesture)
-        plantImageView.isUserInteractionEnabled = true
-        
-        let birdPhotoSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(generateRandomBird))
-        birdPhotoSwipeGesture.direction = [.up, .down]
-        birdImageView.addGestureRecognizer(birdPhotoSwipeGesture)
-        
-        let plantPhotoSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(generateRandomPlant))
-        plantPhotoSwipeGesture.direction = [.up, .down]
-        plantImageView.addGestureRecognizer(plantPhotoSwipeGesture)
+//        let birdPhotoTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.birdPhotoHasBeenTapped(gesture:)))
+//        birdImageView.addGestureRecognizer(birdPhotoTapGesture)
+//        birdImageView.isUserInteractionEnabled = true
+//
+//        let plantPhotoTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.plantPhotoHasBeenTapped(gesture:)))
+//        plantImageView.addGestureRecognizer(plantPhotoTapGesture)
+//        plantImageView.isUserInteractionEnabled = true
+//
+//        let birdPhotoSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(generateRandomBird))
+//        birdPhotoSwipeGesture.direction = [.up, .down]
+//        birdImageView.addGestureRecognizer(birdPhotoSwipeGesture)
+//
+////        let plantPhotoSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(generateRandomPlant))
+//        plantPhotoSwipeGesture.direction = [.up, .down]
+//        plantImageView.addGestureRecognizer(plantPhotoSwipeGesture)
         
     }
     @IBAction func birdPhotoHasBeenTapped(gesture: UITapGestureRecognizer) {
@@ -311,12 +339,12 @@ class RandomPairViewController: UIViewController {
     }
     
     private func loadBirdFlickerPhoto(for photo: [PhotoResult]) {
-        let flickerPhotoEndpoint = "https://farm\(photo.first?.farm ?? 0).staticflickr.com/\(photo.first?.server ?? "")/\(photo.first?.id ?? "")_\(photo.first?.secret ?? "")_b.jpg".lowercased()
-        loadPhotoFromURL(with: flickerPhotoEndpoint, imageView: birdImageView)
+//        let flickerPhotoEndpoint = "https://farm\(photo.first?.farm ?? 0).staticflickr.com/\(photo.first?.server ?? "")/\(photo.first?.id ?? "")_\(photo.first?.secret ?? "")_b.jpg".lowercased()
+//        loadPhotoFromURL(with: flickerPhotoEndpoint, imageView: birdImageView)
     }
     private func loadFlickerPlantPhoto(for photo: [PhotoResult]) {
-        let flickerPhotoEndpoint = "https://farm\(photo.first?.farm ?? 0).staticflickr.com/\(photo.first?.server ?? "")/\(photo.first?.id ?? "")_\(photo.first?.secret ?? "")_b.jpg".lowercased()
-        loadPhotoFromURL(with: flickerPhotoEndpoint, imageView: plantImageView)
+//        let flickerPhotoEndpoint = "https://farm\(photo.first?.farm ?? 0).staticflickr.com/\(photo.first?.server ?? "")/\(photo.first?.id ?? "")_\(photo.first?.secret ?? "")_b.jpg".lowercased()
+//        loadPhotoFromURL(with: flickerPhotoEndpoint, imageView: plantImageView)
     }
     private func setupDataPersistence() {
         if let tabBarController = self.tabBarController as? MainTabBarController {
@@ -348,17 +376,17 @@ class RandomPairViewController: UIViewController {
     @IBAction func shuffleButtonPressed(_ sender: UIButton) {
         isFavorite = false
         resetFavoriteButton()
-        birdImageView.image = nil
-        plantImageView.image = nil
-        generateRandomPair()
+//        birdImageView.image = nil
+//        plantImageView.image = nil
+//        generateRandomPair()
     }
     @IBAction func randomBirdButtonPressed(_ sender: UIButton) {
         resetFavoriteButton()
-        generateRandomBird()
+//        generateRandomBird()
     }
     @IBAction func randomPlantButtonPressed(_ sender: UIButton) {
         resetFavoriteButton()
-        generateRandomPlant()
+//        generateRandomPlant()
     }
     @IBAction func favoriteButtonPressed(_ sender: UIButton) {
         isFavorite.toggle()
@@ -405,4 +433,36 @@ class RandomPairViewController: UIViewController {
 extension RandomPairViewController: PersistenceStackClient {
     func setStack(stack: DataPersistence<String>) {
     }
+}
+
+extension RandomPairViewController: UIPickerViewDelegate {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        switch pickerView {
+        case birdPickerView:
+            return birdData?[row].commonName
+        case plantPickerView:
+            return plantData?[row].name
+        default:
+            return "ERROR :/"
+        }
+    }
+}
+
+extension RandomPairViewController: UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+       return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        switch pickerView {
+        case birdPickerView:
+            return birdData?.count ?? 0
+        case plantPickerView:
+            return plantData?.count ?? 0
+        default:
+            return 0
+        }
+    }
+    
+    
 }

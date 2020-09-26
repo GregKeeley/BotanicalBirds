@@ -10,6 +10,7 @@ import Foundation
 
 class BirdsSpecies: Codable {
     
+    
     var commonName: String
     var scientificName: String
     
