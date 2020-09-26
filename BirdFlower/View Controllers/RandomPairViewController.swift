@@ -302,40 +302,46 @@ class RandomPairViewController: UIViewController {
         }
     }
     //MARK:- Flicker functions
-    private func searchFlickerPhotos(for query: String, searchType: SearchType) {
+    private func searchFlickerPhotos(for query: String, searchType: SearchType) -> FlickerSearchResult? {
+        var searchResults: FlickerSearchResult?
         if searchType == .bird {
             FlickerAPI.searchPhotos(searchQuery: query, contentType: .birds) { [weak self] (results) in
                 switch results {
                 case .failure(let appError):
                     print("Failed to search flicker for a photo: \(appError)")
-                    DispatchQueue.main.async {
-                        if searchType == .bird {
-                            self?.birdImageView.isHidden = true
-                        } else if searchType == .plant {
-                            self?.plantImageView.isHidden = true
-                        }
-                    }
+//                    DispatchQueue.main.async {
+//                        if searchType == .bird {
+//                            self?.birdImageView.isHidden = true
+//                        } else if searchType == .plant {
+//                            self?.plantImageView.isHidden = true
+//                        }
+//                    }
                 case .success(let results):
-                    self?.flickerBirdImageData = results
+//                    self?.flickerBirdImageData = results
+                    searchResults = results
+
                 }
             }
+            
         } else if searchType == .plant {
             FlickerAPI.searchPhotos(searchQuery: query, contentType: .plants) { [weak self] (results) in
                 switch results {
                 case .failure(let appError):
                     print("Failed to search flicker for a photo: \(appError)")
-                    DispatchQueue.main.async {
-                        if searchType == .bird {
-                            self?.birdImageView.isHidden = true
-                        } else if searchType == .plant {
-                            self?.plantImageView.isHidden = true
-                        }
-                    }
+//                    DispatchQueue.main.async {
+//                        if searchType == .bird {
+//                            self?.birdImageView.isHidden = true
+//                        } else if searchType == .plant {
+//                            self?.plantImageView.isHidden = true
+//                        }
+//                    }
                 case .success(let results):
                     self?.flickerPlantImageData = results
+                    searchResults = results
                 }
             }
         }
+        return searchResults
     }
     
     private func loadBirdFlickerPhoto(for photo: [PhotoResult]) {
@@ -446,6 +452,41 @@ extension RandomPairViewController: UIPickerViewDelegate {
             return "ERROR :/"
         }
     }
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        var view = UIView(frame: CGRect(x: 0, y: 0, width: pickerView.bounds.width - 30, height: 60))
+        var imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        switch pickerView {
+        case birdPickerView:
+            let searchResults = searchFlickerPhotos(for: birdData?[row].commonName ?? "bird", searchType: .bird)
+            let flickerPhotoEndpoint = "https://farm\(searchResults?.photos.photo.first?.farm ?? 0).staticflickr.com/\(searchResults?.photos.photo.first?.server ?? "")/\(searchResults?.photos.photo.first?.id ?? "")_\(searchResults?.photos.photo.first?.secret ?? "")_b.jpg".lowercased()
+            
+            imageView.getImage(with: flickerPhotoEndpoint) { (results) in
+                switch results {
+                case .failure(let appError):
+                    print("Something went wrong getting the bird image: \(appError.localizedDescription)")
+                case .success(let image):
+                imageView.image = image
+                }
+            }
+            
+        case plantPickerView:
+            let searchResults = searchFlickerPhotos(for: plantData?[row].name ?? "plant", searchType: .plant)
+            let flickerPhotoEndpoint = "https://farm\(searchResults?.photos.photo.first?.farm ?? 0).staticflickr.com/\(searchResults?.photos.photo.first?.server ?? "")/\(searchResults?.photos.photo.first?.id ?? "")_\(searchResults?.photos.photo.first?.secret ?? "")_b.jpg".lowercased()
+            
+            imageView.getImage(with: flickerPhotoEndpoint) { (results) in
+                switch results {
+                case .failure(let appError):
+                    print("Something went wrong getting the bird image: \(appError.localizedDescription)")
+                case .success(let image):
+                imageView.image = image
+                }
+            }
+        default:
+            break
+        }
+        view.addSubview(imageView)
+        return view
+    }
 }
 
 extension RandomPairViewController: UIPickerViewDataSource {
@@ -464,5 +505,7 @@ extension RandomPairViewController: UIPickerViewDataSource {
         }
     }
     
-    
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return 60
+    }
 }
