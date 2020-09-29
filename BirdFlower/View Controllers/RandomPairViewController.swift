@@ -40,6 +40,10 @@ class RandomPairViewController: UIViewController {
     //MARK:- Variables
     var birdData: [BirdsSpecies]?
     var plantData: [PlantsSpecies]?
+    var currentBirdIndex = 0
+    var currentPlantIndex = 0
+    
+    
     var birdImageURL: String?
     var plantImageURL: String?
     
@@ -135,13 +139,10 @@ class RandomPairViewController: UIViewController {
         shuffleButton.titleLabel?.text = "Shuffle"
         shuffleButton.layer.cornerRadius = 4
         shuffleButton.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
-        //        shuffleButton.clearColorForTitle()
         botanicalBirdsTitleLabel.createShadows()
         birdNameLabel.createShadows()
         plantNameLabel.createShadows()
-        
-//        birdImageView = birdImageView.createShadows()
-//        plantImageView = plantImageView.createShadows()
+
     }
     private func addShadowToImages(image: UIImage) {
         
@@ -161,28 +162,81 @@ class RandomPairViewController: UIViewController {
     }
     
     private func loadBirdData() {
-        birdData = BirdsSpecies.decodeBirdSpeciesData()
+        birdData = BirdsSpecies.decodeBirdSpeciesData()?.shuffled()
     }
     
     private func loadPlantData() {
-        plantData = PlantsSpecies.decodeFlowers()
+        plantData = PlantsSpecies.decodeFlowers()?.shuffled()
     }
     
     private func generateRandomPair() {
-        generateRandomBird()
-        generateRandomPlant()
+//        generateRandomBird(gesture: nil)
+//        generateRandomPlant(gesture: nil)
+        // Note: shuffling the two arrays, and resetting the indexes to zero gives us a new shuffled collection.
+        birdData?.shuffle()
+        plantData?.shuffle()
+        
+        currentPlantIndex = 0
+        currentBirdIndex = 0
+        randomBird = birdData?[currentBirdIndex]
+        randomPlant = plantData?[currentPlantIndex]
+        
+        makeRandomPair()
+        searchFlickerPhotos(for: randomBird?.commonName ?? "", searchType: .bird)
+        searchFlickerPhotos(for: randomPlant?.name ?? "", searchType: .plant)
     }
     
-    private func generateRandomBird() {
-        birdImage = nil
-        randomBird = birdData?.randomElement()
+    @objc private func generateRandomBird(gesture: UISwipeGestureRecognizer?) {
+//        birdImage = nil
+        if let inputGesture = gesture {
+            switch inputGesture.direction {
+            case .up:
+                if currentBirdIndex > 0 {
+                    currentBirdIndex -= 1
+                } else {
+                    currentBirdIndex = (birdData?.count ?? 0) - 1
+                }
+            case .down:
+                if currentBirdIndex < (birdData?.count ?? 0) - 1 {
+                    currentBirdIndex += 1
+                } else {
+                    currentBirdIndex = 0
+                }
+            default:
+                currentBirdIndex += 1
+            }
+        } else {
+            currentBirdIndex += 1
+        }
+        randomBird = birdData?[currentBirdIndex]
         makeRandomPair()
         searchFlickerPhotos(for: randomBird?.commonName ?? "", searchType: .bird)
     }
     
-    private func generateRandomPlant() {
-        plantImage = nil
-        randomPlant = plantData?.randomElement()
+    @objc private func generateRandomPlant(gesture: UISwipeGestureRecognizer?) {
+//        plantImage = nil
+//        currentPlantIndex += 1
+        if let inputGesture = gesture {
+            switch inputGesture.direction {
+            case .up:
+                if currentPlantIndex > 0 {
+                    currentPlantIndex -= 1
+                } else {
+                    currentPlantIndex = (plantData?.count ?? 0) - 1
+                }
+            case .down:
+                if currentPlantIndex < (plantData?.count ?? 0) - 1 {
+                    currentPlantIndex += 1
+                } else {
+                    currentPlantIndex = 0
+                }
+            default:
+                currentPlantIndex += 1
+            }
+        } else {
+            currentPlantIndex += 1
+        }
+        randomPlant = plantData?[currentPlantIndex]
         makeRandomPair()
         searchFlickerPhotos(for: randomPlant?.name ?? "", searchType: .plant)
     }
@@ -233,6 +287,23 @@ class RandomPairViewController: UIViewController {
         let plantPhotoTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.plantPhotoHasBeenTapped(gesture:)))
         plantImageView.addGestureRecognizer(plantPhotoTapGesture)
         plantImageView.isUserInteractionEnabled = true
+        
+        // Note: I added two individual gestueres to each imageview, so I can differentiate between them when using the generateRandomXXXX functions to loop through an array, backwards and forwards
+        let birdPhotoSwipeDownGesture = UISwipeGestureRecognizer(target: self, action: #selector(generateRandomBird))
+        birdPhotoSwipeDownGesture.direction = [.down]
+        birdImageView.addGestureRecognizer(birdPhotoSwipeDownGesture)
+        let birdPhotoSwipeUpGesture = UISwipeGestureRecognizer(target: self, action: #selector(generateRandomBird(gesture:)))
+        birdPhotoSwipeUpGesture.direction = [.up]
+        birdImageView.addGestureRecognizer(birdPhotoSwipeUpGesture)
+
+        
+        let plantPhotoSwipeDownGesture = UISwipeGestureRecognizer(target: self, action: #selector(generateRandomPlant))
+        plantPhotoSwipeDownGesture.direction = [.down]
+        plantImageView.addGestureRecognizer(plantPhotoSwipeDownGesture)
+        let plantPhotoSwipeUpGesture = UISwipeGestureRecognizer(target: self, action: #selector(generateRandomPlant))
+        plantPhotoSwipeUpGesture.direction = [.up]
+        plantImageView.addGestureRecognizer(plantPhotoSwipeUpGesture)
+        
     }
     @IBAction func birdPhotoHasBeenTapped(gesture: UITapGestureRecognizer) {
         if birdImage != nil {
@@ -339,17 +410,17 @@ class RandomPairViewController: UIViewController {
     @IBAction func shuffleButtonPressed(_ sender: UIButton) {
         isFavorite = false
         resetFavoriteButton()
-        birdImageView.image = nil
-        plantImageView.image = nil
+//        birdImageView.image = nil
+//        plantImageView.image = nil
         generateRandomPair()
     }
     @IBAction func randomBirdButtonPressed(_ sender: UIButton) {
         resetFavoriteButton()
-        generateRandomBird()
+        generateRandomBird(gesture: nil)
     }
     @IBAction func randomPlantButtonPressed(_ sender: UIButton) {
         resetFavoriteButton()
-        generateRandomPlant()
+        generateRandomPlant(gesture: nil)
     }
     @IBAction func favoriteButtonPressed(_ sender: UIButton) {
         isFavorite.toggle()
@@ -390,10 +461,4 @@ class RandomPairViewController: UIViewController {
         self.navigationController?.navigationBar.isTranslucent = true
     }
     
-}
-
-//MARK:- Extensions
-extension RandomPairViewController: PersistenceStackClient {
-    func setStack(stack: DataPersistence<String>) {
-    }
 }

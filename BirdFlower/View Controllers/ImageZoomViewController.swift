@@ -14,13 +14,11 @@ class ImageZoomViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var imageView: UIImageView!
     
+    
+    // TODO: Encapsulate objects Mark variables private (review class notes, OOP, GCD, inheritance, encapsulation, polymorphism, protocol oriented programming vs OOP, protocol vs methods)
     var imageData: FlickerSearchResult?
     
-    var zoomImage: UIImage? {
-        didSet {
-
-        }
-    }
+    var zoomImage: UIImage?
     
     var nameForPhoto = "" {
         didSet {
@@ -39,7 +37,7 @@ class ImageZoomViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+//        setupUI()
         scrollView.delegate = self
         scrollView.maximumZoomScale = 2
         scrollView.minimumZoomScale = 1

@@ -28,6 +28,13 @@ class ListViewController: UIViewController {
     @IBOutlet weak var sortMethodBarButton: UIBarButtonItem!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var messageLabelTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var collectionViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var filterStack: UIStackView!
+    
+    @IBOutlet weak var randomPairFilterButton: UIButton!
+    @IBOutlet weak var birdFilterButton: UIButton!
+    @IBOutlet weak var plantsFilterButton: UIButton!
+    @IBOutlet weak var favoritesFilterButton: UIButton!
     
     //MARK:- Variables/Constants
     var resultSearchController = UISearchController()
@@ -80,9 +87,21 @@ class ListViewController: UIViewController {
     var currentListType = ListType.randomDuos {
         didSet {
             tableView.reloadData()
-            checkToEnableShuffle()
+//            checkToEnableShuffle()
         }
     }
+    var filterIsActive = false {
+        didSet {
+            if filterIsActive {
+                collectionViewTopConstraint.constant = 8
+                filterStack.isHidden = false
+            } else {
+                collectionViewTopConstraint.constant = -44
+                filterStack.isHidden = true
+            }
+        }
+    }
+    
     //MARK:- ViewLifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,13 +112,15 @@ class ListViewController: UIViewController {
         setupNavigationBar()
         setupSearchController()
         sortAllDataCollections()
+        filterIsActive = false
+        configureFilterStackButtons()
 //        configureMessageLabel()
     }
     override func viewWillAppear(_ animated: Bool) {
         fetchFavoriteDuos()
         generateRandomDuos()
         tableView.reloadData()
-        checkToEnableShuffle()
+//        checkToEnableShuffle()
         configureMessageLabel()
     }
     
@@ -129,6 +150,34 @@ class ListViewController: UIViewController {
         navigationItem.hidesSearchBarWhenScrolling = true
         setSearchBarPlaceHolderText(currentListType)
         view.backgroundColor = .systemBackground
+    }
+    private func configureFilterStackButtons() {
+        randomPairFilterButton.titleLabel?.font = UIFont(name: "Futura", size: 15)
+        birdFilterButton.titleLabel?.font = UIFont(name: "Futura", size: 15)
+        plantsFilterButton.titleLabel?.font = UIFont(name: "Futura", size: 15)
+        favoritesFilterButton.titleLabel?.font = UIFont(name: "Futura", size: 15)
+        
+        randomPairFilterButton.tintColor = .white
+        birdFilterButton.tintColor = .white
+        plantsFilterButton.tintColor = .white
+        favoritesFilterButton.tintColor = .white
+        
+        randomPairFilterButton.backgroundColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
+        birdFilterButton.backgroundColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
+        plantsFilterButton.backgroundColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
+        favoritesFilterButton.backgroundColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
+        
+        randomPairFilterButton.layer.cornerRadius = 8
+        birdFilterButton.layer.cornerRadius = 8
+        plantsFilterButton.layer.cornerRadius = 8
+        favoritesFilterButton.layer.cornerRadius = 8
+        
+        randomPairFilterButton.titleLabel?.textAlignment = .center
+        birdFilterButton.titleLabel?.textAlignment = .center
+        plantsFilterButton.titleLabel?.textAlignment = .center
+        favoritesFilterButton.titleLabel?.textAlignment = .center
+        
+        randomPairFilterButton.titleLabel?.sizeToFit()
     }
     private func sortAllDataCollections() {
         if currentSortMethod == .ascending {
@@ -278,22 +327,33 @@ class ListViewController: UIViewController {
                 })
             }
         }
-    //MARK:- IBActions
-    @IBAction func toggleButtonPressed(_ sender: UIBarButtonItem) {
+    private func updateListType() {
         switch currentListType {
         case .birds:
-            currentListType = .plants
-            setSearchBarPlaceHolderText(currentListType)
+            break
         case .plants:
-            currentListType = .favorites
-            setSearchBarPlaceHolderText(currentListType)
+            break
         case .favorites:
-            currentListType = .randomDuos
-            setSearchBarPlaceHolderText(currentListType)
+            break
         case .randomDuos:
-            currentListType = .birds
-            setSearchBarPlaceHolderText(currentListType)
+            break
         }
+    }
+    //MARK:- IBActions
+    @IBAction func toggleButtonPressed(_ sender: UIBarButtonItem) {
+        filterIsActive.toggle()
+    }
+    @IBAction func favoriteFilterButtonPressed(_ sender: UIButton) {
+        currentListType = .favorites
+    }
+    @IBAction func birdsFilterButtonPressed(_ sender: UIButton) {
+        currentListType = .birds
+    }
+    @IBAction func plantsFilterButtonPressed(_ sender: UIButton) {
+        currentListType = .plants
+    }
+    @IBAction func randomPairsFilterButtonPressed(_ sender: UIButton) {
+        currentListType = .randomDuos
     }
     
     @IBAction func aboutButtonPressed(_ sender: UIBarButtonItem) {
@@ -305,8 +365,18 @@ class ListViewController: UIViewController {
         self.navigationController?.navigationBar.tintColor = UIColor.white
     }
     @IBAction func shuffleRandomDuos(_ sender: UIBarButtonItem) {
-        randomDuos.removeAll()
-        generateRandomDuos()
+        switch currentListType {
+        case .birds:
+            birdData = birdData.shuffled()
+        case .plants:
+            plantData = plantData.shuffled()
+        case .favorites:
+            favoriteDuos = favoriteDuos?.shuffled()
+        case .randomDuos:
+            randomDuos.removeAll()
+            generateRandomDuos()
+        }
+        
     }
     @IBAction func changeSortMethodButtonPressed(_ sender: UIBarButtonItem) {
         if currentSortMethod == .ascending {

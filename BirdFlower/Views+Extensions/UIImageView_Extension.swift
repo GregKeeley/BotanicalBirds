@@ -11,6 +11,7 @@ extension UIImageView {
     func getImage(with urlString: String,
                   completion: @escaping (Result<UIImage, AppError>) -> ()) {
         var activityIndicator: UIActivityIndicatorView?
+
         DispatchQueue.main.async {
             activityIndicator = UIActivityIndicatorView(style: .medium)
             activityIndicator?.startAnimating()
