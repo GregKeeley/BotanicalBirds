@@ -87,7 +87,7 @@ class ListViewController: UIViewController {
     var currentListType = ListType.randomDuos {
         didSet {
             tableView.reloadData()
-            checkToEnableShuffle()
+//            checkToEnableShuffle()
         }
     }
     var filterIsActive = false {
@@ -120,7 +120,7 @@ class ListViewController: UIViewController {
         fetchFavoriteDuos()
         generateRandomDuos()
         tableView.reloadData()
-        checkToEnableShuffle()
+//        checkToEnableShuffle()
         configureMessageLabel()
     }
     
@@ -365,8 +365,18 @@ class ListViewController: UIViewController {
         self.navigationController?.navigationBar.tintColor = UIColor.white
     }
     @IBAction func shuffleRandomDuos(_ sender: UIBarButtonItem) {
-        randomDuos.removeAll()
-        generateRandomDuos()
+        switch currentListType {
+        case .birds:
+            birdData = birdData.shuffled()
+        case .plants:
+            plantData = plantData.shuffled()
+        case .favorites:
+            favoriteDuos = favoriteDuos?.shuffled()
+        case .randomDuos:
+            randomDuos.removeAll()
+            generateRandomDuos()
+        }
+        
     }
     @IBAction func changeSortMethodButtonPressed(_ sender: UIBarButtonItem) {
         if currentSortMethod == .ascending {
