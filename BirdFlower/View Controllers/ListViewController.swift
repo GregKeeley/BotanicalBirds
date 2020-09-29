@@ -31,6 +31,11 @@ class ListViewController: UIViewController {
     @IBOutlet weak var collectionViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var filterStack: UIStackView!
     
+    @IBOutlet weak var randomPairFilterButton: UIButton!
+    @IBOutlet weak var birdFilterButton: UIButton!
+    @IBOutlet weak var plantsFilterButton: UIButton!
+    @IBOutlet weak var favoritesFilterButton: UIButton!
+    
     //MARK:- Variables/Constants
     var resultSearchController = UISearchController()
     var birdData = [BirdsSpecies]() {
@@ -108,6 +113,7 @@ class ListViewController: UIViewController {
         setupSearchController()
         sortAllDataCollections()
         filterIsActive = false
+        configureFilterStackButtons()
 //        configureMessageLabel()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -145,7 +151,34 @@ class ListViewController: UIViewController {
         setSearchBarPlaceHolderText(currentListType)
         view.backgroundColor = .systemBackground
     }
-    
+    private func configureFilterStackButtons() {
+        randomPairFilterButton.titleLabel?.font = UIFont(name: "Futura", size: 15)
+        birdFilterButton.titleLabel?.font = UIFont(name: "Futura", size: 15)
+        plantsFilterButton.titleLabel?.font = UIFont(name: "Futura", size: 15)
+        favoritesFilterButton.titleLabel?.font = UIFont(name: "Futura", size: 15)
+        
+        randomPairFilterButton.tintColor = .white
+        birdFilterButton.tintColor = .white
+        plantsFilterButton.tintColor = .white
+        favoritesFilterButton.tintColor = .white
+        
+        randomPairFilterButton.backgroundColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
+        birdFilterButton.backgroundColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
+        plantsFilterButton.backgroundColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
+        favoritesFilterButton.backgroundColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
+        
+        randomPairFilterButton.layer.cornerRadius = 8
+        birdFilterButton.layer.cornerRadius = 8
+        plantsFilterButton.layer.cornerRadius = 8
+        favoritesFilterButton.layer.cornerRadius = 8
+        
+        randomPairFilterButton.titleLabel?.textAlignment = .center
+        birdFilterButton.titleLabel?.textAlignment = .center
+        plantsFilterButton.titleLabel?.textAlignment = .center
+        favoritesFilterButton.titleLabel?.textAlignment = .center
+        
+        randomPairFilterButton.titleLabel?.sizeToFit()
+    }
     private func sortAllDataCollections() {
         if currentSortMethod == .ascending {
             birdData = birdData.sorted(by: {$0.commonName < $1.commonName})

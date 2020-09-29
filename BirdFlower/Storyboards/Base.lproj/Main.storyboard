@@ -25,7 +25,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KTB-99-LpB">
-                                <rect key="frame" x="0.0" y="190" width="375" height="539"/>
+                                <rect key="frame" x="0.0" y="170" width="375" height="559"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="basicCell" textLabel="ZkY-xZ-C8x" detailTextLabel="HOd-RK-UmO" rowHeight="114" style="IBUITableViewCellStyleSubtitle" id="eaJ-rb-KBP">
@@ -55,31 +55,31 @@
                                 </prototypes>
                             </tableView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="FPX-9l-gv4" userLabel="Filter Stack">
-                                <rect key="frame" x="0.0" y="140" width="375" height="50"/>
+                                <rect key="frame" x="8" y="140" width="359" height="30"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ddd-ro-cn8">
-                                        <rect key="frame" x="0.0" y="0.0" width="87.666666666666671" height="50"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="ddd-ro-cn8">
+                                        <rect key="frame" x="0.0" y="0.0" width="83.666666666666671" height="30"/>
                                         <state key="normal" title="Random Pairs"/>
                                         <connections>
                                             <action selector="randomPairsFilterButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sbE-C9-hd0"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="utg-SG-9So">
-                                        <rect key="frame" x="95.666666666666686" y="0.0" width="88" height="50"/>
+                                        <rect key="frame" x="91.666666666666686" y="0.0" width="84" height="30"/>
                                         <state key="normal" title="Birds"/>
                                         <connections>
                                             <action selector="birdsFilterButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UAp-9S-5Kx"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y8T-u5-qpM">
-                                        <rect key="frame" x="191.66666666666666" y="0.0" width="87.666666666666657" height="50"/>
+                                        <rect key="frame" x="183.66666666666666" y="0.0" width="83.666666666666657" height="30"/>
                                         <state key="normal" title="Plants"/>
                                         <connections>
                                             <action selector="plantsFilterButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bb3-ME-AZf"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PLW-fN-5gK">
-                                        <rect key="frame" x="287.33333333333331" y="0.0" width="87.666666666666686" height="50"/>
+                                        <rect key="frame" x="275.33333333333331" y="0.0" width="83.666666666666686" height="30"/>
                                         <state key="normal" title="Favorites"/>
                                         <connections>
                                             <action selector="favoriteFilterButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fVR-22-KjX"/>
@@ -92,9 +92,8 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="X0g-dS-Tsq" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.35" id="DH1-fj-6xi"/>
-                            <constraint firstItem="FPX-9l-gv4" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="DKu-fS-YQF"/>
-                            <constraint firstItem="FPX-9l-gv4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="EbL-ad-eVD"/>
-                            <constraint firstAttribute="bottom" secondItem="FPX-9l-gv4" secondAttribute="bottom" constant="622" id="UoO-XR-xjU"/>
+                            <constraint firstItem="FPX-9l-gv4" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="-8" id="DKu-fS-YQF"/>
+                            <constraint firstItem="FPX-9l-gv4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="EbL-ad-eVD"/>
                             <constraint firstItem="FPX-9l-gv4" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="aET-KX-3WU"/>
                             <constraint firstItem="KTB-99-LpB" firstAttribute="top" secondItem="FPX-9l-gv4" secondAttribute="bottom" id="afC-xK-4OB"/>
                             <constraint firstItem="X0g-dS-Tsq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="n24-H9-7HS"/>
@@ -131,10 +130,14 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="birdFilterButton" destination="utg-SG-9So" id="Y5L-PI-f5p"/>
                         <outlet property="collectionViewTopConstraint" destination="afC-xK-4OB" id="V96-iX-BZC"/>
+                        <outlet property="favoritesFilterButton" destination="PLW-fN-5gK" id="xlG-dV-vcT"/>
                         <outlet property="filterStack" destination="FPX-9l-gv4" id="eaw-d0-JJD"/>
                         <outlet property="messageLabel" destination="X0g-dS-Tsq" id="MfT-xv-MVw"/>
                         <outlet property="messageLabelTopConstraint" destination="n4Q-s3-oAm" id="Pme-nV-phv"/>
+                        <outlet property="plantsFilterButton" destination="y8T-u5-qpM" id="etj-c6-j8e"/>
+                        <outlet property="randomPairFilterButton" destination="ddd-ro-cn8" id="d09-8d-c0T"/>
                         <outlet property="shuffleBarButton" destination="fS3-fp-D6Y" id="lMn-f0-TQe"/>
                         <outlet property="sortMethodBarButton" destination="rnR-c4-tG3" id="Zhi-Lb-vrT"/>
                         <outlet property="tableView" destination="KTB-99-LpB" id="Qlg-Hf-ze4"/>
