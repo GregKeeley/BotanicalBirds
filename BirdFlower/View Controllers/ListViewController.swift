@@ -28,6 +28,8 @@ class ListViewController: UIViewController {
     @IBOutlet weak var sortMethodBarButton: UIBarButtonItem!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var messageLabelTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var collectionViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var filterStack: UIStackView!
     
     //MARK:- Variables/Constants
     var resultSearchController = UISearchController()
@@ -83,6 +85,18 @@ class ListViewController: UIViewController {
             checkToEnableShuffle()
         }
     }
+    var filterIsActive = false {
+        didSet {
+            if filterIsActive {
+                collectionViewTopConstraint.constant = 8
+                filterStack.isHidden = false
+            } else {
+                collectionViewTopConstraint.constant = -44
+                filterStack.isHidden = true
+            }
+        }
+    }
+    
     //MARK:- ViewLifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,6 +107,7 @@ class ListViewController: UIViewController {
         setupNavigationBar()
         setupSearchController()
         sortAllDataCollections()
+        filterIsActive = false
 //        configureMessageLabel()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -130,6 +145,7 @@ class ListViewController: UIViewController {
         setSearchBarPlaceHolderText(currentListType)
         view.backgroundColor = .systemBackground
     }
+    
     private func sortAllDataCollections() {
         if currentSortMethod == .ascending {
             birdData = birdData.sorted(by: {$0.commonName < $1.commonName})
@@ -278,22 +294,33 @@ class ListViewController: UIViewController {
                 })
             }
         }
-    //MARK:- IBActions
-    @IBAction func toggleButtonPressed(_ sender: UIBarButtonItem) {
+    private func updateListType() {
         switch currentListType {
         case .birds:
-            currentListType = .plants
-            setSearchBarPlaceHolderText(currentListType)
+            break
         case .plants:
-            currentListType = .favorites
-            setSearchBarPlaceHolderText(currentListType)
+            break
         case .favorites:
-            currentListType = .randomDuos
-            setSearchBarPlaceHolderText(currentListType)
+            break
         case .randomDuos:
-            currentListType = .birds
-            setSearchBarPlaceHolderText(currentListType)
+            break
         }
+    }
+    //MARK:- IBActions
+    @IBAction func toggleButtonPressed(_ sender: UIBarButtonItem) {
+        filterIsActive.toggle()
+    }
+    @IBAction func favoriteFilterButtonPressed(_ sender: UIButton) {
+        currentListType = .favorites
+    }
+    @IBAction func birdsFilterButtonPressed(_ sender: UIButton) {
+        currentListType = .birds
+    }
+    @IBAction func plantsFilterButtonPressed(_ sender: UIButton) {
+        currentListType = .plants
+    }
+    @IBAction func randomPairsFilterButtonPressed(_ sender: UIButton) {
+        currentListType = .randomDuos
     }
     
     @IBAction func aboutButtonPressed(_ sender: UIBarButtonItem) {

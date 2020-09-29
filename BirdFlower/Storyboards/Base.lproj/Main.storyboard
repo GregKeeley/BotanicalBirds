@@ -18,14 +18,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X0g-dS-Tsq">
-                                <rect key="frame" x="122" y="-100" width="131" height="19.333333333333329"/>
+                                <rect key="frame" x="122" y="-100" width="131" height="19.666666666666671"/>
                                 <color key="backgroundColor" systemColor="systemPinkColor"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KTB-99-LpB">
-                                <rect key="frame" x="0.0" y="140" width="375" height="589"/>
+                                <rect key="frame" x="0.0" y="190" width="375" height="539"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="basicCell" textLabel="ZkY-xZ-C8x" detailTextLabel="HOd-RK-UmO" rowHeight="114" style="IBUITableViewCellStyleSubtitle" id="eaJ-rb-KBP">
@@ -54,12 +54,49 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="FPX-9l-gv4" userLabel="Filter Stack">
+                                <rect key="frame" x="0.0" y="140" width="375" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ddd-ro-cn8">
+                                        <rect key="frame" x="0.0" y="0.0" width="87.666666666666671" height="50"/>
+                                        <state key="normal" title="Random Pairs"/>
+                                        <connections>
+                                            <action selector="randomPairsFilterButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sbE-C9-hd0"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="utg-SG-9So">
+                                        <rect key="frame" x="95.666666666666686" y="0.0" width="88" height="50"/>
+                                        <state key="normal" title="Birds"/>
+                                        <connections>
+                                            <action selector="birdsFilterButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UAp-9S-5Kx"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y8T-u5-qpM">
+                                        <rect key="frame" x="191.66666666666666" y="0.0" width="87.666666666666657" height="50"/>
+                                        <state key="normal" title="Plants"/>
+                                        <connections>
+                                            <action selector="plantsFilterButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bb3-ME-AZf"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PLW-fN-5gK">
+                                        <rect key="frame" x="287.33333333333331" y="0.0" width="87.666666666666686" height="50"/>
+                                        <state key="normal" title="Favorites"/>
+                                        <connections>
+                                            <action selector="favoriteFilterButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fVR-22-KjX"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="X0g-dS-Tsq" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.35" id="DH1-fj-6xi"/>
-                            <constraint firstItem="KTB-99-LpB" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="afC-xK-4OB"/>
+                            <constraint firstItem="FPX-9l-gv4" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="DKu-fS-YQF"/>
+                            <constraint firstItem="FPX-9l-gv4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="EbL-ad-eVD"/>
+                            <constraint firstAttribute="bottom" secondItem="FPX-9l-gv4" secondAttribute="bottom" constant="622" id="UoO-XR-xjU"/>
+                            <constraint firstItem="FPX-9l-gv4" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="aET-KX-3WU"/>
+                            <constraint firstItem="KTB-99-LpB" firstAttribute="top" secondItem="FPX-9l-gv4" secondAttribute="bottom" id="afC-xK-4OB"/>
                             <constraint firstItem="X0g-dS-Tsq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="n24-H9-7HS"/>
                             <constraint firstItem="X0g-dS-Tsq" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="-100" id="n4Q-s3-oAm"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="KTB-99-LpB" secondAttribute="trailing" id="nD3-3X-gLU"/>
@@ -69,7 +106,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="BotanicalBirds" largeTitleDisplayMode="always" id="6Yw-7P-pCx">
                         <leftBarButtonItems>
-                            <barButtonItem image="arrow.2.squarepath" catalog="system" id="hKg-J0-5ht">
+                            <barButtonItem image="slider.horizontal.3" catalog="system" id="hKg-J0-5ht">
                                 <connections>
                                     <action selector="toggleButtonPressed:" destination="BYZ-38-t0r" id="JEJ-Cl-rad"/>
                                 </connections>
@@ -94,6 +131,8 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="collectionViewTopConstraint" destination="afC-xK-4OB" id="V96-iX-BZC"/>
+                        <outlet property="filterStack" destination="FPX-9l-gv4" id="eaw-d0-JJD"/>
                         <outlet property="messageLabel" destination="X0g-dS-Tsq" id="MfT-xv-MVw"/>
                         <outlet property="messageLabelTopConstraint" destination="n4Q-s3-oAm" id="Pme-nV-phv"/>
                         <outlet property="shuffleBarButton" destination="fS3-fp-D6Y" id="lMn-f0-TQe"/>
@@ -103,7 +142,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1802.8985507246377" y="-309.375"/>
+            <point key="canvasLocation" x="1802.4000000000001" y="-309.60591133004925"/>
         </scene>
         <!--Random Pair View Controller-->
         <scene sceneID="2P6-Xx-C3v">
@@ -385,7 +424,6 @@
     </designables>
     <resources>
         <image name="Parakeet_+_Zebra_Plant" width="2100" height="2100"/>
-        <image name="arrow.2.squarepath" catalog="system" width="128" height="89"/>
         <image name="arrow.clockwise" catalog="system" width="115" height="128"/>
         <image name="book" catalog="system" width="128" height="102"/>
         <image name="book.fill" catalog="system" width="128" height="102"/>
@@ -395,6 +433,7 @@
         <image name="kingfisher-10.jpg" width="250" height="250"/>
         <image name="questionmark" catalog="system" width="96" height="128"/>
         <image name="shuffle" catalog="system" width="128" height="93"/>
+        <image name="slider.horizontal.3" catalog="system" width="128" height="100"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
