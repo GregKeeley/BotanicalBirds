@@ -8,11 +8,13 @@
 
 import UIKit
 import Kingfisher
+import DataPersistence
 
 class ImageZoomViewController: UIViewController {
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var favoriteButton: UIBarButtonItem!
     
     
     // TODO: Encapsulate objects Mark variables private (review class notes, OOP, GCD, inheritance, encapsulation, polymorphism, protocol oriented programming vs OOP, protocol vs methods)
@@ -20,11 +22,17 @@ class ImageZoomViewController: UIViewController {
     
     var zoomImage: UIImage?
     
+    var bird: BirdsSpecies?
+    var plant: PlantsSpecies?
+    
+    
     var nameForPhoto = "" {
         didSet {
             navigationItem.title = nameForPhoto
         }
     }
+    
+    public var dataPersistence: DataPersistence<FavoriteDuo>?
     
     init(_ image: UIImage) {
         super.init(nibName: nil, bundle: nil)
@@ -37,7 +45,6 @@ class ImageZoomViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        setupUI()
         scrollView.delegate = self
         scrollView.maximumZoomScale = 2
         scrollView.minimumZoomScale = 1
@@ -48,12 +55,9 @@ class ImageZoomViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
         setupUI()
-//        configureData()
     }
     override func viewWillDisappear(_ animated: Bool) {
-//        navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.prefersLargeTitles = true
-//        self.tabBarController?.tabBar.isHidden = false
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -61,28 +65,14 @@ class ImageZoomViewController: UIViewController {
             setMinZoomScaleForImageSize(zoomImage.size)
         }
     }
+    
+    
     private func setupUI() {
         self.tabBarController?.tabBar.isHidden = true
         DispatchQueue.main.async {
             self.imageView.image = self.zoomImage
         }
     }
-//    private func configureData() {
-//        let flickerEndPoint = "https://farm\(imageData?.photos.photo.first?.farm ?? 0).staticflickr.com/\(imageData?.photos.photo.first?.server ?? "")/\(imageData?.photos.photo.first?.id ?? "")_\(imageData?.photos.photo.first?.secret ?? "")_b.jpg".lowercased()
-//        downloadImage(from: (URL(string: flickerEndPoint) ?? URL(string: "https://i.kym-cdn.com/photos/images/original/000/839/182/45a.gif"))!)
-//    }
-//    private func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
-//        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
-//    }
-//    private func downloadImage(from url: URL) {
-//        getData(from: url) { data, response, error in
-//            guard let data = data, error == nil else { return }
-//            print(response?.suggestedFilename ?? url.lastPathComponent)
-//            DispatchQueue.main.async() { [weak self] in
-//                self?.zoomImage = UIImage(data: data)
-//            }
-//        }
-//    }
     private func setMinZoomScaleForImageSize(_ imageSize: CGSize) {
         let widthScale = view.frame.width / imageSize.width
         let heightScale = view.frame.height / imageSize.height
@@ -113,6 +103,27 @@ class ImageZoomViewController: UIViewController {
         zoomRect.origin.x = center.x - (center.x * scrollView.zoomScale)
         zoomRect.origin.y = center.y - (center.y * scrollView.zoomScale)
         return zoomRect
+    }
+    private func setupDataPersistence() {
+        if let tabBarController = self.tabBarController as? MainTabBarController {
+            dataPersistence = tabBarController.dataPersistence
+        }
+    }
+    @IBAction func favoriteButtonPressed(_ sender: UIBarButtonItem) {
+//        var itemToBeSaved: FavoriteDuo
+//        guard bird != nil else {
+//            itemToBeSaved = FavoriteDuo(birdCommonName: "", birdScientificName: "", plantName: plant?.name ?? "Plant")
+//        }
+//        
+//        if !(self.dataPersistence?.hasItemBeenSaved(itemToBeSaved) ?? true) {
+//            do {
+//                try self.dataPersistence?.createItem(itemToBeSaved)
+//            } catch {
+//                print("Failed to save")
+//            }
+//        } else if (self.dataPersistence?.hasItemBeenSaved(itemToBeSaved) ?? true) {
+//            
+//        }
     }
     @IBAction func doubleTapGesture(_ sender: UITapGestureRecognizer) {
         if scrollView.zoomScale == scrollView.minimumZoomScale {
