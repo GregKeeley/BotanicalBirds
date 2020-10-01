@@ -22,8 +22,16 @@ class ImageZoomViewController: UIViewController {
     
     var zoomImage: UIImage?
     
-    var bird: BirdsSpecies?
-    var plant: PlantsSpecies?
+    var bird: BirdsSpecies? {
+        didSet {
+            print("I have bird")
+        }
+    }
+    var plant: PlantsSpecies? {
+        didSet {
+            print("I have plant")
+        }
+    }
     
     
     var nameForPhoto = "" {
@@ -34,9 +42,10 @@ class ImageZoomViewController: UIViewController {
     
     public var dataPersistence: DataPersistence<FavoriteDuo>?
     
-    init(_ image: UIImage) {
+    init(_ image: UIImage, persistence: DataPersistence<FavoriteDuo>) {
         super.init(nibName: nil, bundle: nil)
         zoomImage = image
+        dataPersistence = persistence
     }
     
     required init?(coder: NSCoder) {
@@ -110,20 +119,26 @@ class ImageZoomViewController: UIViewController {
         }
     }
     @IBAction func favoriteButtonPressed(_ sender: UIBarButtonItem) {
-//        var itemToBeSaved: FavoriteDuo
-//        guard bird != nil else {
-//            itemToBeSaved = FavoriteDuo(birdCommonName: "", birdScientificName: "", plantName: plant?.name ?? "Plant")
+        var itemToBeSaved = FavoriteDuo(birdCommonName: "", birdScientificName: "", plantName: "")
+//        guard bird != nil, plant != nil else {
+//            showAlert(title: "Something went wrong", message: "How are both bird and plant empty?")
+//            return
 //        }
-//        
-//        if !(self.dataPersistence?.hasItemBeenSaved(itemToBeSaved) ?? true) {
-//            do {
-//                try self.dataPersistence?.createItem(itemToBeSaved)
-//            } catch {
-//                print("Failed to save")
-//            }
-//        } else if (self.dataPersistence?.hasItemBeenSaved(itemToBeSaved) ?? true) {
-//            
-//        }
+        if bird != nil {
+            itemToBeSaved = FavoriteDuo(birdCommonName: bird?.commonName ?? "Bird", birdScientificName: bird?.scientificName ?? "Scientific name", plantName: "")
+        } else if plant != nil {
+            itemToBeSaved = FavoriteDuo(birdCommonName: "", birdScientificName: "", plantName: plant?.name ?? "Plant")
+        }
+        if !(self.dataPersistence?.hasItemBeenSaved(itemToBeSaved) ?? false) {
+            do {
+                try self.dataPersistence?.createItem(itemToBeSaved)
+                showAlert(title: "Save successful", message: "It worked.")
+            } catch {
+                print("Failed to save")
+            }
+        } else if (self.dataPersistence?.hasItemBeenSaved(itemToBeSaved) ?? true) {
+            showAlert(title: "This has already been saved", message: "No need to save it!")
+        }
     }
     @IBAction func doubleTapGesture(_ sender: UITapGestureRecognizer) {
         if scrollView.zoomScale == scrollView.minimumZoomScale {

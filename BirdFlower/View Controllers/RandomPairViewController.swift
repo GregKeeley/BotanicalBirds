@@ -310,6 +310,8 @@ class RandomPairViewController: UIViewController {
             if let imageZoomVC = UIStoryboard(name: "ImageZoomViewController", bundle: nil).instantiateViewController(identifier: "ImageZoomViewController") as? ImageZoomViewController {
                 imageZoomVC.zoomImage = birdImage
                 //            imageZoomVC.imageData = flickerBirdImageData
+                imageZoomVC.bird = randomBird
+                imageZoomVC.dataPersistence = dataPersistence
                 imageZoomVC.nameForPhoto = randomBird?.commonName ?? "Bird"
                 if let navigator = navigationController {
                     navigator.navigationController?.navigationBar.prefersLargeTitles = false
@@ -325,6 +327,8 @@ class RandomPairViewController: UIViewController {
             if let imageZoomVC = UIStoryboard(name: "ImageZoomViewController", bundle: nil).instantiateViewController(identifier: "ImageZoomViewController") as? ImageZoomViewController {
                 imageZoomVC.zoomImage = plantImage
                 //            imageZoomVC.imageData = flickerPlantImageData
+                imageZoomVC.plant = randomPlant
+                imageZoomVC.dataPersistence = dataPersistence
                 imageZoomVC.nameForPhoto = randomPlant?.name ?? "Plant"
                 if let navigator = navigationController {
                     navigator.navigationController?.navigationBar.prefersLargeTitles = false
@@ -394,11 +398,13 @@ class RandomPairViewController: UIViewController {
         if let imageZoomVC = UIStoryboard(name: "ImageZoomViewController", bundle: nil).instantiateViewController(identifier: "ImageZoomViewController") as? ImageZoomViewController {
             if imageView.image != nil {
                 if imageView == plantImageView {
-                    imageZoomVC.imageData = flickerPlantImageData
-                    imageZoomVC.nameForPhoto = randomPlant?.name ?? "Plant"
+//                    imageZoomVC.imageData = flickerPlantImageData
+//                    imageZoomVC.plant = randomPlant
+//                    imageZoomVC.nameForPhoto = randomPlant?.name ?? "Plant"
                 } else {
-                    imageZoomVC.nameForPhoto = randomBird?.commonName ?? "Bird"
-                    imageZoomVC.imageData = flickerBirdImageData
+//                    imageZoomVC.nameForPhoto = randomBird?.commonName ?? "Bird"
+//                    imageZoomVC.bird = randomBird
+//                    imageZoomVC.imageData = flickerBirdImageData
                 }
                 if let navigator = navigationController {
                     navigator.pushViewController(imageZoomVC, animated: true)
