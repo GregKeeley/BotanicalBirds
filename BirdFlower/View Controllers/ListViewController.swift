@@ -29,6 +29,8 @@ class ListViewController: UIViewController {
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var messageLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var collectionViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var stackViewHeightConstraint: NSLayoutConstraint!
+    
     @IBOutlet weak var filterStack: UIStackView!
     
     @IBOutlet weak var randomPairFilterButton: UIButton!
@@ -80,7 +82,13 @@ class ListViewController: UIViewController {
     }
     
     // Set to true when a user is using the search bar
-    var currentlySearching = false
+    var currentlySearching = false {
+        didSet {
+            if currentlySearching {
+                filterIsActive = false
+            }
+        }
+    }
     // Used to capture what the user is searching for, to be displayed as section header
     var searchText = ""
     
@@ -93,10 +101,10 @@ class ListViewController: UIViewController {
     var filterIsActive = false {
         didSet {
             if filterIsActive {
-                collectionViewTopConstraint.constant = 8
+                stackViewHeightConstraint.constant = 30
                 filterStack.isHidden = false
             } else {
-                collectionViewTopConstraint.constant = -44
+                stackViewHeightConstraint.constant = 0
                 filterStack.isHidden = true
             }
         }
@@ -132,6 +140,8 @@ class ListViewController: UIViewController {
             controller.searchBar.sizeToFit()
             controller.obscuresBackgroundDuringPresentation = false
             controller.automaticallyShowsSearchResultsController = false
+//            controller.
+//            controller.hidesNavigationBarDuringPresentation = false
             tableView.tableHeaderView = controller.searchBar
             return controller
         })()
@@ -679,11 +689,6 @@ extension ListViewController: UITableViewDataSource {
     }
 }
 
-extension ListViewController: PersistenceStackClient {
-    func setStack(stack: DataPersistence<String>) {
-    }
-}
-
 extension ListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text, !searchText.isEmpty else {
@@ -699,6 +704,7 @@ extension ListViewController: UISearchResultsUpdating {
         tableView.reloadData()
     }
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        currentlySearching = true
         searchBar.setShowsCancelButton(true, animated: true)
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

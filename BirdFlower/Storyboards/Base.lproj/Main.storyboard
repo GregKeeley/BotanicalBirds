@@ -86,6 +86,9 @@
                                         </connections>
                                     </button>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Cts-jJ-H5w"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -140,6 +143,7 @@
                         <outlet property="randomPairFilterButton" destination="ddd-ro-cn8" id="d09-8d-c0T"/>
                         <outlet property="shuffleBarButton" destination="fS3-fp-D6Y" id="lMn-f0-TQe"/>
                         <outlet property="sortMethodBarButton" destination="rnR-c4-tG3" id="Zhi-Lb-vrT"/>
+                        <outlet property="stackViewHeightConstraint" destination="Cts-jJ-H5w" id="haA-jM-fQ9"/>
                         <outlet property="tableView" destination="KTB-99-LpB" id="Qlg-Hf-ze4"/>
                     </connections>
                 </viewController>

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,7 +20,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="852"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="896" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Zpy-pP-P1g" userLabel="ImageView">
-                                        <rect key="frame" x="0.0" y="1" width="414" height="893"/>
+                                        <rect key="frame" x="0.0" y="1" width="414" height="893.5"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <gestureRecognizers/>
                                         <connections>
@@ -38,6 +39,7 @@
                                 <viewLayoutGuide key="frameLayoutGuide" id="LAo-dW-F2A"/>
                             </scrollView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="DuJ-vL-i5n"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
                         <constraints>
@@ -46,10 +48,16 @@
                             <constraint firstItem="c1G-or-3Rm" firstAttribute="leading" secondItem="DuJ-vL-i5n" secondAttribute="leading" id="TWF-ke-lDR"/>
                             <constraint firstAttribute="bottom" secondItem="c1G-or-3Rm" secondAttribute="bottom" id="jUc-RN-xqU"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="DuJ-vL-i5n"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Photo" id="DRM-Vd-hkH"/>
+                    <navigationItem key="navigationItem" title="Photo" id="DRM-Vd-hkH">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="heart" catalog="system" id="Yh5-Kr-BtH">
+                            <connections>
+                                <action selector="favoriteButtonPressed:" destination="iOc-DZ-IhF" id="eRW-Je-EjQ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="favoriteButton" destination="Yh5-Kr-BtH" id="sSG-ca-Nom"/>
                         <outlet property="imageView" destination="Zpy-pP-P1g" id="QJ9-PX-WCD"/>
                         <outlet property="scrollView" destination="c1G-or-3Rm" id="bDC-5f-SBM"/>
                     </connections>
@@ -86,6 +94,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="heart" catalog="system" width="128" height="109"/>
         <image name="photo" catalog="system" width="128" height="93"/>
     </resources>
 </document>
