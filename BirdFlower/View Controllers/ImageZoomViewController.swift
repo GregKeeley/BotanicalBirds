@@ -22,14 +22,17 @@ class ImageZoomViewController: UIViewController {
     
     var zoomImage: UIImage?
     
+    var currentItem: FavoriteDuo?
+    var favorites: [FavoriteDuo]?
+    var isFavorite = false
     var bird: BirdsSpecies? {
         didSet {
-            print("I have bird")
+            currentItem = FavoriteDuo(birdCommonName: bird?.commonName ?? "Bird", birdScientificName: bird?.scientificName ?? "Scientific name", plantName: "")
         }
     }
     var plant: PlantsSpecies? {
         didSet {
-            print("I have plant")
+            currentItem = FavoriteDuo(birdCommonName: "", birdScientificName: "", plantName: plant?.name ?? "Plant")
         }
     }
     
@@ -57,6 +60,7 @@ class ImageZoomViewController: UIViewController {
         scrollView.delegate = self
         scrollView.maximumZoomScale = 2
         scrollView.minimumZoomScale = 1
+        fetchFavoriteDuos()
     }
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.prefersLargeTitles = false
@@ -80,6 +84,21 @@ class ImageZoomViewController: UIViewController {
         self.tabBarController?.tabBar.isHidden = true
         DispatchQueue.main.async {
             self.imageView.image = self.zoomImage
+        }
+        guard let itemToBeSaved = currentItem else {
+            return
+        }
+        if (self.dataPersistence?.hasItemBeenSaved(itemToBeSaved) ?? true) {
+            isFavorite = true
+            favoriteButton.image = UIImage(systemName: "heart.fill")
+            favoriteButton.tintColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
+        }
+    }
+    private func fetchFavoriteDuos() {
+        do {
+            favorites = try dataPersistence?.loadItems()
+        } catch {
+            print("Failed to load favorites")
         }
     }
     private func setMinZoomScaleForImageSize(_ imageSize: CGSize) {
@@ -124,20 +143,37 @@ class ImageZoomViewController: UIViewController {
 //            showAlert(title: "Something went wrong", message: "How are both bird and plant empty?")
 //            return
 //        }
-        if bird != nil {
-            itemToBeSaved = FavoriteDuo(birdCommonName: bird?.commonName ?? "Bird", birdScientificName: bird?.scientificName ?? "Scientific name", plantName: "")
-        } else if plant != nil {
-            itemToBeSaved = FavoriteDuo(birdCommonName: "", birdScientificName: "", plantName: plant?.name ?? "Plant")
-        }
-        if !(self.dataPersistence?.hasItemBeenSaved(itemToBeSaved) ?? false) {
-            do {
-                try self.dataPersistence?.createItem(itemToBeSaved)
-                showAlert(title: "Save successful", message: "It worked.")
-            } catch {
-                print("Failed to save")
+        if isFavorite == false {
+            if bird != nil {
+                itemToBeSaved = FavoriteDuo(birdCommonName: bird?.commonName ?? "Bird", birdScientificName: bird?.scientificName ?? "Scientific name", plantName: "")
+            } else if plant != nil {
+                itemToBeSaved = FavoriteDuo(birdCommonName: "", birdScientificName: "", plantName: plant?.name ?? "Plant")
             }
-        } else if (self.dataPersistence?.hasItemBeenSaved(itemToBeSaved) ?? true) {
-            showAlert(title: "This has already been saved", message: "No need to save it!")
+            if !(self.dataPersistence?.hasItemBeenSaved(itemToBeSaved) ?? false) {
+                do {
+                    try self.dataPersistence?.createItem(itemToBeSaved)
+                    favoriteButton.tintColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
+                    favoriteButton.image = UIImage(systemName: "heart.fill")
+                    isFavorite = true
+                    fetchFavoriteDuos()
+                } catch {
+                    print("Failed to save")
+                }
+            } else if (self.dataPersistence?.hasItemBeenSaved(itemToBeSaved) ?? true) {
+                showAlert(title: "This has already been saved", message: "No need to save it!")
+            }
+        } else if isFavorite == true {
+            guard let favoriteIndex = self.favorites?.firstIndex(of: currentItem! ) else {
+                return
+            }
+            do {
+                try self.dataPersistence?.deleteItem(at: favoriteIndex)
+                isFavorite = false
+                favoriteButton.image = UIImage(systemName: "heart")
+                favoriteButton.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            } catch {
+                showAlert(title: "something went wrong", message: "I tried deleting your favorite")
+            }
         }
     }
     @IBAction func doubleTapGesture(_ sender: UITapGestureRecognizer) {
