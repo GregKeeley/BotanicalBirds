@@ -130,6 +130,9 @@ class RandomPairViewController: UIViewController {
             resetFavoriteButton()
         }
     }
+    override func viewDidAppear(_ animated: Bool) {
+        shuffleButton.clearColorForTitle()
+    }
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(false, animated: false)
     }
@@ -170,8 +173,6 @@ class RandomPairViewController: UIViewController {
     }
     
     private func generateRandomPair() {
-//        generateRandomBird(gesture: nil)
-//        generateRandomPlant(gesture: nil)
         // Note: shuffling the two arrays, and resetting the indexes to zero gives us a new shuffled collection.
         birdData?.shuffle()
         plantData?.shuffle()
