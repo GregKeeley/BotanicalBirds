@@ -31,7 +31,7 @@ class AboutViewController: UIViewController {
         websiteButton.clearColorForTitle()
         websiteButton.layer.cornerRadius = 4
         bkgdView.layer.cornerRadius = 4
-        websiteButton.titleLabel?.text = "MeghanKeeley.com/botanicalbirds"
+//        websiteButton.titleLabel?.text = "MeghanKeeley.com/botanicalbirds"
     }
     @IBAction func websiteButtonPressed(_ sender: UIButton) {
         guard let url = URL(string: "https://www.meghankeeley.com/botanicalbirds") else {
