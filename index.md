@@ -1,37 +1,7 @@
-## Welcome to GitHub Pages
+## Welcome to BotanicalBirds iOS App
 
-You can use the [editor on GitHub](https://github.com/GregKeeley/BotanicalBirds/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+This poroject was built in collaboration with an artist to assist in a 100 day art challenge. For each of the 100 days during the challenge a new unique pair of a bird and a plant is required. This tool assists in discovering, and creating of the unique pairs. By providing large data sets for both categories in addition to ability to save these pairs, it helped to reduce time in research, and left more time for the creation of the artwork.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+BotanicalBirds helps to create these pairs in a variety of ways. There is a simple quick shuffler that returns two random elements including pictures (powered by the Flickr API) from each respective dataset, with the ability to bookmark that or any other pair, instantly. The user can also swipe through the shuffled, but ordered collection to find the pair that works best. In addition to the shuffler, there are lists available that allow the user to organize and browse through a collection of randomized pairs, birds only, plants only, and of course their bookmarked combinations. From these lists the user can bookmark directly on any element, sort ascending or descending alphabeticly, remove favorites, or search through any of the indiviudal lists. Each item can be viewed within a photo viewer for a closer look as well.
 
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/GregKeeley/BotanicalBirds/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+### Challenges
