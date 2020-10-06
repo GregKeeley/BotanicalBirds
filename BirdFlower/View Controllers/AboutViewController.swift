@@ -13,6 +13,7 @@ class AboutViewController: UIViewController {
 
     @IBOutlet weak var websiteButton: UIButton!
     @IBOutlet weak var bkgdView: UIView!
+    @IBOutlet weak var disclaimerLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +33,7 @@ class AboutViewController: UIViewController {
         websiteButton.layer.cornerRadius = 4
         bkgdView.layer.cornerRadius = 4
 //        websiteButton.titleLabel?.text = "MeghanKeeley.com/botanicalbirds"
+        disclaimerLabel.adjustsFontSizeToFitWidth = true
     }
     @IBAction func websiteButtonPressed(_ sender: UIButton) {
         guard let url = URL(string: "https://www.meghankeeley.com/botanicalbirds") else {
