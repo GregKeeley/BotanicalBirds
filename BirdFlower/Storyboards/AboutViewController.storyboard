@@ -17,20 +17,34 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Parakeet_+_Zebra_Plant" translatesAutoresizingMaskIntoConstraints="NO" id="m1q-oY-syP">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Parakeet_+_Zebra_Plant" translatesAutoresizingMaskIntoConstraints="NO" id="m1q-oY-syP">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <view alpha="0.45000000000000001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="enZ-fo-ySV">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XkW-DH-TaV">
+                                <rect key="frame" x="20" y="823.5" width="374" height="22.5"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Note: Images in this app are provided by Flickr">
+                                        <attributes>
+                                            <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <font key="NSFont" size="17" name="Futura-Medium"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ETj-PR-QIF">
-                                <rect key="frame" x="20" y="64" width="374" height="491"/>
+                                <rect key="frame" x="20" y="36" width="374" height="491"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <attributedString key="attributedText">
                                     <fragment>
-                                        <string key="content">This app was created as part of a collaboration with my wife, Meghan Keeley to assist in the process of creating unique combinations of birds and plants for use in the creation of digital artwork. You can click below to see the collection of original artwork by Meghan Keeley</string>
+                                        <string key="content">Thank you for downloading BotanicalBirds. This app was created as part of a collaboration with my wife, Meghan Keeley to assist in the process of creating unique combinations of birds and plants for use in the creation of digital artwork. You can click below to see the collection of original artwork by Meghan Keeley</string>
                                         <attributes>
                                             <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <font key="NSFont" size="30" name="Futura-CondensedMedium"/>
@@ -41,7 +55,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BUL-rL-P7V">
-                                <rect key="frame" x="20" y="579" width="374" height="30"/>
+                                <rect key="frame" x="20" y="551" width="374" height="30"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal">
@@ -64,26 +78,25 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="enZ-fo-ySV" secondAttribute="bottom" id="0R9-H0-UWL"/>
-                            <constraint firstAttribute="bottom" secondItem="m1q-oY-syP" secondAttribute="bottom" id="51d-n8-k5g"/>
-                            <constraint firstItem="m1q-oY-syP" firstAttribute="leading" secondItem="pEt-s0-b5W" secondAttribute="leading" id="6IE-AA-qcF"/>
+                            <constraint firstItem="XkW-DH-TaV" firstAttribute="bottom" secondItem="pEt-s0-b5W" secondAttribute="bottom" constant="-16" id="7Ag-Hx-6hd"/>
                             <constraint firstItem="BUL-rL-P7V" firstAttribute="centerX" secondItem="217-3S-W0Q" secondAttribute="centerX" id="8br-bc-2Ui"/>
-                            <constraint firstItem="m1q-oY-syP" firstAttribute="top" secondItem="217-3S-W0Q" secondAttribute="top" id="D96-hq-bFG"/>
                             <constraint firstItem="ETj-PR-QIF" firstAttribute="leading" secondItem="pEt-s0-b5W" secondAttribute="leading" constant="20" id="DOC-Ym-1yv"/>
                             <constraint firstItem="enZ-fo-ySV" firstAttribute="leading" secondItem="pEt-s0-b5W" secondAttribute="leading" id="FdX-nW-r2e"/>
-                            <constraint firstItem="ETj-PR-QIF" firstAttribute="top" secondItem="pEt-s0-b5W" secondAttribute="top" constant="20" id="Hb1-oI-U96"/>
+                            <constraint firstItem="ETj-PR-QIF" firstAttribute="top" secondItem="pEt-s0-b5W" secondAttribute="top" constant="-8" id="Hb1-oI-U96"/>
                             <constraint firstItem="pEt-s0-b5W" firstAttribute="trailing" secondItem="ETj-PR-QIF" secondAttribute="trailing" constant="20" id="Mcc-ac-Ojd"/>
                             <constraint firstItem="ETj-PR-QIF" firstAttribute="height" secondItem="pEt-s0-b5W" secondAttribute="height" multiplier="0.6" id="Ogu-gE-8Nw"/>
                             <constraint firstItem="BUL-rL-P7V" firstAttribute="trailing" secondItem="ETj-PR-QIF" secondAttribute="trailing" id="QEu-Fz-5nM"/>
-                            <constraint firstItem="m1q-oY-syP" firstAttribute="trailing" secondItem="pEt-s0-b5W" secondAttribute="trailing" id="Zaw-KC-Ivk"/>
                             <constraint firstItem="enZ-fo-ySV" firstAttribute="trailing" secondItem="pEt-s0-b5W" secondAttribute="trailing" id="fej-0I-qGO"/>
-                            <constraint firstItem="BUL-rL-P7V" firstAttribute="centerX" secondItem="m1q-oY-syP" secondAttribute="centerX" id="ltv-EF-K3n"/>
+                            <constraint firstItem="XkW-DH-TaV" firstAttribute="leading" secondItem="pEt-s0-b5W" secondAttribute="leading" constant="20" id="nRC-Ca-WQU"/>
                             <constraint firstItem="enZ-fo-ySV" firstAttribute="top" secondItem="217-3S-W0Q" secondAttribute="top" id="qMi-8h-BlB"/>
+                            <constraint firstItem="pEt-s0-b5W" firstAttribute="trailing" secondItem="XkW-DH-TaV" secondAttribute="trailing" constant="20" id="rG4-Rd-Bb1"/>
                             <constraint firstItem="BUL-rL-P7V" firstAttribute="top" secondItem="ETj-PR-QIF" secondAttribute="bottom" constant="24" id="rgM-Yx-ZNP"/>
                             <constraint firstItem="BUL-rL-P7V" firstAttribute="leading" secondItem="ETj-PR-QIF" secondAttribute="leading" id="vdx-bd-Ync"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="bkgdView" destination="enZ-fo-ySV" id="ev6-L8-oYl"/>
+                        <outlet property="disclaimerLabel" destination="XkW-DH-TaV" id="L5A-Le-3as"/>
                         <outlet property="websiteButton" destination="BUL-rL-P7V" id="t1V-MP-5Fr"/>
                     </connections>
                 </viewController>
