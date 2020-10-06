@@ -14,20 +14,18 @@ extension UIImageView {
 
         DispatchQueue.main.async {
             activityIndicator = UIActivityIndicatorView(style: .medium)
-            activityIndicator?.startAnimating()
             activityIndicator?.center = self.center
+            activityIndicator?.color = .white
             self.addSubview(activityIndicator!)
         }
-        
+        activityIndicator?.startAnimating()
+
         guard let url = URL(string: urlString) else {
             completion(.failure(.badURL(urlString)))
             return
         }
         let request = URLRequest(url: url)
         NetworkHelper.shared.performDataTask(with: request) { [weak activityIndicator] (result) in
-            DispatchQueue.main.async {
-                activityIndicator?.stopAnimating()
-            }
             switch result {
             case .failure(let appError):
                 completion(.failure(.networkClientError(appError)))
@@ -35,6 +33,9 @@ extension UIImageView {
                 if let image = UIImage(data: data) {
                     completion(.success(image))
                 }
+            }
+            DispatchQueue.main.async {
+                activityIndicator?.stopAnimating()
             }
         }
     }

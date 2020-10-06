@@ -36,6 +36,7 @@ class RandomPairViewController: UIViewController {
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var shuffleButton: UIButton!
     @IBOutlet weak var botanicalBirdsTitleLabel: UILabel!
+    @IBOutlet weak var mainTitleLabel: UILabel!
     
     //MARK:- Variables
     var birdData: [BirdsSpecies]?
@@ -61,6 +62,7 @@ class RandomPairViewController: UIViewController {
                 return
             }
             DispatchQueue.main.async {
+//                self.birdImageView.kf.indicatorType = .activity
                 self.birdImageView.contentMode = .scaleAspectFill
             }
             loadBirdFlickerPhoto(for: photo)
@@ -77,8 +79,10 @@ class RandomPairViewController: UIViewController {
                 return
             }
             DispatchQueue.main.async {
+//                self.plantImageView.kf.indicatorType = .activity
                 self.plantImageView.contentMode = .scaleAspectFill
             }
+            
             loadFlickerPlantPhoto(for: photo)
         }
     }
@@ -131,7 +135,7 @@ class RandomPairViewController: UIViewController {
         }
     }
     override func viewDidAppear(_ animated: Bool) {
-        shuffleButton.clearColorForTitle()
+        configureUI()
     }
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(false, animated: false)
@@ -139,13 +143,18 @@ class RandomPairViewController: UIViewController {
     
     //MARK:- Funcs
     private func configureUI() {
+        mainTitleLabel.adjustsFontSizeToFitWidth = true
         shuffleButton.titleLabel?.text = "Shuffle"
+        shuffleButton.titleLabel?.sizeToFit()
         shuffleButton.layer.cornerRadius = 4
         shuffleButton.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
         botanicalBirdsTitleLabel.createShadows()
         birdNameLabel.createShadows()
         plantNameLabel.createShadows()
-
+        shuffleButton.clearColorForTitle()
+        shuffleButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        shuffleButton.titleLabel?.adjustsFontForContentSizeCategory = true
+        
     }
     private func addShadowToImages(image: UIImage) {
         
@@ -254,32 +263,36 @@ class RandomPairViewController: UIViewController {
     ///   - imageView: The UIImageView that needs to be set
     private func loadPhotoFromURL(with url: String, imageView: UIImageView) {
         if imageView == self.birdImageView {
+            DispatchQueue.main.async {
+                imageView.kf.indicatorType = .activity
+                imageView.kf.setImage(with: URL(string: url))
+                imageView.isUserInteractionEnabled = true
+            }
             self.birdImageView.getImage(with: url, completion: { [weak self] (results) in
                 switch results {
                 case .failure(let appError):
                     print(appError.localizedDescription)
                 case .success(let image):
                     self?.birdImage = image
-                    DispatchQueue.main.async {
-                        imageView.image = image
-                    }
                 }
             })
         } else {
+            DispatchQueue.main.async {
+                imageView.kf.indicatorType = .activity
+                imageView.kf.setImage(with: URL(string: url))
+                imageView.isUserInteractionEnabled = true
+            }
             self.plantImageView.getImage(with: url, completion: { [weak self] (results) in
                 switch results {
                 case .failure(let appError):
                     print(appError.localizedDescription)
                 case .success(let image):
                     self?.plantImage = image
-                    DispatchQueue.main.async {
-                        imageView.image = image
-                    }
                 }
             })
         }
+        
     }
-    
     private func configureTapGestures() {
         let birdPhotoTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.birdPhotoHasBeenTapped(gesture:)))
         birdImageView.addGestureRecognizer(birdPhotoTapGesture)
@@ -415,6 +428,11 @@ class RandomPairViewController: UIViewController {
     }
     //MARK:- IBActions
     @IBAction func shuffleButtonPressed(_ sender: UIButton) {
+
+        DispatchQueue.main.async {
+            self.birdImageView.kf.indicatorType = .activity
+            self.plantImageView.kf.indicatorType = .activity
+        }
         isFavorite = false
         resetFavoriteButton()
 //        birdImageView.image = nil

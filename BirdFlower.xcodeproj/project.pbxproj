@@ -37,6 +37,7 @@
 		88D630A425017FDE0033E275 /* DataPersistence in Frameworks */ = {isa = PBXBuildFile; productRef = 88D630A325017FDE0033E275 /* DataPersistence */; };
 		88D630A82501837F0033E275 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D630A72501837F0033E275 /* MainTabBarController.swift */; };
 		88D630AA2501994C0033E275 /* UIViewController_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D630A92501994C0033E275 /* UIViewController_Extension.swift */; };
+		88FAC32F252CD2A20068D435 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FAC32E252CD2A20068D435 /* ActivityIndicator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +71,7 @@
 		88C6783B25083A550054BC5D /* ImageZoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageZoomViewController.swift; sourceTree = "<group>"; };
 		88D630A72501837F0033E275 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		88D630A92501994C0033E275 /* UIViewController_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController_Extension.swift; sourceTree = "<group>"; };
+		88FAC32E252CD2A20068D435 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +183,7 @@
 				88C6783725082DEE0054BC5D /* ImageZoomView.swift */,
 				8843542E251D3C1100B67133 /* UIImageView_Extension.swift */,
 				88BBC1F6251D52480023EAF9 /* UILabel_Extension.swift */,
+				88FAC32E252CD2A20068D435 /* ActivityIndicator.swift */,
 			);
 			path = "Views+Extensions";
 			sourceTree = "<group>";
@@ -300,6 +303,7 @@
 				88C6783825082DEE0054BC5D /* ImageZoomView.swift in Sources */,
 				88BBC1F7251D52480023EAF9 /* UILabel_Extension.swift in Sources */,
 				88763CC024FDDB4E00EE3409 /* secrets.swift in Sources */,
+				88FAC32F252CD2A20068D435 /* ActivityIndicator.swift in Sources */,
 				88C67833250682150054BC5D /* AboutViewController.swift in Sources */,
 				88C678352506E7580054BC5D /* EmptyView.swift in Sources */,
 				88201A332502B513006152F1 /* FavoriteDuos.swift in Sources */,
