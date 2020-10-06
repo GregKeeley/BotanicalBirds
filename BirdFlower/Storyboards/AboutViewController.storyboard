@@ -17,20 +17,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="valentin-salja-VMroCCpP648-unsplash" translatesAutoresizingMaskIntoConstraints="NO" id="m1q-oY-syP">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Parakeet_+_Zebra_Plant" translatesAutoresizingMaskIntoConstraints="NO" id="m1q-oY-syP">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </imageView>
-                            <view alpha="0.75" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="enZ-fo-ySV">
-                                <rect key="frame" x="12" y="36" width="390" height="599"/>
+                            <view alpha="0.45000000000000001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="enZ-fo-ySV">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ETj-PR-QIF">
-                                <rect key="frame" x="20" y="44" width="374" height="529"/>
+                                <rect key="frame" x="20" y="64" width="374" height="491"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <attributedString key="attributedText">
                                     <fragment>
-                                        <string key="content">This app was created as part of a collaboration with my wife, Meghan Keeley to assist in the process of creating unique combinations of birds and plants for use in the creation of digital artwork. You can click below to see the collection of original artwork by Meghan Keeley!</string>
+                                        <string key="content">This app was created as part of a collaboration with my wife, Meghan Keeley to assist in the process of creating unique combinations of birds and plants for use in the creation of digital artwork. You can click below to see the collection of original artwork by Meghan Keeley</string>
                                         <attributes>
                                             <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <font key="NSFont" size="30" name="Futura-CondensedMedium"/>
@@ -41,12 +41,12 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BUL-rL-P7V">
-                                <rect key="frame" x="32" y="597" width="350" height="30"/>
+                                <rect key="frame" x="20" y="579" width="374" height="30"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal">
                                     <attributedString key="attributedTitle">
-                                        <fragment content="View Botanical Birds">
+                                        <fragment content="MeghanKeeley.com">
                                             <attributes>
                                                 <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <font key="NSFont" size="14" name="Futura-MediumItalic"/>
@@ -63,25 +63,23 @@
                         <viewLayoutGuide key="safeArea" id="pEt-s0-b5W"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="enZ-fo-ySV" secondAttribute="bottom" id="0R9-H0-UWL"/>
                             <constraint firstAttribute="bottom" secondItem="m1q-oY-syP" secondAttribute="bottom" id="51d-n8-k5g"/>
                             <constraint firstItem="m1q-oY-syP" firstAttribute="leading" secondItem="pEt-s0-b5W" secondAttribute="leading" id="6IE-AA-qcF"/>
                             <constraint firstItem="BUL-rL-P7V" firstAttribute="centerX" secondItem="217-3S-W0Q" secondAttribute="centerX" id="8br-bc-2Ui"/>
                             <constraint firstItem="m1q-oY-syP" firstAttribute="top" secondItem="217-3S-W0Q" secondAttribute="top" id="D96-hq-bFG"/>
                             <constraint firstItem="ETj-PR-QIF" firstAttribute="leading" secondItem="pEt-s0-b5W" secondAttribute="leading" constant="20" id="DOC-Ym-1yv"/>
-                            <constraint firstItem="pEt-s0-b5W" firstAttribute="trailing" secondItem="BUL-rL-P7V" secondAttribute="trailing" constant="32" id="Gvc-rG-DgE"/>
-                            <constraint firstItem="ETj-PR-QIF" firstAttribute="top" secondItem="pEt-s0-b5W" secondAttribute="top" id="Hb1-oI-U96"/>
+                            <constraint firstItem="enZ-fo-ySV" firstAttribute="leading" secondItem="pEt-s0-b5W" secondAttribute="leading" id="FdX-nW-r2e"/>
+                            <constraint firstItem="ETj-PR-QIF" firstAttribute="top" secondItem="pEt-s0-b5W" secondAttribute="top" constant="20" id="Hb1-oI-U96"/>
                             <constraint firstItem="pEt-s0-b5W" firstAttribute="trailing" secondItem="ETj-PR-QIF" secondAttribute="trailing" constant="20" id="Mcc-ac-Ojd"/>
-                            <constraint firstItem="enZ-fo-ySV" firstAttribute="trailing" secondItem="ETj-PR-QIF" secondAttribute="trailing" constant="8" id="SUe-Z3-234"/>
-                            <constraint firstItem="enZ-fo-ySV" firstAttribute="bottom" secondItem="BUL-rL-P7V" secondAttribute="bottom" constant="8" id="VXT-rh-inV"/>
-                            <constraint firstItem="enZ-fo-ySV" firstAttribute="top" secondItem="ETj-PR-QIF" secondAttribute="top" constant="-8" id="XmL-hZ-zJv"/>
-                            <constraint firstItem="pEt-s0-b5W" firstAttribute="bottom" secondItem="BUL-rL-P7V" secondAttribute="bottom" constant="235" id="YZH-72-Uz5"/>
+                            <constraint firstItem="ETj-PR-QIF" firstAttribute="height" secondItem="pEt-s0-b5W" secondAttribute="height" multiplier="0.6" id="Ogu-gE-8Nw"/>
+                            <constraint firstItem="BUL-rL-P7V" firstAttribute="trailing" secondItem="ETj-PR-QIF" secondAttribute="trailing" id="QEu-Fz-5nM"/>
                             <constraint firstItem="m1q-oY-syP" firstAttribute="trailing" secondItem="pEt-s0-b5W" secondAttribute="trailing" id="Zaw-KC-Ivk"/>
+                            <constraint firstItem="enZ-fo-ySV" firstAttribute="trailing" secondItem="pEt-s0-b5W" secondAttribute="trailing" id="fej-0I-qGO"/>
                             <constraint firstItem="BUL-rL-P7V" firstAttribute="centerX" secondItem="m1q-oY-syP" secondAttribute="centerX" id="ltv-EF-K3n"/>
-                            <constraint firstItem="pEt-s0-b5W" firstAttribute="trailing" secondItem="ETj-PR-QIF" secondAttribute="trailing" constant="20" id="lz6-eq-WAw"/>
-                            <constraint firstItem="enZ-fo-ySV" firstAttribute="leading" secondItem="ETj-PR-QIF" secondAttribute="leading" constant="-8" id="nEr-vp-PXR"/>
+                            <constraint firstItem="enZ-fo-ySV" firstAttribute="top" secondItem="217-3S-W0Q" secondAttribute="top" id="qMi-8h-BlB"/>
                             <constraint firstItem="BUL-rL-P7V" firstAttribute="top" secondItem="ETj-PR-QIF" secondAttribute="bottom" constant="24" id="rgM-Yx-ZNP"/>
-                            <constraint firstItem="BUL-rL-P7V" firstAttribute="leading" secondItem="pEt-s0-b5W" secondAttribute="leading" constant="32" id="sdz-K1-bcD"/>
-                            <constraint firstItem="ETj-PR-QIF" firstAttribute="leading" secondItem="pEt-s0-b5W" secondAttribute="leading" constant="20" id="vIQ-Dg-eZ1"/>
+                            <constraint firstItem="BUL-rL-P7V" firstAttribute="leading" secondItem="ETj-PR-QIF" secondAttribute="leading" id="vdx-bd-Ync"/>
                         </constraints>
                     </view>
                     <connections>
@@ -95,7 +93,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="valentin-salja-VMroCCpP648-unsplash" width="3456" height="5184"/>
+        <image name="Parakeet_+_Zebra_Plant" width="2100" height="2100"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
