@@ -187,7 +187,7 @@ class ListViewController: UIViewController {
         plantsFilterButton.titleLabel?.textAlignment = .center
         favoritesFilterButton.titleLabel?.textAlignment = .center
         
-        randomPairFilterButton.titleLabel?.sizeToFit()
+        randomPairFilterButton.titleLabel?.adjustsFontSizeToFitWidth = true
     }
     private func sortAllDataCollections() {
         if currentSortMethod == .ascending {
@@ -435,6 +435,7 @@ extension ListViewController: UITableViewDelegate {
                     navigator.pushViewController(detailVC, animated: true)
                 }
             }
+        
         case .plants:
             let plant: PlantsSpecies?
             if currentlySearching {

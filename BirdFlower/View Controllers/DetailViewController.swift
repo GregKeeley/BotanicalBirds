@@ -26,11 +26,12 @@ class DetailViewController: UIViewController {
     
     var flickerBirdImageData: FlickerSearchResult? {
         didSet {
-            guard let photo = flickerBirdImageData?.photos.photo, !photo.isEmpty else {
+            guard let photo = flickerBirdImageData?.photos.photo, duo?.birdCommonName != "" else {
                 DispatchQueue.main.async {
                     self.birdImageView.contentMode = .scaleAspectFit
                     self.birdImageView.tintColor = .white
-                    self.birdImageView.image = UIImage(systemName: "questionmark")
+//                    self.birdImageView.image = UIImage(systemName: "questionmark")
+                    self.birdImageView.image = nil
                 }
                 return
             }
@@ -39,11 +40,12 @@ class DetailViewController: UIViewController {
     }
     var flickerPlantImageData: FlickerSearchResult? {
         didSet {
-            guard let photo = flickerPlantImageData?.photos.photo, !photo.isEmpty else {
+            guard let photo = flickerPlantImageData?.photos.photo, duo?.plantName != "" else {
                 DispatchQueue.main.async {
                     self.plantImageView.contentMode = .scaleAspectFit
                     self.plantImageView.tintColor = .white
-                    self.plantImageView.image = UIImage(systemName: "questionmark")
+//                    self.plantImageView.image = UIImage(systemName: "questionmark")
+                    self.plantImageView.image = nil
                 }
                 return
             }
