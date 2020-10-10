@@ -2,10 +2,17 @@
 
 BotanicalBirds is an iOS app that allows you to generate unique combinations of birds and plants (aka Botanicals).
 
-<img src="BotanicalBirds/BirdFlower/Supporting Files/Assets.xcassets/Detail_Screen - iPhone 8 Plus.imageset/Detail_Screen - iPhone 8 Plus.png" alt="Shuffle Random Pairs" width="300" height="600" />
+Shuffle or swipe to browse random pairs
+<img src="BirdFlower/Supporting Files/Assets.xcassets/Shuffle_Screen - iPhone 8 Plus.imageset/Shuffle_Screen - iPhone 8 Plus.png" alt="Shuffle Random Pairs" width="300" height="600" />
 
+Browse, searcha and sort through a variety of lists
+<img src="BirdFlower/Supporting Files/Assets.xcassets/List_Screen- iPhone 8 Plus.imageset/List_Screen- iPhone 8 Plus.png" alt="Shuffle Random Pairs" width="300" height="600" />
 
+Take a closer look at images from the list
+<img src="BirdFlower/Supporting Files/Assets.xcassets/Detail_Screen - iPhone 8 Plus.imageset/Detail_Screen - iPhone 8 Plus.png" alt="Shuffle Random Pairs" width="300" height="600" />
 
+## Tools & Frameworks
+xCode 12, Swift 5, UIKit, Kingfisher
 
 ## Challenge
 
@@ -17,6 +24,6 @@ BotanicalBirds is an iOS app that allows you to generate unique combinations of 
 
 ## CocoaPods
 
-kingfisher
+[Kingfisher](https://github.com/onevcat/Kingfisher)
 
 
