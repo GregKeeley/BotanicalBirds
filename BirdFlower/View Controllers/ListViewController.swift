@@ -95,18 +95,16 @@ class ListViewController: UIViewController {
     var currentListType = ListType.randomDuos {
         didSet {
             tableView.reloadData()
-//            checkToEnableShuffle()
+            //            checkToEnableShuffle()
         }
     }
+    
+    let filterUpperBound: CGFloat = 0
+    let filterLowerBound: CGFloat = 30
+    
     var filterIsActive = false {
         didSet {
-            if filterIsActive {
-                stackViewHeightConstraint.constant = 30
-                filterStack.isHidden = false
-            } else {
-                stackViewHeightConstraint.constant = 0
-                filterStack.isHidden = true
-            }
+            animateFilterConstraint()
         }
     }
     
@@ -122,13 +120,12 @@ class ListViewController: UIViewController {
         sortAllDataCollections()
         filterIsActive = false
         configureFilterStackButtons()
-//        configureMessageLabel()
+        //        configureMessageLabel()
     }
     override func viewWillAppear(_ animated: Bool) {
         fetchFavoriteDuos()
         generateRandomDuos()
         tableView.reloadData()
-//        checkToEnableShuffle()
         configureMessageLabel()
     }
     
@@ -140,8 +137,6 @@ class ListViewController: UIViewController {
             controller.searchBar.sizeToFit()
             controller.obscuresBackgroundDuringPresentation = false
             controller.automaticallyShowsSearchResultsController = false
-//            controller.
-//            controller.hidesNavigationBarDuringPresentation = false
             tableView.tableHeaderView = controller.searchBar
             return controller
         })()
@@ -150,7 +145,7 @@ class ListViewController: UIViewController {
         messageLabel.sizeToFit()
         messageLabel.layer.cornerRadius = 4
         messageLabel.clipsToBounds = true
-        lowerBound = view.frame.height * 0.07
+        messageLabelLowerBound = view.frame.height * 0.07
     }
     private func setupNavigationBar() {
         navigationItem.rightBarButtonItem?.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
@@ -187,7 +182,7 @@ class ListViewController: UIViewController {
         plantsFilterButton.titleLabel?.textAlignment = .center
         favoritesFilterButton.titleLabel?.textAlignment = .center
         
-        randomPairFilterButton.titleLabel?.sizeToFit()
+        randomPairFilterButton.titleLabel?.adjustsFontSizeToFitWidth = true
     }
     private func sortAllDataCollections() {
         if currentSortMethod == .ascending {
@@ -285,8 +280,8 @@ class ListViewController: UIViewController {
         }
     }
     // TODO: Move these variables to the proper section
-    let upperBound = CGFloat(0)
-    var lowerBound = CGFloat(100)
+    let messageLabelUpperBound = CGFloat(0)
+    var messageLabelLowerBound = CGFloat(100)
     
     private func animateLabelForSave(code: Int) {
         // Save Codes
@@ -314,29 +309,50 @@ class ListViewController: UIViewController {
             break
         }
         
-            messageLabel.text = message
-            while messageLabel.frame.origin.y < lowerBound {
-                messageLabelTopConstraint.constant += 1
-                UIView.animate(withDuration: 0.5,
-                               delay: 0.0,
-                               options: [],
-                               animations: {
-                    self.messageLabel.alpha = 1.0
+        messageLabel.text = message
+        while messageLabel.frame.origin.y < messageLabelLowerBound {
+            messageLabelTopConstraint.constant += 1
+            UIView.animate(withDuration: 0.5,
+                           delay: 0.0,
+                           options: [],
+                           animations: {
+                            self.messageLabel.alpha = 1.0
+                            self.view.layoutIfNeeded()
+                           }, completion: { finished in
+                            while self.messageLabel.frame.origin.y > self.messageLabelUpperBound {
+                                self.messageLabelTopConstraint.constant -= 1
+                                UIView.animate(withDuration: 0.5,
+                                               delay: 1.0,
+                                               options: [],
+                                               animations: {
+                                                self.messageLabel.alpha = 0.0
+                                                self.view.layoutIfNeeded()
+                                               }, completion: nil)
+                                }
+                           })
+        }
+    }
+    private func animateFilterConstraint() {
+        if filterIsActive {
+            while stackViewHeightConstraint.constant < filterLowerBound {
+                filterStack.isHidden = false
+                stackViewHeightConstraint.constant += 1
+                UIView.animate(withDuration: 0.3, delay: 0.0, options: [], animations: {
+                    self.view.layoutIfNeeded()
+                }, completion: nil)
+            }
+        } else {
+            while stackViewHeightConstraint.constant > filterUpperBound {
+                stackViewHeightConstraint.constant -= 1
+                UIView.animate(withDuration: 0.3, delay: 0.0, options: [], animations: {
                     self.view.layoutIfNeeded()
                 }, completion: { finished in
-                    while self.messageLabel.frame.origin.y > self.upperBound {
-                        self.messageLabelTopConstraint.constant -= 1
-                        UIView.animate(withDuration: 0.5,
-                                       delay: 1.0,
-                                       options: [],
-                                       animations: {
-                            self.messageLabel.alpha = 0.0
-                            self.view.layoutIfNeeded()
-                        }, completion: nil)
-                    }
+                    self.filterStack.isHidden = true
                 })
+                
             }
         }
+    }
     private func updateListType() {
         switch currentListType {
         case .birds:
@@ -435,6 +451,7 @@ extension ListViewController: UITableViewDelegate {
                     navigator.pushViewController(detailVC, animated: true)
                 }
             }
+            
         case .plants:
             let plant: PlantsSpecies?
             if currentlySearching {
@@ -548,8 +565,8 @@ extension ListViewController: UITableViewDataSource {
                         cell.textLabel?.text = ("\(favorite?.plantName ?? "Plant")")
                         cell.detailTextLabel?.text = "Plant only"
                     } else {
-                    cell.textLabel?.text = ("\(favorite?.birdCommonName ?? "Bird") + \(favorite?.plantName ?? "Plant")")
-                    cell.detailTextLabel?.text = ""
+                        cell.textLabel?.text = ("\(favorite?.birdCommonName ?? "Bird") + \(favorite?.plantName ?? "Plant")")
+                        cell.detailTextLabel?.text = ""
                     }
                 }
             } else {
@@ -571,7 +588,7 @@ extension ListViewController: UITableViewDataSource {
         return cell
     }
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-            return true
+        return true
     }
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         // Save Codes
