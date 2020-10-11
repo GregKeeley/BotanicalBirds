@@ -337,14 +337,29 @@ class ListViewController: UIViewController {
             while stackViewHeightConstraint.constant < filterLowerBound {
                 filterStack.isHidden = false
                 stackViewHeightConstraint.constant += 1
-                UIView.animate(withDuration: 0.3, delay: 0.0, options: [], animations: {
+                UIView.animate(withDuration: 0.3, delay: 0.0, options: [.transitionCrossDissolve], animations: {
+                    self.randomPairFilterButton.alpha = 1.0
+                    self.birdFilterButton.alpha = 1.0
+                    self.plantsFilterButton.alpha = 1.0
+                    self.favoritesFilterButton.alpha = 1.0
                     self.view.layoutIfNeeded()
                 }, completion: nil)
             }
         } else {
             while stackViewHeightConstraint.constant > filterUpperBound {
                 stackViewHeightConstraint.constant -= 1
-                UIView.animate(withDuration: 0.3, delay: 0.0, options: [], animations: {
+//                UIView.animate(withDuration: 0.2, animations: {
+//                    self.randomPairFilterButton.alpha = 0.0
+//                    self.birdFilterButton.alpha = 0.0
+//                    self.plantsFilterButton.alpha = 0.0
+//                    self.favoritesFilterButton.alpha = 0.0
+//                    self.view.layoutIfNeeded()
+//                }, completion: nil)
+                UIView.animate(withDuration: 0.3, delay: 0.0, options: [.transitionCrossDissolve], animations: {
+                    self.randomPairFilterButton.alpha = 0.0
+                    self.birdFilterButton.alpha = 0.0
+                    self.plantsFilterButton.alpha = 0.0
+                    self.favoritesFilterButton.alpha = 0.0
                     self.view.layoutIfNeeded()
                 }, completion: { finished in
                     self.filterStack.isHidden = true
