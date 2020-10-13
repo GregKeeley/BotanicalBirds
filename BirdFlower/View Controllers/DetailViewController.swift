@@ -95,7 +95,7 @@ class DetailViewController: UIViewController {
             FlickerAPI.searchPhotos(searchQuery: query, contentType: .birds) { [weak self] (results) in
                 switch results {
                 case .failure(let appError):
-                    print("Failed to search flicker for a photo: \(appError)")
+                    self?.showAlert(title: "Error", message: "\(appError.localizedDescription)")
                     DispatchQueue.main.async {
                         if searchType == .bird {
                             self?.birdImageView.isHidden = true
@@ -113,7 +113,7 @@ class DetailViewController: UIViewController {
             FlickerAPI.searchPhotos(searchQuery: query, contentType: .plants) { [weak self] (results) in
                 switch results {
                 case .failure(let appError):
-                    print("Failed to search flicker for a photo: \(appError)")
+                    self?.showAlert(title: "Error", message: "\(appError.localizedDescription)")
                     DispatchQueue.main.async {
                         if searchType == .bird {
                             self?.birdImageView.isHidden = true
@@ -135,7 +135,7 @@ class DetailViewController: UIViewController {
             self.birdImageView.getImage(with: url, completion: { [weak self] (results) in
                 switch results {
                 case .failure(let appError):
-                    print(appError.localizedDescription)
+                    self?.showAlert(title: "Error", message: "\(appError.localizedDescription)")
                 case .success(let image):
                     self?.birdImage = image
                     DispatchQueue.main.async {
@@ -147,7 +147,7 @@ class DetailViewController: UIViewController {
             self.plantImageView.getImage(with: url, completion: { [weak self] (results) in
                 switch results {
                 case .failure(let appError):
-                    print(appError.localizedDescription)
+                    self?.showAlert(title: "Error", message: "\(appError.localizedDescription)")
                 case .success(let image):
                     self?.plantImage = image
                     DispatchQueue.main.async {
