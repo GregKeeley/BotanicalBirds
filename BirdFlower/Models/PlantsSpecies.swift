@@ -17,7 +17,6 @@ class PlantsSpecies: Decodable {
         do {
             return try JSONDecoder().decode([PlantsSpecies].self, from: flowersJSONData)
         } catch {
-            print("Failed to decode flowers")
             return nil
         }
     }

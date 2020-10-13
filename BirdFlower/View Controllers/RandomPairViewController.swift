@@ -167,7 +167,6 @@ class RandomPairViewController: UIViewController {
     private func fetchFavoriteDuos() {
         do {
             favoriteDuos = try dataPersistence?.loadItems()
-            print("favorites: \(favoriteDuos?.count ?? -1 )")
         } catch {
             showAlert(title: "Well, this is embarassing", message: "Failed to load favorites...")
         }
@@ -271,7 +270,7 @@ class RandomPairViewController: UIViewController {
             self.birdImageView.getImage(with: url, completion: { [weak self] (results) in
                 switch results {
                 case .failure(let appError):
-                    print(appError.localizedDescription)
+                    self?.showAlert(title: "Error", message: "\(appError.localizedDescription)")
                 case .success(let image):
                     self?.birdImage = image
                 }
@@ -285,7 +284,7 @@ class RandomPairViewController: UIViewController {
             self.plantImageView.getImage(with: url, completion: { [weak self] (results) in
                 switch results {
                 case .failure(let appError):
-                    print(appError.localizedDescription)
+                    self?.showAlert(title: "Error", message: "\(appError.localizedDescription)")
                 case .success(let image):
                     self?.plantImage = image
                 }
@@ -359,7 +358,7 @@ class RandomPairViewController: UIViewController {
             FlickerAPI.searchPhotos(searchQuery: query, contentType: .birds) { [weak self] (results) in
                 switch results {
                 case .failure(let appError):
-                    print("Failed to search flicker for a photo: \(appError)")
+                    self?.showAlert(title: "Error", message: "\(appError.localizedDescription)")
                     DispatchQueue.main.async {
                         if searchType == .bird {
                             self?.birdImageView.isHidden = true
@@ -375,7 +374,7 @@ class RandomPairViewController: UIViewController {
             FlickerAPI.searchPhotos(searchQuery: query, contentType: .plants) { [weak self] (results) in
                 switch results {
                 case .failure(let appError):
-                    print("Failed to search flicker for a photo: \(appError)")
+                    self?.showAlert(title: "Error", message: "\(appError.localizedDescription)")
                     DispatchQueue.main.async {
                         if searchType == .bird {
                             self?.birdImageView.isHidden = true

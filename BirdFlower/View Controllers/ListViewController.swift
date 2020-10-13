@@ -231,7 +231,7 @@ class ListViewController: UIViewController {
             favoriteDuos = try dataPersistence?.loadItems()
             filteredFavorites = favoriteDuos?.sorted(by: {$0.birdCommonName < $1.birdCommonName})
         } catch {
-            print("Failed to load favorites")
+            showAlert(title: "Error", message: "Favorites failed to load")
         }
     }
     private func setupDataPersistence() {
@@ -348,13 +348,6 @@ class ListViewController: UIViewController {
         } else {
             while stackViewHeightConstraint.constant > filterUpperBound {
                 stackViewHeightConstraint.constant -= 1
-//                UIView.animate(withDuration: 0.2, animations: {
-//                    self.randomPairFilterButton.alpha = 0.0
-//                    self.birdFilterButton.alpha = 0.0
-//                    self.plantsFilterButton.alpha = 0.0
-//                    self.favoritesFilterButton.alpha = 0.0
-//                    self.view.layoutIfNeeded()
-//                }, completion: nil)
                 UIView.animate(withDuration: 0.3, delay: 0.0, options: [.transitionCrossDissolve], animations: {
                     self.randomPairFilterButton.alpha = 0.0
                     self.birdFilterButton.alpha = 0.0

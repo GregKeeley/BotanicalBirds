@@ -22,7 +22,6 @@ class BirdsSpecies: Codable {
         do {
             return try JSONDecoder().decode([BirdsSpecies].self, from: birdsSpeciesJSONData)
         } catch {
-            print("Bird data failed to decode")
             return nil
         }
         

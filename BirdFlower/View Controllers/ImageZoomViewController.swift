@@ -98,7 +98,7 @@ class ImageZoomViewController: UIViewController {
         do {
             favorites = try dataPersistence?.loadItems()
         } catch {
-            print("Failed to load favorites")
+            showAlert(title: "Error", message: "Failed to load favorites")
         }
     }
     private func setMinZoomScaleForImageSize(_ imageSize: CGSize) {
@@ -157,7 +157,7 @@ class ImageZoomViewController: UIViewController {
                     isFavorite = true
                     fetchFavoriteDuos()
                 } catch {
-                    print("Failed to save")
+                    showAlert(title: "Error", message: "Failed to save favorite")
                 }
             } else if (self.dataPersistence?.hasItemBeenSaved(itemToBeSaved) ?? true) {
                 showAlert(title: "This has already been saved", message: "No need to save it!")
