@@ -57,12 +57,14 @@ class RandomPairViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.birdImageView.contentMode = .scaleAspectFit
                     self.birdImageView.tintColor = .white
+                    self.birdImageView.isUserInteractionEnabled = false
                     self.birdImageView.image = UIImage(systemName: "questionmark")
                 }
                 return
             }
             DispatchQueue.main.async {
 //                self.birdImageView.kf.indicatorType = .activity
+                self.birdImageView.isUserInteractionEnabled = true
                 self.birdImageView.contentMode = .scaleAspectFill
             }
             loadBirdFlickerPhoto(for: photo)
@@ -73,6 +75,7 @@ class RandomPairViewController: UIViewController {
             guard let photo = flickerPlantImageData?.photos.photo, !photo.isEmpty else {
                 DispatchQueue.main.async {
                     self.plantImageView.contentMode = .scaleAspectFit
+                    self.plantImageView.isUserInteractionEnabled = false
                     self.plantImageView.tintColor = .white
                     self.plantImageView.image = UIImage(systemName: "questionmark")
                 }
@@ -80,6 +83,7 @@ class RandomPairViewController: UIViewController {
             }
             DispatchQueue.main.async {
 //                self.plantImageView.kf.indicatorType = .activity
+                self.plantImageView.isUserInteractionEnabled = true
                 self.plantImageView.contentMode = .scaleAspectFill
             }
             
