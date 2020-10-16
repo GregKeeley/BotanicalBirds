@@ -598,15 +598,9 @@ extension ListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        // Save Codes
-        // 1: Favorite saved successfully
-        // 2: FAvorite already saved
-        // 3: Favorite removed successfully
-        // 4: Error
-        
-        // Delete a favorite from favorites list
-        let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
+
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, _, _) in
             if self.currentListType == .favorites {
                 guard let favoriteItem = self.favoriteDuos?[indexPath.row] else {
                     return
@@ -624,7 +618,7 @@ extension ListViewController: UITableViewDataSource {
             }
         }
         
-        let favorite = UITableViewRowAction(style: .normal, title: "Favorite") { (action, indexPath) in
+        let favoriteAction = UIContextualAction(style: .destructive, title: "Favorite") { (action, _, _) in
             if self.currentListType != .favorites {
                 switch self.currentListType {
                 case .birds:
@@ -687,13 +681,14 @@ extension ListViewController: UITableViewDataSource {
             }
             self.fetchFavoriteDuos()
         }
-        favorite.backgroundColor = #colorLiteral(red: 0, green: 0.6940027566, blue: 0, alpha: 1)
+        favoriteAction.backgroundColor = #colorLiteral(red: 0, green: 0.6940027566, blue: 0, alpha: 1)
         if currentListType == .favorites {
-            return [delete]
+            return UISwipeActionsConfiguration.init(actions: [deleteAction])
         } else {
-            return [favorite]
+            return UISwipeActionsConfiguration.init(actions: [favoriteAction])
         }
     }
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }

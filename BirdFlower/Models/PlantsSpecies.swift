@@ -9,6 +9,7 @@
 import Foundation
 
 class PlantsSpecies: Decodable {
+    
     var name: String
     init(name: String) {
         self.name = name
