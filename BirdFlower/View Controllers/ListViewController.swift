@@ -328,7 +328,7 @@ class ListViewController: UIViewController {
                                                 self.messageLabel.alpha = 0.0
                                                 self.view.layoutIfNeeded()
                                                }, completion: nil)
-                                }
+                            }
                            })
         }
     }
@@ -598,7 +598,7 @@ extension ListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
-
+    
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, _, _) in
             if self.currentListType == .favorites {
@@ -688,7 +688,7 @@ extension ListViewController: UITableViewDataSource {
             return UISwipeActionsConfiguration.init(actions: [favoriteAction])
         }
     }
-
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }

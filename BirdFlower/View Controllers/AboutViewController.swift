@@ -10,14 +10,13 @@ import UIKit
 import SafariServices
 
 class AboutViewController: UIViewController {
-
+    
     @IBOutlet weak var websiteButton: UIButton!
     @IBOutlet weak var bkgdView: UIView!
     @IBOutlet weak var disclaimerLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        setupUI()
     }
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = true
@@ -32,7 +31,6 @@ class AboutViewController: UIViewController {
         websiteButton.clearColorForTitle()
         websiteButton.layer.cornerRadius = 4
         bkgdView.layer.cornerRadius = 4
-//        websiteButton.titleLabel?.text = "MeghanKeeley.com/botanicalbirds"
         disclaimerLabel.adjustsFontSizeToFitWidth = true
     }
     @IBAction func websiteButtonPressed(_ sender: UIButton) {

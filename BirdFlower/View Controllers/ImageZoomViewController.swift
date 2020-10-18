@@ -16,8 +16,6 @@ class ImageZoomViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var favoriteButton: UIBarButtonItem!
     
-    
-    // TODO: Encapsulate objects Mark variables private (review class notes, OOP, GCD, inheritance, encapsulation, polymorphism, protocol oriented programming vs OOP, protocol vs methods)
     var imageData: FlickerSearchResult?
     
     var zoomImage: UIImage?
@@ -139,10 +137,10 @@ class ImageZoomViewController: UIViewController {
     }
     @IBAction func favoriteButtonPressed(_ sender: UIBarButtonItem) {
         var itemToBeSaved = FavoriteDuo(birdCommonName: "", birdScientificName: "", plantName: "")
-//        guard bird != nil, plant != nil else {
-//            showAlert(title: "Something went wrong", message: "How are both bird and plant empty?")
-//            return
-//        }
+        //        guard bird != nil, plant != nil else {
+        //            showAlert(title: "Something went wrong", message: "How are both bird and plant empty?")
+        //            return
+        //        }
         if isFavorite == false {
             if bird != nil {
                 itemToBeSaved = FavoriteDuo(birdCommonName: bird?.commonName ?? "Bird", birdScientificName: bird?.scientificName ?? "Scientific name", plantName: "")

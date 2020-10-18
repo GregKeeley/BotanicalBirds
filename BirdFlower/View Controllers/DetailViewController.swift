@@ -30,7 +30,6 @@ class DetailViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.birdImageView.contentMode = .scaleAspectFit
                     self.birdImageView.tintColor = .white
-//                    self.birdImageView.image = UIImage(systemName: "questionmark")
                     self.birdImageView.image = nil
                 }
                 return
@@ -44,7 +43,6 @@ class DetailViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.plantImageView.contentMode = .scaleAspectFit
                     self.plantImageView.tintColor = .white
-//                    self.plantImageView.image = UIImage(systemName: "questionmark")
                     self.plantImageView.image = nil
                 }
                 return
@@ -192,5 +190,3 @@ class DetailViewController: UIViewController {
     }
     
 }
-//MARK:- Extensions
-

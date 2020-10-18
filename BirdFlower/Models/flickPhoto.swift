@@ -28,7 +28,7 @@ struct Urls: Codable {
 struct URLElement: Codable {
     let type: String
     let content: String
-
+    
     enum CodingKeys: String, CodingKey {
         case type
         case content = "_content"

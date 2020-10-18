@@ -63,7 +63,7 @@ class RandomPairViewController: UIViewController {
                 return
             }
             DispatchQueue.main.async {
-//                self.birdImageView.kf.indicatorType = .activity
+                //                self.birdImageView.kf.indicatorType = .activity
                 self.birdImageView.isUserInteractionEnabled = true
                 self.birdImageView.contentMode = .scaleAspectFill
             }
@@ -82,7 +82,7 @@ class RandomPairViewController: UIViewController {
                 return
             }
             DispatchQueue.main.async {
-//                self.plantImageView.kf.indicatorType = .activity
+                //                self.plantImageView.kf.indicatorType = .activity
                 self.plantImageView.isUserInteractionEnabled = true
                 self.plantImageView.contentMode = .scaleAspectFill
             }
@@ -200,7 +200,7 @@ class RandomPairViewController: UIViewController {
     }
     
     @objc private func generateRandomBird(gesture: UISwipeGestureRecognizer?) {
-//        birdImage = nil
+        //        birdImage = nil
         if let inputGesture = gesture {
             switch inputGesture.direction {
             case .up:
@@ -227,8 +227,8 @@ class RandomPairViewController: UIViewController {
     }
     
     @objc private func generateRandomPlant(gesture: UISwipeGestureRecognizer?) {
-//        plantImage = nil
-//        currentPlantIndex += 1
+        //        plantImage = nil
+        //        currentPlantIndex += 1
         if let inputGesture = gesture {
             switch inputGesture.direction {
             case .up:
@@ -312,7 +312,7 @@ class RandomPairViewController: UIViewController {
         let birdPhotoSwipeUpGesture = UISwipeGestureRecognizer(target: self, action: #selector(generateRandomBird(gesture:)))
         birdPhotoSwipeUpGesture.direction = [.up]
         birdImageView.addGestureRecognizer(birdPhotoSwipeUpGesture)
-
+        
         
         let plantPhotoSwipeDownGesture = UISwipeGestureRecognizer(target: self, action: #selector(generateRandomPlant))
         plantPhotoSwipeDownGesture.direction = [.down]
@@ -415,13 +415,13 @@ class RandomPairViewController: UIViewController {
         if let imageZoomVC = UIStoryboard(name: "ImageZoomViewController", bundle: nil).instantiateViewController(identifier: "ImageZoomViewController") as? ImageZoomViewController {
             if imageView.image != nil {
                 if imageView == plantImageView {
-//                    imageZoomVC.imageData = flickerPlantImageData
-//                    imageZoomVC.plant = randomPlant
-//                    imageZoomVC.nameForPhoto = randomPlant?.name ?? "Plant"
+                    //                    imageZoomVC.imageData = flickerPlantImageData
+                    //                    imageZoomVC.plant = randomPlant
+                    //                    imageZoomVC.nameForPhoto = randomPlant?.name ?? "Plant"
                 } else {
-//                    imageZoomVC.nameForPhoto = randomBird?.commonName ?? "Bird"
-//                    imageZoomVC.bird = randomBird
-//                    imageZoomVC.imageData = flickerBirdImageData
+                    //                    imageZoomVC.nameForPhoto = randomBird?.commonName ?? "Bird"
+                    //                    imageZoomVC.bird = randomBird
+                    //                    imageZoomVC.imageData = flickerBirdImageData
                 }
                 if let navigator = navigationController {
                     navigator.pushViewController(imageZoomVC, animated: true)
@@ -431,15 +431,15 @@ class RandomPairViewController: UIViewController {
     }
     //MARK:- IBActions
     @IBAction func shuffleButtonPressed(_ sender: UIButton) {
-
+        
         DispatchQueue.main.async {
             self.birdImageView.kf.indicatorType = .activity
             self.plantImageView.kf.indicatorType = .activity
         }
         isFavorite = false
         resetFavoriteButton()
-//        birdImageView.image = nil
-//        plantImageView.image = nil
+        //        birdImageView.image = nil
+        //        plantImageView.image = nil
         generateRandomPair()
     }
     @IBAction func randomBirdButtonPressed(_ sender: UIButton) {
