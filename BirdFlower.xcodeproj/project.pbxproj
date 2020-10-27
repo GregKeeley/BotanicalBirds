@@ -38,9 +38,12 @@
 		88D630A82501837F0033E275 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D630A72501837F0033E275 /* MainTabBarController.swift */; };
 		88D630AA2501994C0033E275 /* UIViewController_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D630A92501994C0033E275 /* UIViewController_Extension.swift */; };
 		88FAC32F252CD2A20068D435 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FAC32E252CD2A20068D435 /* ActivityIndicator.swift */; };
+		B538A7187669ED3878B29203 /* Pods_BirdFlower.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AADD98FD3D21D57888DAA14 /* Pods_BirdFlower.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1ECF2DEA14A5B5726D712875 /* Pods-BirdFlower.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BirdFlower.release.xcconfig"; path = "Target Support Files/Pods-BirdFlower/Pods-BirdFlower.release.xcconfig"; sourceTree = "<group>"; };
+		4AADD98FD3D21D57888DAA14 /* Pods_BirdFlower.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BirdFlower.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		88201A322502B513006152F1 /* FavoriteDuos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteDuos.swift; sourceTree = "<group>"; };
 		8836C51024FDF58C00FCAABF /* PixaBayImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixaBayImage.swift; sourceTree = "<group>"; };
 		8836C51724FE809F00FCAABF /* flickPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = flickPhoto.swift; sourceTree = "<group>"; };
@@ -72,6 +75,7 @@
 		88D630A72501837F0033E275 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		88D630A92501994C0033E275 /* UIViewController_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController_Extension.swift; sourceTree = "<group>"; };
 		88FAC32E252CD2A20068D435 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		B8AB92171F538747783F16B3 /* Pods-BirdFlower.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BirdFlower.debug.xcconfig"; path = "Target Support Files/Pods-BirdFlower/Pods-BirdFlower.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,17 +85,29 @@
 			files = (
 				88D630A425017FDE0033E275 /* DataPersistence in Frameworks */,
 				8836C51424FDF63900FCAABF /* Kingfisher in Frameworks */,
+				B538A7187669ED3878B29203 /* Pods_BirdFlower.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		48DEAB147A77C5C05A18E3FC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B8AB92171F538747783F16B3 /* Pods-BirdFlower.debug.xcconfig */,
+				1ECF2DEA14A5B5726D712875 /* Pods-BirdFlower.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		88763C9B24FDCCE900EE3409 = {
 			isa = PBXGroup;
 			children = (
 				88763CA624FDCCE900EE3409 /* BirdFlower */,
 				88763CA524FDCCE900EE3409 /* Products */,
+				48DEAB147A77C5C05A18E3FC /* Pods */,
+				8A3E5DEA670B3FD0797FFA3B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -188,6 +204,14 @@
 			path = "Views+Extensions";
 			sourceTree = "<group>";
 		};
+		8A3E5DEA670B3FD0797FFA3B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4AADD98FD3D21D57888DAA14 /* Pods_BirdFlower.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -195,6 +219,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 88763CB824FDCCEB00EE3409 /* Build configuration list for PBXNativeTarget "BirdFlower" */;
 			buildPhases = (
+				609A3459EE672DAB18A91E32 /* [CP] Check Pods Manifest.lock */,
 				88763CA024FDCCE900EE3409 /* Sources */,
 				88763CA124FDCCE900EE3409 /* Frameworks */,
 				88763CA224FDCCE900EE3409 /* Resources */,
@@ -267,6 +292,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		609A3459EE672DAB18A91E32 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BirdFlower-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\n# if [ $? != 0 ] ; then\n    # print error to STDERR\n#    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n#    exit 1\n# fi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\n# echo \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		888FAE44251E31110014BA01 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -457,6 +504,7 @@
 		};
 		88763CB924FDCCEB00EE3409 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B8AB92171F538747783F16B3 /* Pods-BirdFlower.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -471,12 +519,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.GregKeeley.BotanicalBirds;
 				PRODUCT_NAME = BotanicalBirds;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		88763CBA24FDCCEB00EE3409 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1ECF2DEA14A5B5726D712875 /* Pods-BirdFlower.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -491,7 +540,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.GregKeeley.BotanicalBirds;
 				PRODUCT_NAME = BotanicalBirds;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

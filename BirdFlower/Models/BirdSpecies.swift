@@ -491,12 +491,6 @@ class BirdsSpecies: Codable {
         "bandCode6": "AYTVAL"
     },
     {
-        "bandCode4": "REDH",
-        "commonName": "Redhead",
-        "scientificName": "Aythya americana",
-        "bandCode6": "AYTAME"
-    },
-    {
         "bandCode4": "COMP",
         "bandCode4Conflict": true,
         "commonName": "Common Pochard",

@@ -137,9 +137,10 @@ class RandomPairViewController: UIViewController {
         } else {
             resetFavoriteButton()
         }
+//        configureUI()
     }
     override func viewDidAppear(_ animated: Bool) {
-        configureUI()
+//        configureUI()
     }
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(false, animated: false)
@@ -148,7 +149,7 @@ class RandomPairViewController: UIViewController {
     //MARK:- Funcs
     private func configureUI() {
         mainTitleLabel.adjustsFontSizeToFitWidth = true
-        shuffleButton.titleLabel?.text = "Shuffle"
+//        shuffleButton.titleLabel?.text = "Shuffle"
         shuffleButton.titleLabel?.sizeToFit()
         shuffleButton.layer.cornerRadius = 4
         shuffleButton.tintColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
